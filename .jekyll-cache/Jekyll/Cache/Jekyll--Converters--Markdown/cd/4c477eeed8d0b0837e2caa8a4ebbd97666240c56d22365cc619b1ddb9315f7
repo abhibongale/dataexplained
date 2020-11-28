@@ -1,0 +1,47 @@
+I"�	<p>Welcome to the webpage for the Princeton OPR seminar: <strong>Introduction to R package: broom</strong>.</p>
+
+<h2 id="setup">Setup</h2>
+
+<p>You’ll need to install:</p>
+
+<ul>
+  <li><strong>Install the latest version of R</strong> (3.2.3), which can be done <a href="http://lib.stat.cmu.edu/R/CRAN/">here</a>. If you already have R installed, make sure your version is at least 3.2.0: if it’s not, upgrade!</li>
+  <li><strong>Install RStudio</strong>, which can be found <a href="http://www.rstudio.com/">here</a>.</li>
+</ul>
+
+<p>You’ll need to install several R packages, which you can do in R with:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>install.packages(c("ggplot2", "dplyr", "tidyr", "broom"))
+</code></pre></div></div>
+
+<h2 id="links">Links</h2>
+
+<ul>
+  <li><a href="https://www.dropbox.com/s/37stedam8hjffak/broom-code.txt?dl=0">Live Code Feed</a></li>
+  <li><a href="/courses/errors">R Error Message Cheat Sheet</a>: contains some common R error messages. If you get an error while running a line that you expect to work (perhaps because you saw it on the screen), you can check these examples. (In particular, check your spelling and capitalization carefully).</li>
+  <li><a href="https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf">Data Wrangling Cheat Sheet</a>: this sheet is a great summary of dplyr and tidyr operations, two packages used today.</li>
+</ul>
+
+<h2 id="other-resources">Other Resources</h2>
+<ul>
+  <li><a href="/RData/resources/">Resources for future learning</a> A page of additional resources for learning R</li>
+</ul>
+
+<h2 id="relevant-code">Relevant Code</h2>
+
+<p>We’ll be studying a set of United Nations voting data that can be found here:</p>
+
+<ul>
+  <li>Anton Strezhnev; Erik Voeten, 2013, “United Nations General Assembly Voting Data”, <a href="http://hdl.handle.net/1902.1/12379">hdl:1902.1/12379</a> UNF:5:s7mORKL1ZZ6/P3AR5Fokkw== Erik Voeten [Distributor] V7 [Version]</li>
+</ul>
+
+<p>You can download it using the following line of code:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>load(url("http://varianceexplained.org/courses/WS1015/files/undata-213.RData"))
+</code></pre></div></div>
+
+<p>And load the descriptions dataset with:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>load(url("http://varianceexplained.org/courses/WS1015/files/descriptions-213.RData"))
+</code></pre></div></div>
+:ET

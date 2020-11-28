@@ -1,0 +1,33 @@
+I"¿<p>Iâ€™m a honing my skills as a  data scientist. My interests include statistics, data analysis, neural networks, and programming in R, Python, and Java.</p>
+
+<h1 id="education">Education</h1>
+<ul>
+  <li>Bachelors in Computer Engineering from Mumbai University, India. (2015-2019)</li>
+  <li>Msc in Computing Major Artificial Intelligence from DCU, Ireland (2021-2022)</li>
+</ul>
+
+<h1 id="software">Software</h1>
+<ul>
+  <li><a href="https://github.com/abhibongale/Fantasy-Team-Optimizer">Fantasy Premier Team Optimization </a>: Working on Shiny app which optimize selection of team  each gameweek.</li>
+  <li><a href="http://github.com/abhibongale/hand-gesture-recognition">Hand Gesture Recognition</a>: Detects live hand gesture on webcam, it uses convolution neural network to detect hand gesture, convolution neural network was design using Python and framework Tensorflow v1.13.</li>
+</ul>
+
+<!--
+Publications
+============
+-->
+
+<h1 id="links">Links</h1>
+
+<ul>
+  <li><a href="https://github.com/abhibongale">My GitHub</a></li>
+</ul>
+
+<h1 id="about-this-site">About This Site</h1>
+
+<p>This site is powered by <a href="http://jekyllrb.com/">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/">Minimal Mistakes</a> theme. All blog posts are released under a <a href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>. The favicon and logo were created by <a href="https://www.data-imaginist.com/about/">Thomas Lin Pedersen</a>.</p>
+
+<p>All blog posts are compiled with <a href="http://yihui.name/knitr/">knitr</a> <a href="http://rmarkdown.rstudio.com/">R markdown</a> using <a href="https://github.com/dgrtwo/dgrtwo.github.com/blob/master/_scripts/knitpages.R">this script</a>. You can find the reproducible sources of each blog post <a href="https://github.com/dgrtwo/dgrtwo.github.com/tree/master/_R">here</a>.</p>
+
+<p>All opinions and views are my own and do not represent my employer.</p>
+:ET

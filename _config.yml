@@ -1,0 +1,58 @@
+# Site wide configuration
+
+title:            Data Explained
+locale:           en_US
+url:              http://dataexplained.in
+# url:              http://localhost:4000
+
+name: Data Explained
+description: Thoughts on statistics, data science, computational biology, education, Python and R.
+
+# Jekyll configuration
+
+permalink:   /:categories/:title/
+markdown:    kramdown
+highlighter: rouge
+sass:
+  sass_dir: _sass
+  style: compressed
+gems:
+  - jekyll-sitemap
+
+kramdown:
+  auto_ids: true
+  footnote_nr: 1
+  entity_output: as_char
+  toc_levels: 1..6
+  enable_coderay: false
+
+
+# Site owner
+owner:
+  name: Abhishek Bongale
+  avatar: abhishekbongale.jpg
+  bio: "Honing Data Scientist skills in R and Python."
+  email: abhibongale97@gmail.com
+  disqus-shortname: dataexplained
+  twitter: abhibongale
+  facebook: #username
+  google:
+    plus: #username
+    analytics: 
+    verify: 
+    ad-client: 
+    ad-slot: 
+  bing-verify: 
+  github: abhibongale
+  stackoverflow: #712603
+  linkedin: 
+  instagram: #username
+  lastfm: #username
+  tumblr: #username
+  pinterest: #username
+  foursquare: #username
+  steam: #username
+  dribbble: #username
+
+include: [".htaccess"]
+exclude: ["lib", "config.rb", "Capfile", "config", "log", "Rakefile", "Rakefile.rb", "tmp", "less", "*.sublime-project", "*.sublime-workspace", "test", "spec", "Gruntfile.js", "package.json", "node_modules", "Gemfile", "Gemfile.lock", "LICENSE", "README.md"]

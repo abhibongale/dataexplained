@@ -1,0 +1,68 @@
+==================================================================
+https://keybase.io/drobinson
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://varianceexplained.org
+  * I am drobinson (https://keybase.io/drobinson) on keybase.
+  * I have a public key with fingerprint 2BFD FAC9 CDA9 669F FE2C  6973 C0B7 A65C CA30 6675
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "01019f8ded411505fc2ee01efacc87f97575fa83b38085de94dbbfb8a608083cd4a20a",
+      "fingerprint": "2bfdfac9cda9669ffe2c6973c0b7a65cca306675",
+      "host": "keybase.io",
+      "key_id": "c0b7a65cca306675",
+      "kid": "01019f8ded411505fc2ee01efacc87f97575fa83b38085de94dbbfb8a608083cd4a20a",
+      "uid": "03175b3c33f72d4e551e8bdc271dc319",
+      "username": "drobinson"
+    },
+    "service": {
+      "hostname": "varianceexplained.org",
+      "protocol": "http:"
+    },
+    "type": "web_service_binding",
+    "version": 1
+  },
+  "ctime": 1518105455,
+  "expire_in": 157680000,
+  "prev": "3c07d4270998d3133a94655cdba1c81fd4000ea2ffab0f04643c208e31add061",
+  "seqno": 14,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.0.76
+Comment: https://keybase.io/crypto
+
+yMIqAnicrZJbSBVBGMePXdGwjAiloGItSDKd2dnZywm7UFB0oewhukjH2ZlZHbXd
+4+56Ca0MuklUDxVBdKUoSNGXoJcgK6uHCjILNFDoQY8YlWAlVFizXd56bF6G+fj/
+f9//+5jOzImxjLTzB7bg+beGR9Oe3r9aE9vZGHgNiu2xvUq8Qankvy5exXgQJioF
+U+IKgABajsk40yDEADtU5RxA7hBKTcOxDGxgh5jIRiYwMeOWxmzbsU2iA1lAlGlE
+BUTJVxzhlnE/6Qs3lFjVdphEWJQRS9ctx+Eq1S0DUWAbRMeUEgR03cDSWO4FkUOG
+s0nAC4Qna/KR+BXvH/r/nLvmNw5BA9uIIuQYKtM4xpCbNqOqARlF0IqEAfddsodL
+NfM9W7iB5yr78hVZrhWUR5uNRvkjqSW+IC7lvD5ZRYTLWYHnl0lK0vdCj3pVUlIe
+hsl4RAj3JiNLHbcTf2AJiWdyodJQy/1AyE5xKJU0FBEdYmhCgDWM8xXZQPg8ISIF
+NnQTyBO14bUSKfdtME01gGWZDEGEiKXpGFNmE0hN6DBNqjlRHYfYwAGariGqApMj
+SBgDOlSi8apdT7I1mZOUSWYgylwS1vhc2fego2RSLC0jNmXyhOinxTLSs/7+v0VF
+U8fR/mur+qc8ti7kqLpXmL3ufuf6PDb87PXxAaHkFDcsufgy1TXv9Lnr4kx3dtHq
+ocGVo015B7yx6ne30cPpFVvfK6VHpo4bgy9mfFze9yS9vTCVFXu6/ajZ0pisC3Zc
+bb1SvKJ827n83k1tbXOGGzfsTH0Lf8zP7BprXFrcenZ8WumbE/fQzGX13eCiu3v2
+Rrvu2MTTl+vWPtr89uZB8aUlr6W5IxV28pOP3C/FeUMLS/avuCV2dd05+3Xug57z
+dy6NlAz0nurXFjev8RbdqL/7QR0lqY6vK6/P+N60run14ay+DbmpWZ+b+keeV+Zu
++tRTHz/8bORKbsWr6kO7E7Nq2nMXtM75CYRbSw4=
+=xd5q
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/drobinson
+
+==================================================================

@@ -1,0 +1,36 @@
+I"�
+<p>Welcome to Statistical Programming with R. Please make sure to complete the following <em>before</em> coming to lecture:</p>
+
+<ul>
+  <li>Bring a <strong>fully charged laptop</strong>,</li>
+  <li><strong>Install the newest version of R</strong>, which can be done <a href="http://lib.stat.cmu.edu/R/CRAN/">here</a>. Your version should be 3.1: previous versions may lead to unexpected behavior.</li>
+  <li><strong>Install RStudio</strong>, which can be found <a href="http://www.rstudio.com/">here</a>. <em>Make sure you can open the application,</em> and have it ready at the start of the session.</li>
+</ul>
+
+<h2 id="important-links">Important Links</h2>
+<ul>
+  <li><a href="http://goo.gl/forms/bOij6K3bEA">Course Evaluation</a> <strong>Please</strong> fill this out after the course- this evaluation is essential to designing future R workshops.</li>
+  <li><a href="https://dl.dropboxusercontent.com/s/pyes8fk81y9q5dl/10_13_2014_Rlesson2.R?dl=0">R Live Feed</a> Ended up a few lines behind? Want to check that your spelling of the last line was correct? No problem: this page contains the live contents of <code class="highlighter-rouge">session2.R</code>, the file that’s being written and executed on the screen. It is synced by Dropbox and may take a few seconds to get up to date.</li>
+  <li><a href="/pages/errors/">R Error Message Cheat Sheet</a>: contains some common R error messages. If you get an error while running a line that you expect to work (perhaps because you saw it on the screen), check these examples before you go to the Google docs. (In particular, check your spelling and capitalization carefully).</li>
+  <li><a href="/RData/">My online course</a> A free online course I developed that includes videos and code transcripts for the material covered in this workshop and more</li>
+  <li><a href="/RData/resources/">Resources for future learning</a> A page of additional resources for learning R</li>
+</ul>
+
+<h2 id="relevant-code">Relevant Code</h2>
+
+<p>We’ll be studying a set of United Nations voting data that can be found here:</p>
+
+<ul>
+  <li>Anton Strezhnev; Erik Voeten, 2013, “United Nations General Assembly Voting Data”, <a href="http://hdl.handle.net/1902.1/12379">hdl:1902.1/12379</a> UNF:5:s7mORKL1ZZ6/P3AR5Fokkw== Erik Voeten [Distributor] V7 [Version]</li>
+</ul>
+
+<p>You can download it using the following line of code:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>load(url("http://dgrtwo.github.io/files/undata-213.RData"))
+</code></pre></div></div>
+
+<p>And load the descriptions dataset with:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>load(url("http://dgrtwo.github.io/files/descriptions-213.RData"))
+</code></pre></div></div>
+:ET

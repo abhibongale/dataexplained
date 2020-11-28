@@ -1,0 +1,87 @@
+I". <p>I use <a href="http://yihui.name/knitr/">knitr</a> and <a href="http://jekyllrb.com/">jekyll</a> to produce these reproducible R pages. Here are the steps:</p>
+
+<ul>
+  <li>
+    <p>Set up <a href="http://jekyllbootstrap.com/">jekyll-bootstrap</a>, optionally with a GitHub repository.</p>
+  </li>
+  <li>
+    <p>Set up a folder called <code class="highlighter-rouge">_R</code> to contain your .Rmd files that will be compiled.</p>
+  </li>
+  <li>
+    <p>Put the following script into <code class="highlighter-rouge">knitpages.R</code>. When run, this will regenerate pages in the <code class="highlighter-rouge">pages</code> directory from any newer files in the <code class="highlighter-rouge">_R</code> directory:</p>
+  </li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1">#!/usr/bin/Rscript --vanilla</span><span class="w">
+
+</span><span class="c1"># compiles all .Rmd files in _R directory into .md files in Pages directory,</span><span class="w">
+</span><span class="c1"># if the input file is older than the output file.</span><span class="w">
+
+</span><span class="c1"># run ./knitpages.R to update all knitr files that need to be updated.</span><span class="w">
+
+</span><span class="n">KnitPost</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">outfile</span><span class="p">,</span><span class="w"> </span><span class="n">base.url</span><span class="o">=</span><span class="s2">"/"</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="c1"># this function is a modified version of an example here:</span><span class="w">
+    </span><span class="c1"># http://jfisher-usgs.github.com/r/2012/07/03/knitr-jekyll/</span><span class="w">
+    </span><span class="n">require</span><span class="p">(</span><span class="n">knitr</span><span class="p">);</span><span class="w">
+    </span><span class="n">opts_knit</span><span class="o">$</span><span class="n">set</span><span class="p">(</span><span class="n">base.url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">base.url</span><span class="p">)</span><span class="w">
+    </span><span class="n">fig.path</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"figs/"</span><span class="p">,</span><span class="w"> </span><span class="n">sub</span><span class="p">(</span><span class="s2">".Rmd$"</span><span class="p">,</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="n">basename</span><span class="p">(</span><span class="n">input</span><span class="p">)),</span><span class="w"> </span><span class="s2">"/"</span><span class="p">)</span><span class="w">
+    </span><span class="n">opts_chunk</span><span class="o">$</span><span class="n">set</span><span class="p">(</span><span class="n">fig.path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fig.path</span><span class="p">)</span><span class="w">
+    </span><span class="n">opts_chunk</span><span class="o">$</span><span class="n">set</span><span class="p">(</span><span class="n">fig.cap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"center"</span><span class="p">)</span><span class="w">
+    </span><span class="n">render_jekyll</span><span class="p">()</span><span class="w">
+    </span><span class="n">knit</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">outfile</span><span class="p">,</span><span class="w"> </span><span class="n">envir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parent.frame</span><span class="p">())</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">infile</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">list.files</span><span class="p">(</span><span class="s2">"_R"</span><span class="p">,</span><span class="w"> </span><span class="n">pattern</span><span class="o">=</span><span class="s2">"*.Rmd"</span><span class="p">,</span><span class="w"> </span><span class="n">full.names</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="n">outfile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"pages/"</span><span class="p">,</span><span class="w"> </span><span class="n">sub</span><span class="p">(</span><span class="s2">".Rmd$"</span><span class="p">,</span><span class="w"> </span><span class="s2">".md"</span><span class="p">,</span><span class="w"> </span><span class="n">basename</span><span class="p">(</span><span class="n">infile</span><span class="p">)))</span><span class="w">
+
+    </span><span class="c1"># knit only if the input file is the last one modified</span><span class="w">
+    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">file.exists</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w">
+        </span><span class="n">file.info</span><span class="p">(</span><span class="n">infile</span><span class="p">)</span><span class="o">$</span><span class="n">mtime</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">file.info</span><span class="p">(</span><span class="n">outfile</span><span class="p">)</span><span class="o">$</span><span class="n">mtime</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="n">KnitPost</span><span class="p">(</span><span class="n">infile</span><span class="p">,</span><span class="w"> </span><span class="n">outfile</span><span class="p">)</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+<ul>
+  <li>
+    <p>Create a <code class="highlighter-rouge">.Rmd</code> file in the <code class="highlighter-rouge">_R</code> directory, such as <code class="highlighter-rouge">_R/example.Rmd</code>. Run the command</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> ./knitpages.R
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p>(To-do: have the script be run as part of the Jekyll updating process).</p>
+
+<ul>
+  <li>
+    <p>Visit your page at <a href="http://localhost:4000/pages/example.html">http://localhost:4000/pages/example.html</a>.</p>
+  </li>
+  <li>
+    <p>If you like, deploy it using git:</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> git add .
+ git commit -m "Updated Rmd page"
+ git push -u origin master
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<hr />
+
+<p>Now, some R code just for fun:</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">summary</span><span class="p">(</span><span class="n">cars</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">##      speed           dist    
+##  Min.   : 4.0   Min.   :  2  
+##  1st Qu.:12.0   1st Qu.: 26  
+##  Median :15.0   Median : 36  
+##  Mean   :15.4   Mean   : 43  
+##  3rd Qu.:19.0   3rd Qu.: 56  
+##  Max.   :25.0   Max.   :120</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">plot</span><span class="p">(</span><span class="n">cars</span><span class="p">)</span></code></pre></figure>
+
+<p><img src="/figs/workflow/plot_cars.png" alt="center" /></p>
+
+:ET
