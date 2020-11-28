@@ -1,2 +1,2 @@
-# dataexplained.io
+# dataexplained
 Blogs
