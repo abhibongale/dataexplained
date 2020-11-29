@@ -2,8 +2,8 @@
 
 title:            Data Explained
 locale:           en_US
-#url:		  https://abhibongale.github.io/dataexplained/
-url:              /dataexplained.in
+url:		  https://abhibongale.github.io/dataexplained
+#url:              /dataexplained.in
 # url:              http://localhost:4000
 
 name: Data Explained
