@@ -1,0 +1,255 @@
+---
+layout: post
+title: "Economic Guide to Picking a College Major - A tidy analysis"
+description: "All data is from American Community Survey 2010-2012 Public Use Microdata Series. TidyTuesday Challenge published on 2018-10-26"
+output: html_document
+date: 2020-12-01 10:30:27 -0400
+category: r
+tags: [r, statistics]
+comments: true
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, cache = TRUE)
+theme_set(theme_light())
+```
+
+```{r results=FALSE}
+library(tidyverse)
+```
+
+Attempt of this blog is to practice data analysis and improve myself through watching how data science pioneers do analysis on there data.
+
+# Explore Data
+
+```{r}
+recent_grads <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018/2018-10-16/recent-grads.csv')
+skimr::skim(recent_grads)
+```
+
+
+```{r by_major_category}
+by_major_category <- majors_processed %>%
+  filter(!is.na(Total)) %>%
+  group_by(Major_category) %>%
+  summarise(Men = sum(Men),
+            Women = sum(Women),
+            Total = sum(Total),
+            MedianSalary = sum(Median * Sample_size) / sum(Sample_size)) %>%
+  mutate(ShareWomen = Women / Total) %>%
+  arrange(desc(ShareWomen))
+```
+
+### What are trending Major Category?
+
+```{r}
+recent_grads %>%
+  count(Major_category, wt = Total, sort = TRUE) %>%
+  mutate(Major_category = fct_reorder(Major_category, n)) %>%
+  ggplot(aes(Major_category, n, fill = Major_category)) +
+  geom_col() +
+  coord_flip() +
+  labs( x = "",
+        y = "Total # of graduates") +
+  theme(legend.position = "none")
+
+```
+
+
+
+Lets look at the median
+```{r}
+recent_grads %>%
+  ggplot(aes(Median)) +
+  geom_histogram()
+
+```
+
+### How majors-money distribution?
+
+```{r}
+recent_grads %>%
+  group_by(Major_category) %>%
+  summarise(Median = median(Median)) %>%
+  mutate(Major_category = fct_reorder(Major_category, Median)) %>%
+  ggplot(aes(Major_category, Median)) +
+  geom_col() +
+  scale_y_continuous(labels = scales::dollar_format()) +
+  coord_flip()
+
+```
+
+Lets look same thing using boxplot to get more clarity
+
+```{r}
+recent_grads %>%
+  mutate(Major_category = fct_reorder(Major_category, Median)) %>%
+  ggplot(aes(Major_category, Median, fill = Major_category)) +
+  geom_boxplot() +
+  scale_y_continuous(labels = scales::dollar_format()) +
+  expand_limits(y = 0) +
+  coord_flip() +
+  theme(legend.position = "none")
+```
+
+### What are the  Highest earning majors?
+
+Lets look at top 20 highest earning majors
+```{r}
+recent_grads %>%
+  arrange(desc(Median)) %>%
+  select(Major, Major_category, Median, P25th, P75th) %>%
+  head(20) %>%
+  mutate(Major = fct_reorder(Major, Median)) %>%
+  ggplot(aes(Major, Median, colour = Major_category)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = P25th, ymax = P75th)) +
+  expand_limits(y = 0) +
+  coord_flip() +
+  labs(title = "What are the highest-earning majors?",
+       subtitle = "Top 20 majors with at least 100 graduates surveyed. Bars represent the 25th to 75th percentile")
+```
+
+`geom_errorbar` shows us the range of the salary. Petroleum engineering 25th percentile salary is greater than the most of the  major 75th percentile salary.
+
+## What are the lowest earning majors?
+
+```{r}
+recent_grads %>%
+  arrange(Median) %>%
+  select(Major, Major_category, Median, P25th, P75th) %>%
+  head(20) %>%
+  mutate(Major = fct_reorder(Major, Median)) %>%
+  ggplot(aes(Major, Median, colour = Major_category)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = P25th, ymax = P75th)) +
+  expand_limits(y = 0) +
+  coord_flip()
+
+```
+
+We have to look at the sample size if the sample size is low then we don't want to trust that data.
+
+```{r}
+recent_grads %>%
+  arrange(Sample_size) %>%
+  select(Major, Major_category, Median, P25th, P75th, Sample_size)
+
+```
+
+
+lets look at the median vs sample size graph
+```{r}
+recent_grads %>%
+  ggplot(aes(Sample_size, Median)) +
+  geom_point(aes(colour = Major_category)) +
+  geom_text(aes(label = Major), check_overlap = TRUE, vjust = 1, hjust = 1) +
+  scale_x_log10()
+
+```
+
+Major with Sample Size is less than 10. We can see they have lot of variance(stretch) and they are not use full at all they cannot tell the full picture of it.
+
+So we have to set cutoff point for sample size. We should choose good value so that it generalize the data.
+
+
+```{r}
+recent_grads %>%
+  filter(Sample_size >= 100) %>%
+  head(20) %>%
+  select(Major, Major_category, Median, P25th, P75th) %>%
+  ggplot(aes(Major, Median, colour = Major_category)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = P25th, ymax = P75th)) +
+  expand_limits(y = 0) +
+  coord_flip()
+
+```
+
+We should go for Sample size cutoff value 100.
+
+
+### How does gender breakdown relate to typical earnings?
+
+We will use `gather` function
+
+```{r}
+recent_grads %>%
+  arrange(desc(Total)) %>%
+  head(20) %>%
+  mutate(Major = fct_reorder(Major, Total)) %>%
+  gather(Gender, Number, Men, Women) %>%
+  select(Major, Gender, Number) %>%
+  ggplot(aes(Major, Number, fill = Gender)) +
+  geom_col() +
+  coord_flip()
+
+```
+
+
+
+### What is a ShareWomen and Average Salary Correlation?
+```{r}
+majors_processed <- recent_grads %>%
+  arrange(desc(Median)) %>%
+  mutate(Major = str_to_title(Major),
+         Major = fct_reorder(Major, Median))
+```
+
+
+
+`MedianSalary` is a weighted by `Sample_size`. The more Sample one will have more effect on the outcome.
+
+
+Lets look at the correlation
+
+```{r}
+by_major_category %>%
+  ggplot(aes(ShareWomen, MedianSalary)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  ggrepel::geom_text_repel(aes(label = Major_category), forces = 0.1) +
+  expand_limits(y = 0)
+```
+
+My first instinct will be Engineering and Computer & Mathematics will be outliers. (they are too away from the center). Health is also a outlier(Simpson paradox).
+Seems lik a negative correlation.
+
+```{r}
+g <- majors_processed %>%
+  ggplot(aes(ShareWomen, Median)) +
+  geom_point(aes(color = Major_category, size = Sample_size, label = Major)) +
+  geom_smooth(method = "lm") +
+  scale_x_continuous(labels = scales::percent_format()) +
+  scale_y_continuous(labels = scales:: dollar_format())
+  expand_limits(y = 0)
+
+plotly::ggplotly(g)
+```
+
+So its negative correlation.
+
+Looking at the which variables we wanna select
+```{r}
+majors_processed %>%
+  select(Major, Total, ShareWomen, Sample_size, Median) %>%
+  lm(Median ~ ShareWomen, data = ., weights = Sample_size)
+```
+
+weighted linear regression.
+
+
+```{r}
+majors_processed %>%
+  select(Major, Total, ShareWomen, Sample_size, Median) %>%
+  lm(Median ~ ShareWomen, data = ., weights = Sample_size) %>%
+  summary()
+```
+This is a weighted linear regression. Regression expect Mean rather than Median
+. Because Salary data is log distributed Median will be close to Geometric Mean.
+
+There may be negative correlation. means there will be decrease in salary upto 23000
+
+There are lot of work to be done and more to be explore like 
+unemployment and other variables etc.
