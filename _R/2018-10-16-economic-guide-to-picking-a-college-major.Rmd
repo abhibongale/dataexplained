@@ -12,11 +12,11 @@ comments: true
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, cache = TRUE)
-theme_set(theme_light())
 ```
 
 ```{r results=FALSE}
 library(tidyverse)
+theme_set(theme_light())
 ```
 
 Attempt of this blog is to practice data analysis and improve myself through watching how data science pioneers do analysis on there data.

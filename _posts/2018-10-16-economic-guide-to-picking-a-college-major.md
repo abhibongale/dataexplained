@@ -15,6 +15,7 @@ comments: true
 
 {% highlight r %}
 library(tidyverse)
+theme_set(theme_light())
 {% endhighlight %}
 
 Attempt of this blog is to practice data analysis and improve myself through watching how data science pioneers do analysis on there data.
@@ -89,6 +90,12 @@ by_major_category <- majors_processed %>%
   arrange(desc(ShareWomen))
 {% endhighlight %}
 
+
+
+{% highlight text %}
+## Error in filter(., !is.na(Total)): object 'majors_processed' not found
+{% endhighlight %}
+
 ### What are trending Major Category?
 
 
@@ -104,7 +111,7 @@ recent_grads %>%
   theme(legend.position = "none")
 {% endhighlight %}
 
-![center](/figs/2018-10-16-economic-guide-to-picking-a-college-major/unnamed-chunk-54-1.png)
+![center](/figs/2018-10-16-economic-guide-to-picking-a-college-major/unnamed-chunk-3-1.png)
 
 
 
@@ -116,7 +123,7 @@ recent_grads %>%
   geom_histogram()
 {% endhighlight %}
 
-![center](/figs/2018-10-16-economic-guide-to-picking-a-college-major/unnamed-chunk-55-1.png)
+![center](/figs/2018-10-16-economic-guide-to-picking-a-college-major/unnamed-chunk-4-1.png)
 
 ### How majors-money distribution?
 
@@ -132,7 +139,7 @@ recent_grads %>%
   coord_flip()
 {% endhighlight %}
 
-![center](/figs/2018-10-16-economic-guide-to-picking-a-college-major/unnamed-chunk-56-1.png)
+![center](/figs/2018-10-16-economic-guide-to-picking-a-college-major/unnamed-chunk-5-1.png)
 
 Lets look same thing using boxplot to get more clarity
 
@@ -148,7 +155,7 @@ recent_grads %>%
   theme(legend.position = "none")
 {% endhighlight %}
 
-![center](/figs/2018-10-16-economic-guide-to-picking-a-college-major/unnamed-chunk-57-1.png)
+![center](/figs/2018-10-16-economic-guide-to-picking-a-college-major/unnamed-chunk-6-1.png)
 
 ### What are the  Highest earning majors?
 
@@ -169,7 +176,7 @@ recent_grads %>%
        subtitle = "Top 20 majors with at least 100 graduates surveyed. Bars represent the 25th to 75th percentile")
 {% endhighlight %}
 
-![center](/figs/2018-10-16-economic-guide-to-picking-a-college-major/unnamed-chunk-58-1.png)
+![center](/figs/2018-10-16-economic-guide-to-picking-a-college-major/unnamed-chunk-7-1.png)
 
 `geom_errorbar` shows us the range of the salary. Petroleum engineering 25th percentile salary is greater than the most of the  major 75th percentile salary.
 
@@ -189,7 +196,7 @@ recent_grads %>%
   coord_flip()
 {% endhighlight %}
 
-![center](/figs/2018-10-16-economic-guide-to-picking-a-college-major/unnamed-chunk-59-1.png)
+![center](/figs/2018-10-16-economic-guide-to-picking-a-college-major/unnamed-chunk-8-1.png)
 
 We have to look at the sample size if the sample size is low then we don't want to trust that data.
 
@@ -204,18 +211,18 @@ recent_grads %>%
 
 {% highlight text %}
 ## # A tibble: 173 x 6
-##    Major                    Major_category           Median P25th  P75th Sample_size
-##    <chr>                    <chr>                     <dbl> <dbl>  <dbl>       <dbl>
-##  1 LIBRARY SCIENCE          Education                 22000 20000  22000           2
-##  2 METALLURGICAL ENGINEERI… Engineering               73000 50000 105000           3
-##  3 PHARMACOLOGY             Biology & Life Science    45000 40000  45000           3
-##  4 SCHOOL STUDENT COUNSELI… Education                 41000 41000  43000           4
-##  5 MILITARY TECHNOLOGIES    Industrial Arts & Consu…  40000 40000  40000           4
-##  6 SOIL SCIENCE             Agriculture & Natural R…  35000 18500  44000           4
-##  7 GEOLOGICAL AND GEOPHYSI… Engineering               50000 42800  57000           5
-##  8 EDUCATIONAL ADMINISTRAT… Education                 34000 29000  35000           5
-##  9 MINING AND MINERAL ENGI… Engineering               75000 55000  90000           7
-## 10 MATHEMATICS AND COMPUTE… Computers & Mathematics   42000 30000  78000           7
+##    Major            Major_category       Median P25th  P75th Sample_size
+##    <chr>            <chr>                 <dbl> <dbl>  <dbl>       <dbl>
+##  1 LIBRARY SCIENCE  Education             22000 20000  22000           2
+##  2 METALLURGICAL E… Engineering           73000 50000 105000           3
+##  3 PHARMACOLOGY     Biology & Life Scie…  45000 40000  45000           3
+##  4 SCHOOL STUDENT … Education             41000 41000  43000           4
+##  5 MILITARY TECHNO… Industrial Arts & C…  40000 40000  40000           4
+##  6 SOIL SCIENCE     Agriculture & Natur…  35000 18500  44000           4
+##  7 GEOLOGICAL AND … Engineering           50000 42800  57000           5
+##  8 EDUCATIONAL ADM… Education             34000 29000  35000           5
+##  9 MINING AND MINE… Engineering           75000 55000  90000           7
+## 10 MATHEMATICS AND… Computers & Mathema…  42000 30000  78000           7
 ## # … with 163 more rows
 {% endhighlight %}
 
@@ -230,7 +237,7 @@ recent_grads %>%
   scale_x_log10()
 {% endhighlight %}
 
-![center](/figs/2018-10-16-economic-guide-to-picking-a-college-major/unnamed-chunk-61-1.png)
+![center](/figs/2018-10-16-economic-guide-to-picking-a-college-major/unnamed-chunk-10-1.png)
 
 Major with Sample Size is less than 10. We can see they have lot of variance(stretch) and they are not use full at all they cannot tell the full picture of it.
 
@@ -250,7 +257,7 @@ recent_grads %>%
   coord_flip()
 {% endhighlight %}
 
-![center](/figs/2018-10-16-economic-guide-to-picking-a-college-major/unnamed-chunk-62-1.png)
+![center](/figs/2018-10-16-economic-guide-to-picking-a-college-major/unnamed-chunk-11-1.png)
 
 We should go for Sample size cutoff value 100.
 
@@ -272,7 +279,7 @@ recent_grads %>%
   coord_flip()
 {% endhighlight %}
 
-![center](/figs/2018-10-16-economic-guide-to-picking-a-college-major/unnamed-chunk-63-1.png)
+![center](/figs/2018-10-16-economic-guide-to-picking-a-college-major/unnamed-chunk-12-1.png)
 
 
 
@@ -302,7 +309,11 @@ by_major_category %>%
   expand_limits(y = 0)
 {% endhighlight %}
 
-![center](/figs/2018-10-16-economic-guide-to-picking-a-college-major/unnamed-chunk-65-1.png)
+
+
+{% highlight text %}
+## Error in ggplot(., aes(ShareWomen, MedianSalary)): object 'by_major_category' not found
+{% endhighlight %}
 
 My first instinct will be Engineering and Computer & Mathematics will be outliers. (they are too away from the center). Health is also a outlier(Simpson paradox).
 Seems lik a negative correlation.
@@ -337,10 +348,10 @@ plotly::ggplotly(g)
 
 {% highlight text %}
 ## Auto configuration failed
-## 140478297431680:error:25066067:DSO support routines:DLFCN_LOAD:could not load the shared library:dso_dlfcn.c:185:filename(libssl_conf.so): libssl_conf.so: cannot open shared object file: No such file or directory
-## 140478297431680:error:25070067:DSO support routines:DSO_load:could not load the shared library:dso_lib.c:244:
-## 140478297431680:error:0E07506E:configuration file routines:MODULE_LOAD_DSO:error loading dso:conf_mod.c:285:module=ssl_conf, path=ssl_conf
-## 140478297431680:error:0E076071:configuration file routines:MODULE_RUN:unknown module name:conf_mod.c:222:module=ssl_conf
+## 140038393392768:error:25066067:DSO support routines:DLFCN_LOAD:could not load the shared library:dso_dlfcn.c:185:filename(libssl_conf.so): libssl_conf.so: cannot open shared object file: No such file or directory
+## 140038393392768:error:25070067:DSO support routines:DSO_load:could not load the shared library:dso_lib.c:244:
+## 140038393392768:error:0E07506E:configuration file routines:MODULE_LOAD_DSO:error loading dso:conf_mod.c:285:module=ssl_conf, path=ssl_conf
+## 140038393392768:error:0E076071:configuration file routines:MODULE_RUN:unknown module name:conf_mod.c:222:module=ssl_conf
 {% endhighlight %}
 
 

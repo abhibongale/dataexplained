@@ -1,0 +1,162 @@
+---
+layout: post
+title: "IKEA Furniture prices- A tidy analysis"
+description: "The weird Economics of Ikea"
+output: html_document
+date: "`r Sys.Date()`"
+category: r
+tags: [r, statistics]
+comments: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, cache = TRUE)
+
+library(tidyverse)
+library(ggridges)
+theme_set(theme_light())
+```
+
+
+[The weird economics of ikea](https://fivethirtyeight.com/features/the-weird-economics-of-ikea/)
+
+The Article explained how unique IKEA is and they are the only company in furniture (proving wrong to the analyst 15 years ago who predict they will have lots of competitors around the world). 
+
+Let's look at what makes IKEA so unique how they sale there furniture.
+
+## Explore data
+
+```{r}
+ikea <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-11-03/ikea.csv')
+```
+
+
+* Data contains `X1` variable which define row numbers. 
+* `short_description` is messy.
+
+We've done data preprocessing.
+
+#### Clean data
+
+```{r}
+ikea_df <- ikea %>%
+  select(-X1) %>%
+  mutate(short_description = str_squish(short_description))
+```
+
+```{r}
+ikea_df <- ikea %>%
+  separate(short_description, c("main_description", "rest"),
+           sep = ",", 
+           extra = "merge",
+           fill = "right") %>%
+  extract(rest, "numbers", "([\\d\\-xX]+) cm", remove = FALSE)
+
+ikea_df %>%
+  count(category, main_description)
+```
+
+### Does `price` associate with furniture size?
+
+```{r}
+ikea_df %>%
+  select(X1, price, depth:width) %>%
+  pivot_longer(depth:width, names_to = "dim") %>%
+  ggplot(aes(value, price, colour = dim)) +
+  geom_point(alpha = 0.4, show.legend = FALSE) +
+  scale_y_log10() +
+  facet_wrap(~dim, scales = "free_x") +
+  labs(x = NULL)
+```
+
+there is a relation between width and price. While we don't see any or there is a vague relation between `depth` and `height`.
+
+Lets look at the volume vs price for each category.
+```{r}
+ikea_df %>%
+  add_count(category, name = "category_total") %>%
+  mutate(volume = depth*height*width, rm.na = TRUE,
+         category = glue::glue("{category} ({category_total})")) %>%
+  ggplot(aes(volume, price)) +
+  geom_point(alpha = 0.4) +
+  scale_y_log10(labels = scales::dollar_format()) +
+  expand_limits(y = 0) +
+  geom_smooth(method = "lm")
+```
+
+### What are the common item people prefer in terms of space/size?
+
+```{r}
+ikea_df %>%
+  add_count(category, name = "category_total") %>%
+  mutate(category = glue::glue("{category}({category_total})"),
+         category = fct_reorder(category, price),
+         volume = (depth*height*width)/10^6) %>%
+  ggplot(aes(volume, category, fill = category)) +
+  geom_density_ridges(alpha = .5) +
+  theme(legend.position = "none") +
+  geom_vline(xintercept = 1, colour = "red", lty = 2) +
+  labs(x = "volume in cubic meter",
+       y = "furniture category",
+       title = "How much volune does each item have?",
+       subtitle = "vertical red line represent 1 cubic meter")
+```
+
+People choose different lots of different wardrobes, Sofas and armchairs in terms of size. Room dividers category has only 13 data so we have to ignore that column.
+
+### How `category` effects `price`?
+
+```{r}
+ikea_df %>%
+  select(X1, price, category) %>%
+  add_count(category, name = "category_total") %>%
+  mutate(category = glue::glue("{category} ({category_total})"),
+         category = fct_reorder(category, price)) %>%
+  ggplot(aes(category, price)) +
+  geom_boxplot(aes(fill = category), show.legend = FALSE) +
+  scale_y_log10(labels = scales::dollar_format()) +
+  coord_flip() +
+  labs(title = "Prices according to the famous category",
+       x = "",
+       y = "Price")
+```
+
+
+## Linear Model 
+
+So lets predict prices w.r.t to furniture volumes
+
+```{r}
+ikea_df <- ikea_df %>%
+    mutate(volume = (depth*height*width)/10^6)
+```
+
+
+```{r}
+ikea_lm <- ikea_df %>%
+  select(volume, price, category) %>%
+  lm(log2(price)~log2(volume) + category, data =.)
+
+ikea_lm <- ikea_df %>%
+  select(volume, price, category) %>%
+  mutate(category = fct_relevel(category, "Tables & desks")) %>%
+  lm(log2(price)~log2(volume)+category, data =.)
+
+ikea_lm %>%
+  summary()
+
+
+```
+
+So we start with $10.191^2$ and for 1 $m^3$ volume increase price will increase $2^0.754$
+
+
+### Conclusion
+
+Goal of this analysis is to find the relation between price and other variables. Which category people buy most depending on size.
+
+Here We can clearly see that for `wadrobe` and some other categories people go for bigger volumes. But TV  & media furniture people still prefer smaller size.
+
+Prediction isn't because lots of items missing dimensions and lots of them have incorrect prediction. We might have to do webscraping from ikea furniture's Saudi Arabia website using the links(some links items are not avaliable) provided. Prediction here is bias towards bigger items like tables and wardrobes.
