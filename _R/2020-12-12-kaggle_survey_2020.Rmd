@@ -642,14 +642,13 @@ We can conclude from above exploration skills, education, Hardware and  experien
     - **Platform to deploy to show skills(work)**: Github, Kaggle, Colab.
 
 
-(**Note**: data scientist position is a mixture of a lot of roles
+(**Note**: data scientist position is a mixture of a lot of roles)
 
 ![Source: Jason Jung](https://miro.medium.com/max/2400/1*bw6Q4AkG9l6vZqaRgOAkfA.png)
 
-)
+
 
 Reference:
-![Machine Learning Engineer vs Data Scientist (Is Data Science Over?)](https://towardsdatascience.com/mlevsds-3c89425baabb)
-Reference:
 
-1. ![Machine Learning Engineer vs Data Scientist (Is Data Science Over?)](https://towardsdatascience.com/mlevsds-3c89425baabb)
+1. [Machine Learning Engineer vs Data Scientist (Is Data Science Over?)](https://towardsdatascience.com/mlevsds-3c89425baabb)
+
