@@ -1,0 +1,649 @@
+---
+layout: post
+title: "What's it takes to be a Data Scientists"
+description: "Notebook Explore the skills, Education and Tools used by a Data Scientist. Its the Kaggle-annual-Ml-and-DS-Survey-Competition"
+output: html_document
+date: "`r Sys.Date()`"
+category: r
+tags: [r, kaggle, tidyverse]
+comments: true
+editor_options: 
+  chunk_output_type: console
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, cache = TRUE)
+library(tidyverse) #metadata of packages
+theme_set(theme_light())
+```
+
+
+
+```{r}
+survey <- read_csv("../_data/kaggle_survey_2020_responses.csv")
+dim(survey) # dimension of data (rows  columns)
+skimr::skim(survey) # insight of data
+```
+
+columns represents answer to specific questions and some questions have multiple answers so they have more than one column for representation.
+
+We can merge the columns which represents multi-choice questions for clarity.
+
+## 1. Data Wrangling
+
+```{r}
+# merge columns which represents multi-choice questions.
+merge_cols <- function(survey) {
+  survey <- survey %>%
+     unite("Q7",Q7_Part_1:Q7_OTHER, 
+          sep = "," ,
+          na.rm = TRUE) %>%
+    unite("Q9",Q9_Part_1:Q9_OTHER,
+          sep = ",",
+          na.rm = TRUE) %>%
+    unite("Q10", Q10_Part_1:Q10_OTHER,
+           sep = ",",
+           na.rm = TRUE) %>%
+    unite("Q12", Q12_Part_1:Q12_OTHER,
+          sep = ",",
+          na.rm = TRUE) %>%
+    unite("Q14", Q14_Part_1:Q14_OTHER,
+          sep = ",",
+          na.rm = TRUE) %>%
+    unite("Q16", Q16_Part_1:Q16_OTHER,
+          sep = ",",
+          na.rm = TRUE) %>%
+    unite("Q17", Q17_Part_1:Q17_OTHER,
+          sep = ",",
+          na.rm = TRUE) %>%
+    unite("Q18", Q18_Part_1:Q18_OTHER,
+          sep = ",",
+          na.rm = TRUE) %>%
+    unite("Q19", Q19_Part_1:Q19_OTHER,
+          sep = ",",
+          na.rm = TRUE) %>%
+    unite("Q23", Q23_Part_1:Q23_OTHER,
+          sep = ",",
+          na.rm = TRUE) %>%
+    unite("Q26A", Q26_A_Part_1:Q26_A_OTHER,
+          sep = ",",
+          na.rm = TRUE) %>%
+    unite("Q26B", Q26_B_Part_1:Q26_B_OTHER,
+          sep = ",",
+          na.rm = TRUE) %>%
+    unite("Q27A", Q27_A_Part_1:Q27_A_OTHER,
+          sep = ",",
+          na.rm = TRUE) %>%
+    unite("Q27B", Q27_B_Part_1:Q27_B_OTHER,
+          sep = ",",
+          na.rm = TRUE) %>%
+    unite("Q28A", Q28_A_Part_1:Q28_A_OTHER,
+          sep = ",",
+          na.rm = TRUE) %>%
+    unite("Q28B", Q28_B_Part_1:Q28_B_OTHER,
+          sep = ",",
+          na.rm = TRUE) %>%
+    unite("Q29A", Q29_A_Part_1:Q29_A_OTHER,
+          sep = ",",
+          na.rm = TRUE) %>%
+    unite("Q29B", Q29_B_Part_1:Q29_B_OTHER,
+          sep = ",",
+          na.rm = TRUE) %>%
+    unite("Q31A", Q31_A_Part_1:Q31_A_OTHER,
+          sep = ",",
+          na.rm = TRUE) %>%
+    unite("Q31B", Q31_B_Part_1:Q31_B_OTHER,
+          sep = ",",
+          na.rm = TRUE) %>%
+    unite("Q33A", Q33_A_Part_1:Q33_A_OTHER,
+          sep = ",",
+          na.rm = TRUE) %>%
+    unite("Q33B", Q33_B_Part_1:Q33_B_OTHER,
+          sep = ",",
+          na.rm = TRUE) %>%
+    unite("Q34A", Q34_A_Part_1:Q34_A_OTHER,
+          sep = ",",
+          na.rm = TRUE) %>%
+    unite("Q34B", Q34_B_Part_1:Q34_B_OTHER,
+          sep = ",",
+          na.rm = TRUE) %>%
+    unite("Q35A", Q35_A_Part_1:Q35_A_OTHER,
+          sep = ",",
+          na.rm = TRUE) %>%
+    unite("Q35B", Q35_B_Part_1:Q35_B_OTHER,
+          sep = ",",
+          na.rm = TRUE) %>%
+    unite("Q36", Q36_Part_1:Q36_OTHER,
+          sep = ",",
+          na.rm = TRUE) %>%
+    unite("Q37", Q37_Part_1:Q37_OTHER,
+          sep = ",",
+          na.rm = TRUE) %>%
+    unite("Q39", Q39_Part_1:Q39_OTHER,
+          sep = ",",
+          na.rm = TRUE)
+  
+  return(survey)
+}
+
+survey <- merge_cols(survey) # merge_cols function call
+
+dim(survey) # dimension of data
+```
+
+We have merge all questions which represents more than one answer columns.
+
+first row contains the survey questions.
+
+```{r}
+# separate questions from dataset
+questions <- survey %>%
+  filter(row.names(survey) == 1) %>%
+  t() # transpose
+
+survey <- survey %>%
+  filter(!row.names(survey) == 1)
+```
+  
+## 2. Exploratory Analysis
+
+## Data Scientist
+
+```{r}
+data_scientists <- survey %>%
+  filter(Q5 == 'Data Scientist')
+```
+
+
+### Data Scientist Age distribution
+
+```{r}
+data_scientists %>%
+  select(Q1, Q2) %>% # prepare data
+  mutate(Q2 = ifelse(Q2 == "Prefer to self-describe" | Q2 == "Prefer not to say" | Q2 == "Nonbinary", "Other", Q2)) %>%
+  ggplot(aes(Q1, fill = Q2)) + # create plot
+  geom_bar(stat = "count", position = "dodge2") +
+  geom_text(stat="count", aes(label =..count..), vjust = -0.01) +
+  scale_fill_viridis_d(direction = -1) +
+  geom_hline(yintercept = 0, size = 1, colour = "#333333") +
+  labs(title = "Data Scientist Age Group",
+       subtitle = "# of Data Scientists took kaggle survey, 2020",
+       fill = "",
+       x = "Age") +
+  bbplot::bbc_style() +
+  theme(legend.position = "top", 
+        legend.justification = "left") +
+  guides(fill = guide_legend(reverse = TRUE))
+```
+
+
+
+### Most data scientists' educational qualifications?
+
+```{r}
+data_scientists %>%
+  select(Q4) %>% # prepare data 
+  filter(Q4 != 'NA') %>%
+  mutate(Q4 = ifelse(Q4 == "Some college/university study without earning a bachelor’s degree" | Q4 == "No formal education past high school", "None", Q4)) %>%
+  mutate(Q4 = str_remove_all(Q4, "degree")) %>%
+  add_count(Q4, name = "count") %>%
+  unique() %>%
+  mutate(total = sum(count), 
+         percent = round(count/total*100, digits = 0)) %>%
+  filter(Q4 != "I prefer not to answer") %>%
+  ggplot(aes("", percent, fill= Q4)) + #Make plot 
+  geom_bar(stat = "identity") +
+  coord_polar(theta = "y", start = 0) +
+  geom_hline(yintercept = 0, size = 1, colour="#333333") +
+  geom_text(aes(label =paste0(percent, "%"),
+             family="Helvetica",
+             size = 3),  
+            position = position_stack(vjust = 0.5)) +
+  labs(title = "Data Scientists educational qualification",
+       subtitle = "% of degree holders, 2020 kaggle Survey",
+       x = "",
+       y = "",
+       fill = "") +
+  bbplot::bbc_style() +
+  guides(fill = guide_legend(reverse = TRUE), size = FALSE)
+```
+
+
+Most of Data Scientists have Masters, Bachelors and Doctoral degrees. 
+We can generalize that Data Scientists required one of the above three degrees as this degrees account for 94% of total.
+
+
+### For how long they are coding?
+
+```{r}
+data_scientists %>%
+  select(Q6) %>% # prepare data
+  filter(Q6 != 'NA') %>%
+  mutate_if(is.character, factor) %>%
+  mutate(Q6 = fct_relevel(Q6, "I have never written code", "< 1 years", "1-2 years", "3-5 years", "5-10 years", "10-20 years", "20+ years"),
+         Q6 = fct_collapse(Q6, "Never coded" = "I have never written code", "10+ years" = c("10-20 years", "20+ years"))
+         ) %>%
+  group_by(Q6) %>%
+  count() %>%
+  ggplot(aes(Q6, n)) +
+  geom_col(position="identity", 
+           fill="#1380A1") +
+  geom_hline(yintercept = 0, size = 1, colour="#333333")  +
+  geom_hline(yintercept = 300, size = 1, 
+             colour = "red", linetype = "dashed") +
+  geom_text(aes(label = n), vjust = 0.01, family="Helvetica", size = 6) +
+  geom_label(aes(x = "< 1 years", y = 600, label = "Atleast above 1 year of coding experience must be", family="Helvetica")) +
+  labs(title = "Coding Experience") + 
+  bbplot::bbc_style() 
+```
+
+Approximately 90% of data scientists have more than 1 year of coding Experience.
+
+
+```{r}
+data_scientists %>%
+  select(Q6) %>% # prepare data
+  filter(Q6 != 'NA') %>%
+  mutate_if(is.character, factor) %>%
+  mutate(Q6 = fct_relevel(Q6, "I have never written code", "< 1 years", "1-2 years", "3-5 years", "5-10 years", "10-20 years", "20+ years"),
+         Q6 = fct_collapse(Q6, "Never coded" = "I have never written code", "10+ years" = c("10-20 years", "20+ years"))
+         ) %>%
+  add_count(Q6, name = "count") %>%
+  unique() %>%
+  mutate(total = sum(count), percent = count/total*100)
+```
+
+Coding Experience is must only 47 of the data scientist professional is without any coding experience which account just $1.77%$. At least 1 years of coding experience will increase the chance.
+
+  
+### Programming Language used on Regular basis and Recommended.
+
+```{r}
+library(formattable)
+
+data_scientists %>%
+  select(Q7) %>% # prepare data
+  filter(Q7 != 'NA') %>%
+  mutate(Q7 = strsplit(Q7, ",")) %>%
+  unnest(Q7) %>%
+  add_count(Q7, name = "count") %>%
+  unique() %>%
+  rename("Programming language" = Q7) %>%
+  mutate(total = sum(count), percent = round(count/total*100, 2)) %>%
+  arrange(desc(percent)) %>%
+  formattable()
+```
+
+By far Python, SQL, R are most Important language.
+We have to compare to recommended language by data scientists. 
+
+
+```{r}
+data_scientists %>%
+  select(Q8) %>%
+  filter(Q8 != 'NA') %>%
+  add_count(Q8, name = "count") %>%
+  unique() %>%
+  mutate(total = sum(count), percent = count/total*100) %>%
+  arrange(desc(percent)) %>%
+  filter(percent > 1) %>%
+  ggplot(aes(x = "", percent, fill = Q8)) +
+  geom_bar(stat = "identity", size = 1) +
+  coord_polar(theta = "y", start = 0) +
+  geom_hline(yintercept = 0, size = 1, colour="#333333") +
+  geom_text(aes(label = paste0(round(percent, 0), "%")),
+            position = position_stack(vjust = 0.58),
+             family="Helvetica", size = 5) +
+  scale_fill_manual(values = c("#FAAB18", "#1380A1","#990000")) +
+  bbplot::bbc_style() +
+  labs(title = "Recommended Language",
+       subtitle = "% of Data Scientist recommended")
+```
+
+By far Python, SQL, R are most used and recommended by Data Scientists.
+
+### Hardware Required on day-to-day basis?
+```{r}
+data_scientists %>%
+  select(Q11) %>% # prepare data
+  filter(Q11 != 'NA') %>%
+  add_count(Q11, name = "count") %>%
+  unique() %>%
+  mutate(Q11 = recode_factor(Q11, "A cloud computing platform (AWS, Azure, GCP, hosted notebooks, etc)" = "cloud platform", "A personal computer or laptop" = "PC or laptop", "A deep learning workstation (NVIDIA GTX, LambdaLabs, etc)" = "workstation"),
+         Q11 = fct_reorder(Q11, count)) %>%
+  ggplot(aes(Q11, count)) + # make plot
+  geom_col() +
+  geom_col(position="identity", 
+           fill="#1380A1") +
+  geom_hline(yintercept = 0, size = 1, colour="#333333") +
+  geom_text(aes(label = count), vjust = -0.05, 
+            family = "Helvetica", size = 6) +
+  bbplot::bbc_style()
+```
+
+Most of them required no special hardware to do data related tasks.
+Most of the Data Scientists(86% of data scientists) used hardware:
+1. Personal Computers(64%)
+2. Cloud Platforms(23%)
+
+
+### Most preferred coding environment? 
+```{r}
+data_scientists %>%
+  select(Q10) %>% # prepare data
+  filter(Q10 != "NA") %>%
+  mutate(Q10 = strsplit(Q10, ",")) %>%
+  unnest(Q10) %>%
+  group_by() %>%
+  add_count(Q10, name = "count") %>%
+  unique() %>%
+  mutate(Q10 = fct_reorder(Q10, count)) %>%
+  filter(count > 15) %>%
+  ggplot(aes(Q10, count)) +
+  geom_col(position = "identity", fill="#1380A1") +
+  coord_flip() +
+  geom_hline(yintercept = 0, size = 1, colour="#333333") +
+  geom_text(aes(label = count), hjust = 1, vjust = 0.5, 
+            family = "Helvetica", size = 6, colour = "white") +
+  labs(title = "Notebooks",
+       subtitle = "# of Data Scientist used Notebooks")+
+  bbplot::bbc_style()
+```
+
+
+1. Colab Notebooks
+2. Kaggle Notebooks 
+
+are most preferred notebooks.
+
+
+### Must know Libraries/Methods ?
+
+#### visualization libraries
+
+```{r}
+# visualization library
+data_scientists %>%
+  select(Q14) %>% # prepare data
+  filter(Q14 != 'NA') %>%
+  mutate(Q14 = strsplit(Q14, ",")) %>%
+  unnest(Q14) %>%
+  add_count(Q14, name = "count") %>%
+  mutate(Q14 = fct_reorder(Q14, count)) %>%
+  unique() %>%
+  ggplot(aes(as.factor(Q14), count, colour = "#FAAB18")) + # make plot
+  geom_line(group = 1, size = 1) +
+  geom_point(colour = "#333333") +
+  geom_hline(yintercept = 0, size = 1, colour = "#333333") +
+  geom_text(aes(label = count), vjust = -0.5, colour = "black",
+            family = "Helvetica", size = 6) +
+  scale_colour_manual(values = "#FAAB18") +
+  coord_flip() +
+  labs(x = "", 
+       y = "",
+       title = "Visualization Libraries") +
+  theme(legend.position = "none", 
+        axis.text = element_text(size= 14, family = "Helvetica", colour = "#333333"), 
+        text = element_text(size= 14, family = "Helvetica", colour = "#333333"))
+```
+
+
+Visualization library curve increases exponential. This libraries are most used one: 
+1. Shiny 
+2. Ggplot
+3. Plotly
+4. Seaborn
+5. Matplotlib
+
+
+#### Common Machine Learning Methods used?
+
+```{r}
+ml_library <- as_tibble(gsub("\\s*\\([^\\)]+\\)","",
+                   as.character(data_scientists$Q17)
+                   ))
+
+# prepare data
+ml_library <- ml_library %>%
+  mutate(value = strsplit(value, ",")) %>%
+  unnest(value) %>%
+  add_count(value, name = "count") %>%
+  unique() %>%
+  mutate(total = sum(count), percent = round((count / total)*100, 0))
+
+# make plot
+ml_library %>%
+  filter(value != "NA" & percent > 3) %>%
+  mutate(value = fct_reorder(value, percent)) %>%
+  ggplot(aes("", percent, fill = value)) +
+  geom_col() +
+  geom_text(aes(label = paste0(percent, "%")), vjust = 0.5, 
+            colour = "white", position = position_stack(vjust = 0.5)) +
+  coord_polar(theta = "y", start = 0) +
+  geom_hline(yintercept = 0, size = 1, colour = "#333333") +
+  labs(title = "ML Methods") + 
+  bbplot::bbc_style()
+```
+
+Most methods used by data scientists are:
+1. Linear or Logistic Regression.
+2. Decision Trees or Random Forest
+3. Gradient Boosting Machines
+
+more than 50% of data scientists used this ml methods on daily basis.
+
+#### Computer Vision Methods to know?
+
+```{r}
+cv_algo <- as_tibble(gsub("\\s*\\([^\\)]+\\)","",
+                   as.character(data_scientists$Q18)
+                   ))
+
+# prepare data
+cv_algo <- cv_algo %>%
+  mutate(value = strsplit(value, ",")) %>%
+  unnest(value) %>%
+  add_count(value, name = "count") %>%
+  unique() %>%
+  mutate(total = sum(count), percent = round((count / total)*100, 2)) 
+  
+# make a table
+cv_algo %>%
+  arrange(desc(count)) %>%
+  formattable()
+```
+
+Most important OpenCV methods are:
+
+1. Image classification and other general purpose networks
+2. General purpose image/video tools
+3. Image segmentation methods
+4. Object detection methods
+
+### NLP Methods to know?
+
+```{r}
+require(pack)
+nlp <- as_tibble(gsub("\\s*\\([^\\)]+\\)","",
+                   as.character(data_scientists$Q19)
+                   ))
+
+# prepare data
+nlp <- nlp %>%
+  mutate(value = strsplit(value, ",")) %>%
+  unnest(value) %>%
+  add_count(value, name = "count") %>%
+  unique() %>%
+  mutate(total = sum(count), percent = round((count / total)*100, 2)) 
+
+
+# make plot
+bubbles::bubbles(nlp$percent, nlp$value, color = rainbow(6, alpha=NULL)[6], width=1000, height=900)
+
+```
+
+Most used Natural language Processing models are:
+1. Transformer language models
+2. Word embeddings/vectors
+3. Encoder-decoder models
+4. Contextualized embeddings
+
+
+### Most famous cloud services among data scientists?
+
+```{r}
+count(data_scientists) 
+
+data_scientists %>%
+  select(Q26A) %>%
+  filter(Q26A != "") %>%
+  summarise(count = n(), total = 2676, percent = count/total*100)
+
+
+data_scientists %>%
+  select(Q26A) %>%
+  filter(Q26A != "") %>%
+  mutate(Q26A = strsplit(Q26A, ",")) %>%
+  unnest(Q26A) %>%
+  add_count(Q26A, name = "count") %>%
+  unique() %>%
+  arrange(desc(count)) %>%
+  mutate(total = sum(count), percent = round(count/total*100,0)) %>%
+  filter(percent > 2) %>%
+  ggplot(aes("", percent, fill = Q26A)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = paste0(percent, "%")), 
+            position = position_stack(vjust = 0.5)) +
+  coord_polar(theta = "y") +
+  labs(fill = "Cloud Platform")
+```
+
+Most used cloud-platform by data scientists:
+1. AWS
+2. GCP
+3. Azure 
+
+## Database to used for Big data?
+
+```{r}
+# prepare data
+database <- data_scientists %>%
+  select(Q29A) %>% 
+  filter(Q29A != "") %>%
+  mutate(Q29A = strsplit(Q29A, ",")) %>%
+  unnest(Q29A) %>%
+  add_count(Q29A, name = "count") %>%
+  unique() %>%
+  arrange(desc(count)) %>%
+  mutate(total = sum(count), percent = round(count/total*100,0)) %>%
+  mutate(Q29A = fct_reorder(Q29A, percent)) %>%
+  filter(percent > 2)
+  
+ggplot(database, aes(Q29A, percent)) +
+  geom_col(fill = ifelse(database$Q29A == "None","#1380A1", "#FAAB18")) +
+  geom_text(aes(y = 1,label = paste0(percent, "%")), 
+            hjust = 0, vjust = 0.5, 
+            colour = ifelse(database$Q29A == "None", "white", "black")) +
+  coord_flip() +
+  labs(title = "Database") +
+  geom_hline(yintercept = 0, size = 1, colour = "#333333") +
+  bbplot::bbc_style()
+```
+
+Data Scientists don't have any clear preference in database.
+
+## Most used Bussiness Intelligence software?
+
+```{r}
+data_scientists %>%
+  select(Q31A) %>%
+  filter(Q31A != "") %>%
+  mutate(Q31A = strsplit(Q31A, ",")) %>%
+  unnest(Q31A) %>%
+  add_count(Q31A, name = "count") %>%
+  unique() %>%
+  arrange(desc(count)) %>%
+  mutate(total = sum(count), percent = round(count/total*100,0)) %>%
+  mutate(Q31A = fct_reorder(Q31A, percent)) %>%
+  filter(percent > 2) %>%
+  ggplot(aes(Q31A, percent)) +
+  geom_col(fill = "#990000") +
+  geom_text(aes(y = 2,label = paste0(percent, "%")), hjust = 0, vjust = 0.5, colour = "white") +
+  geom_hline(yintercept = 0, size = 1, colour = "#333333") +
+  bbplot::bbc_style() +
+  theme(axis.text.x = element_text(angle = 10, size = 12))
+```
+
+Out of our sample only 60% of data scientists used BI tools. 
+Out of them: 
+1. Tableau
+2. Microsoft Power BI
+are most preferred.
+
+### Where most of the data scientists preferred to deploy there work?
+
+```{r}
+# prepare data
+deploy <- data_scientists %>%
+  select(Q36) %>%
+  filter(Q36 != "") %>%
+  mutate(Q36 = strsplit(Q36, ",")) %>%
+  unnest(Q36) %>%
+  add_count(Q36, name = "count") %>%
+  unique() %>%
+  arrange(desc(count)) %>%
+  mutate(Q36 = ifelse(Q36 == "I do not share my work publicly",
+                      "No sharing", Q36)) %>%
+  mutate_if(is.character, factor) %>%
+  mutate(total = sum(count), percent = round(count/total * 100, 0)) %>%
+  mutate(Q36 = fct_reorder(Q36, percent))
+
+# make a plot
+ggplot(deploy, aes(Q36, percent)) +
+  geom_col(fill = ifelse(deploy$Q36 == "No sharing", 
+                         "#1380A1","#588300")) +
+  geom_text(aes(label = paste0(percent, "%")), 
+            hjust = 0.3, vjust = -0.1, family = "Helvetica", size = 5) +
+  geom_hline(yintercept = 0, size = 1, colour = "#333333") +
+  bbplot::bbc_style() +
+  theme(axis.text.x = element_text(angle = 18, size = 12))
+```
+
+
+1. Github
+2. Kaggle
+3. Colab 
+
+are most preferred platform to public show there work.
+
+
+## Summary
+
+We can conclude from above exploration skills, education, Hardware and  experience required to be a data scientists.
+1. **Education**: Most of the employers preferred employee's with Masters degree.
+2. **Language to learn** : Python, SQL, R 
+3. **Coding Experience**: greater than 1 year
+4.**Specific Hardware required**: I don't think so most of them use PC or laptop. I think midrange configuration laptops or PC are sufficient for most of the data scientists tasks.
+5. **Must have skills(Knowledge)**: 
+       - **visualization Libraries**: Shiny, Ggplot, Plotly, Seaborn, Matplotlib.
+       - **ML Methods(Concepts must have)**:  Linear or Logistic Regression, Decision Trees or Random Forest, Gradient Boosting Machines, Neural Networks(CNN, RNN).
+       - **Compuer Vision(concepts must have)**: Image classification and other general purpose networks, General purpose image/video tools, Image segmentation methods, Object detection methods.
+       - **NLP(concepts must have)**: Transformer language models, Word embeddings/vectors, Encoder-decoder models, Contextualized embeddings
+       -**BI software to know**: Tableau, Microsoft Power BI.
+6. **Notebooks used and Platform to deploy Work**
+    - **Notebooks(should be familiar with)** Colab,Kaggle 
+    - **Platform to deploy to show skills(work)**: Github, Kaggle, Colab.
+
+
+(**Note**: data scientist position is a mixture of a lot of roles
+
+![Source: Jason Jung](https://miro.medium.com/max/2400/1*bw6Q4AkG9l6vZqaRgOAkfA.png)
+
+)
+
+Reference:
+![Machine Learning Engineer vs Data Scientist (Is Data Science Over?)](https://towardsdatascience.com/mlevsds-3c89425baabb)
+Reference:
+
+1. ![Machine Learning Engineer vs Data Scientist (Is Data Science Over?)](https://towardsdatascience.com/mlevsds-3c89425baabb)

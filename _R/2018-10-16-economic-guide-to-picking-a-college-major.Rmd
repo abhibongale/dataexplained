@@ -214,7 +214,7 @@ by_major_category %>%
 ```
 
 My first instinct will be Engineering and Computer & Mathematics will be outliers. (they are too away from the center). Health is also a outlier(Simpson paradox).
-Seems lik a negative correlation.
+Seems like a negative correlation.
 
 ```{r}
 g <- majors_processed %>%
