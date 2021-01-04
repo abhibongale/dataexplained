@@ -181,7 +181,7 @@ data_scientists %>%
 
 ### Most data scientists' educational qualifications?
 
-```{r fig.width=15, fig.height=5, fig.fullwidth=TRUE}
+```{r fig.width=10.5, fig.height=5.5, fig.fullwidth=TRUE}
 data_scientists %>%
   select(Q4) %>% # prepare data 
   filter(Q4 != 'NA') %>%
@@ -191,14 +191,13 @@ data_scientists %>%
   unique() %>%
   mutate(total = sum(count), 
          percent = round(count/total*100, digits = 0)) %>%
-  filter(Q4 != "I prefer not to answer") %>%
+  filter(Q4 != "I prefer not to answer" & Q4 != "None") %>%
   ggplot(aes("", percent, fill= Q4)) + #Make plot 
   geom_bar(stat = "identity") +
   coord_polar(theta = "y", start = 0) +
-  geom_hline(yintercept = 0, size = 1, colour="#333333") +
   geom_text(aes(label =paste0(percent, "%"),
              family="Helvetica",
-             size = 3),  
+             size = 5),  
             position = position_stack(vjust = 0.5)) +
   labs(title = "Data Scientists educational qualification",
        subtitle = "% of degree holders, 2020 kaggle Survey",
@@ -216,7 +215,7 @@ We can generalize that Data Scientists required one of the above three degrees a
 
 ### For how long they are coding?
 
-```{fig.width=10, fig.height=2, fig.fullwidth=TRUE}
+```{r fig.width=10.5, fig.height=5.5}
 data_scientists %>%
   select(Q6) %>% # prepare data
   filter(Q6 != 'NA') %>%
@@ -241,7 +240,7 @@ data_scientists %>%
 Approximately 90% of data scientists have more than 1 year of coding Experience.
 
 
-```{fig.width=10, fig.height=2, fig.fullwidth=TRUE}
+```{r fig.width=10.5, fig.height=5.5}
 data_scientists %>%
   select(Q6) %>% # prepare data
   filter(Q6 != 'NA') %>%
@@ -259,7 +258,7 @@ Coding Experience is must only 47 of the data scientist professional is without 
   
 ### Programming Language used on Regular basis and Recommended.
 
-```{r fig.width=10, fig.height=2, fig.fullwidth=TRUE}
+```{r fig.width=10.5, fig.height=5.5}
 library(formattable)
 
 data_scientists %>%
@@ -279,7 +278,7 @@ By far Python, SQL, R are most Important language.
 We have to compare to recommended language by data scientists. 
 
 
-```{r fig.width=10, fig.height=2, fig.fullwidth=TRUE}
+```{r fig.width=10.5, fig.height=5.5}
 data_scientists %>%
   select(Q8) %>%
   filter(Q8 != 'NA') %>%
@@ -304,7 +303,7 @@ data_scientists %>%
 By far Python, SQL, R are most used and recommended by Data Scientists.
 
 ### Hardware Required on day-to-day basis?
-```{r fig.width=10, fig.height=2, fig.fullwidth=TRUE}
+```{r fig.width=10.5, fig.height=5.5}
 data_scientists %>%
   select(Q11) %>% # prepare data
   filter(Q11 != 'NA') %>%
@@ -329,7 +328,7 @@ Most of the Data Scientists(86% of data scientists) used hardware:
 
 
 ### Most preferred coding environment? 
-```{r fig.width=15, fig.height=5, fig.fullwidth=TRUE}
+```{r fig.width=10.5, fig.height=5.5}
 data_scientists %>%
   select(Q10) %>% # prepare data
   filter(Q10 != "NA") %>%
@@ -362,7 +361,7 @@ are most preferred notebooks.
 
 #### visualization libraries
 
-```{r fig.width=15, fig.height=5, fig.fullwidth=TRUE}
+```{r fig.width=10.5, fig.height=5.5}
 # visualization library
 data_scientists %>%
   select(Q14) %>% # prepare data
@@ -497,7 +496,7 @@ Most used Natural language Processing models are:
 
 ### Most famous cloud services among data scientists?
 
-```{r fig.width=15, fig.height=5, fig.fullwidth=TRUE}
+```{r fig.width=10.5, fig.height=5.5}
 count(data_scientists) 
 
 data_scientists %>%
@@ -533,7 +532,7 @@ Most used cloud-platform by data scientists:
 
 ## Database to used for Big data?
 
-```{r fig.width=15, fig.height=5, fig.fullwidth=TRUE}
+```{r fig.width=10.5, fig.height=5.5}
 # prepare data
 database <- data_scientists %>%
   select(Q29A) %>% 
@@ -562,7 +561,7 @@ Data Scientists don't have any clear preference in database.
 
 ## Most used Bussiness Intelligence software?
 
-```{r fig.width=15, fig.height=5, fig.fullwidth=TRUE}
+```{r fig.width=10.5, fig.height=5.5}
 data_scientists %>%
   select(Q31A) %>%
   filter(Q31A != "") %>%
@@ -590,7 +589,7 @@ are most preferred.
 
 ### Where most of the data scientists preferred to deploy there work?
 
-```{r fig.width=15, fig.height=5, fig.fullwidth=TRUE}
+```{r fig.width=10.5, fig.height=5.5}
 # prepare data
 deploy <- data_scientists %>%
   select(Q36) %>%
