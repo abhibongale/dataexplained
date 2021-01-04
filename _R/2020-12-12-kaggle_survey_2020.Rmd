@@ -23,7 +23,7 @@ theme_set(theme_light())
 ```{r}
 survey <- read_csv("../_data/kaggle_survey_2020_responses.csv")
 dim(survey) # dimension of data (rows  columns)
-skimr::skim(survey) # insight of data
+#skimr::skim(survey) # insight of data
 ```
 
 columns represents answer to specific questions and some questions have multiple answers so they have more than one column for representation.
@@ -181,7 +181,7 @@ data_scientists %>%
 
 ### Most data scientists' educational qualifications?
 
-```{r}
+```{r fig.width=15, fig.height=5, fig.fullwidth=TRUE}
 data_scientists %>%
   select(Q4) %>% # prepare data 
   filter(Q4 != 'NA') %>%
@@ -216,7 +216,7 @@ We can generalize that Data Scientists required one of the above three degrees a
 
 ### For how long they are coding?
 
-```{r}
+```{fig.width=10, fig.height=2, fig.fullwidth=TRUE}
 data_scientists %>%
   select(Q6) %>% # prepare data
   filter(Q6 != 'NA') %>%
@@ -241,7 +241,7 @@ data_scientists %>%
 Approximately 90% of data scientists have more than 1 year of coding Experience.
 
 
-```{r}
+```{fig.width=10, fig.height=2, fig.fullwidth=TRUE}
 data_scientists %>%
   select(Q6) %>% # prepare data
   filter(Q6 != 'NA') %>%
@@ -259,7 +259,7 @@ Coding Experience is must only 47 of the data scientist professional is without 
   
 ### Programming Language used on Regular basis and Recommended.
 
-```{r}
+```{r fig.width=10, fig.height=2, fig.fullwidth=TRUE}
 library(formattable)
 
 data_scientists %>%
@@ -279,7 +279,7 @@ By far Python, SQL, R are most Important language.
 We have to compare to recommended language by data scientists. 
 
 
-```{r}
+```{r fig.width=10, fig.height=2, fig.fullwidth=TRUE}
 data_scientists %>%
   select(Q8) %>%
   filter(Q8 != 'NA') %>%
@@ -304,7 +304,7 @@ data_scientists %>%
 By far Python, SQL, R are most used and recommended by Data Scientists.
 
 ### Hardware Required on day-to-day basis?
-```{r}
+```{r fig.width=10, fig.height=2, fig.fullwidth=TRUE}
 data_scientists %>%
   select(Q11) %>% # prepare data
   filter(Q11 != 'NA') %>%
@@ -329,7 +329,7 @@ Most of the Data Scientists(86% of data scientists) used hardware:
 
 
 ### Most preferred coding environment? 
-```{r}
+```{r fig.width=15, fig.height=5, fig.fullwidth=TRUE}
 data_scientists %>%
   select(Q10) %>% # prepare data
   filter(Q10 != "NA") %>%
@@ -362,7 +362,7 @@ are most preferred notebooks.
 
 #### visualization libraries
 
-```{r}
+```{r fig.width=15, fig.height=5, fig.fullwidth=TRUE}
 # visualization library
 data_scientists %>%
   select(Q14) %>% # prepare data
@@ -399,7 +399,7 @@ Visualization library curve increases exponential. This libraries are most used 
 
 #### Common Machine Learning Methods used?
 
-```{r}
+```{r fig.width=15, fig.height=5, fig.fullwidth=TRUE}
 ml_library <- as_tibble(gsub("\\s*\\([^\\)]+\\)","",
                    as.character(data_scientists$Q17)
                    ))
@@ -422,8 +422,13 @@ ml_library %>%
             colour = "white", position = position_stack(vjust = 0.5)) +
   coord_polar(theta = "y", start = 0) +
   geom_hline(yintercept = 0, size = 1, colour = "#333333") +
-  labs(title = "ML Methods") + 
-  bbplot::bbc_style()
+  labs(title = "ML Methods",
+       x = "",
+       y = "",
+       fill = "") +
+  theme(legend.position = "left",
+        axis.text = element_text(size= 14, family = "Helvetica", colour = "#333333"), 
+        text = element_text(size= 14, family = "Helvetica", colour = "#333333")) 
 ```
 
 Most methods used by data scientists are:
@@ -435,7 +440,7 @@ more than 50% of data scientists used this ml methods on daily basis.
 
 #### Computer Vision Methods to know?
 
-```{r}
+```{r fig.width=15, fig.height=5, fig.fullwidth=TRUE}
 cv_algo <- as_tibble(gsub("\\s*\\([^\\)]+\\)","",
                    as.character(data_scientists$Q18)
                    ))
@@ -463,7 +468,7 @@ Most important OpenCV methods are:
 
 ### NLP Methods to know?
 
-```{r}
+```{r fig.width=15, fig.height=5, fig.fullwidth=TRUE}
 require(pack)
 nlp <- as_tibble(gsub("\\s*\\([^\\)]+\\)","",
                    as.character(data_scientists$Q19)
@@ -492,7 +497,7 @@ Most used Natural language Processing models are:
 
 ### Most famous cloud services among data scientists?
 
-```{r}
+```{r fig.width=15, fig.height=5, fig.fullwidth=TRUE}
 count(data_scientists) 
 
 data_scientists %>%
@@ -516,7 +521,9 @@ data_scientists %>%
   geom_text(aes(label = paste0(percent, "%")), 
             position = position_stack(vjust = 0.5)) +
   coord_polar(theta = "y") +
-  labs(fill = "Cloud Platform")
+  labs(fill = "Cloud Platform") +
+  theme(axis.text = element_text(size= 14, family = "Helvetica", colour = "#333333"), 
+        text = element_text(size= 14, family = "Helvetica", colour = "#333333"))
 ```
 
 Most used cloud-platform by data scientists:
@@ -526,7 +533,7 @@ Most used cloud-platform by data scientists:
 
 ## Database to used for Big data?
 
-```{r}
+```{r fig.width=15, fig.height=5, fig.fullwidth=TRUE}
 # prepare data
 database <- data_scientists %>%
   select(Q29A) %>% 
@@ -555,7 +562,7 @@ Data Scientists don't have any clear preference in database.
 
 ## Most used Bussiness Intelligence software?
 
-```{r}
+```{r fig.width=15, fig.height=5, fig.fullwidth=TRUE}
 data_scientists %>%
   select(Q31A) %>%
   filter(Q31A != "") %>%
@@ -583,7 +590,7 @@ are most preferred.
 
 ### Where most of the data scientists preferred to deploy there work?
 
-```{r}
+```{r fig.width=15, fig.height=5, fig.fullwidth=TRUE}
 # prepare data
 deploy <- data_scientists %>%
   select(Q36) %>%
