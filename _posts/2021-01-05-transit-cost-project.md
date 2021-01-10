@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Which Constructions cost more per Km Railways or Meteros?"
+title: "Which Construction cost more per km Railways or Metros?"
 description: "Here I analyze top 8 conuntries from  transit-cost-project data to get the datainsight. dataset was publish by r4ds community as a part of tidytuesday challenge"
 output: html_document
 date: "2021-01-10"

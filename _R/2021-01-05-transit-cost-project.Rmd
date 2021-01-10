@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Which Constructions cost more per Km Railways or Meteros?"
+title: "Which Construction cost more per km Railways or Metros?"
 description: "Here I analyze top 8 conuntries from  transit-cost-project data to get the datainsight. dataset was publish by r4ds community as a part of tidytuesday challenge"
 output: html_document
 date: "`r Sys.Date()`"
@@ -57,7 +57,7 @@ transit_cost <- transit_cost %>%
 
 ### Transit Projects in United States? And its Total Costs?
 
-```{r fig.width=10.5, fig.height=5.5, fig.fullwidth=TRUE}
+```{r fig.width=5.12, fig.height=3.84, dpi=200}
 transit_cost %>%
   filter(country == "United States") %>%
   select(-c(source1, source2)) %>%
@@ -79,7 +79,7 @@ In united States, NewYork has most transit projects.
 construction cost more?
 
 
-```{r fig.width=10.5, fig.height=5.5, fig.fullwidth=TRUE}
+```{r fig.width=5.12, fig.height= 3.84, dpi= 200}
 transit_cost %>%
   filter(!is.na(cost_km_millions),
          !is.na(rr)) %>%
