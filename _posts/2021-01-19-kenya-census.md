@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Kenya's Agriculture"
-description: ""
+description: "Agriculture production, Population in Agriculture according 2019 Kenya Population and Housing Census data"
 output: html_document
 date: "2021-01-23"
 category: r

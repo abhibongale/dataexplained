@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Kenya's Agriculture"
-description: ""
+description: "Agriculture production, Population in Agriculture according 2019 Kenya Population and Housing Census data"
 output: html_document
 date: "`r Sys.Date()`"
 category: r
@@ -61,7 +61,7 @@ We can conclude that Gender distribution is equal in pretty much every county.
 
 ## 2. Agricultural products grown in each region?
 
-```{r}
+```{r fig.width=6.72, fig.height=4.8, dpi=200}
 crops %>%
   filter(SubCounty != "KENYA") %>%
   pivot_longer(Farming:`Khat (Miraa)`, 
