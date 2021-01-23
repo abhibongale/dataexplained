@@ -1,0 +1,203 @@
+---
+layout: post
+title: "Kenya's Agriculture"
+description: ""
+output: html_document
+date: "2021-01-23"
+category: r
+tags: [r, tidytuesday, tidyverse]
+comments: true
+editor_options: 
+  chunk_output_type: console
+---
+
+
+
+
+According to Wikipedia, Agriculture in Kenya dominates Kenya's economy. Agriculture is also the largest contributor to Kenya’s gross domestic product (GDP).
+In 2005, agriculture, including forestry and fishing, accounted for about 24 percent of the GDP, as well as 18 percent of wage employment and 50 percent of revenue from exports.
+
+**About the data:** The 2019 Kenya Population and Housing Census was the eighth to be conducted in Kenya since 1948 and was conducted from the night of 24th/25th to 31st August 2019. Kenya leveraged on technology to capture data during cartographic mapping, enumeration and data transmission, making the 2019 Census the first paperless census to be conducted in Kenya.
+
+
+{% highlight r %}
+gender <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-01-19/gender.csv')
+
+crops <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-01-19/crops.csv')
+
+households <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-01-19/households.csv')
+{% endhighlight %}
+
+
+
+## Gender Distribution in every County?
+
+
+
+{% highlight r %}
+gender %>%
+  filter(County != "Total") %>% 
+  pivot_longer(Male:Intersex, names_to = "gender", values_to = "count") %>%
+  mutate(gender_percent = count/Total*100,
+         County = fct_reorder(County, Total)) %>%
+  ggplot(aes(gender_percent, County)) +
+  geom_col(aes(fill = gender)) + 
+  geom_vline(xintercept = 50, size = 1, colour ="#990000" , 
+             linetype="longdash") +
+  geom_vline(xintercept = 0, size = 1, colour = "#333333") +
+  scale_x_continuous(labels = scales::percent_format(scale = 1)) +
+  scale_fill_manual(values = c("#FAAB18", "#588300", "#1380A1")) +
+  labs(x = "",
+       y = "County",
+       title = "Kenya Population in EveryCounty",
+       subtitle = "Population Percentage As per Gender , 2019",
+       fill = "") +
+  theme(legend.position = "top")
+{% endhighlight %}
+
+![center](/figs/2021-01-19-kenya-census/unnamed-chunk-2-1.png)
+
+We can conclude that Gender distribution is equal in pretty much every county.
+
+## 2. Agricultural products grown in each region?
+
+
+{% highlight r %}
+crops %>%
+  filter(SubCounty != "KENYA") %>%
+  pivot_longer(Farming:`Khat (Miraa)`, 
+               names_to = "Crop", values_to = "Count") %>%
+  filter(!is.na(Count)) %>%
+  mutate(SubCounty = str_to_title(SubCounty),
+         SubCounty = fct_reorder(SubCounty, Count, sum)) %>%
+  ggplot(aes(Count, SubCounty)) +
+  geom_col(aes(fill = Crop)) +
+  scale_x_continuous(labels = scales::comma) +
+  labs(x = "",
+       title = "Kenya Agriculture",
+       subtitle = "Population in Cultivation, 2019",
+       fill = "")
+{% endhighlight %}
+
+![center](/figs/2021-01-19-kenya-census/unnamed-chunk-3-1.png)
+
+Farming Category is a combinations of many crops like sugarcane, potato, maize etc.
+
+[Kenya Agriculture wiki](https://en.wikipedia.org/wiki/Agriculture_in_Kenya)
+
+Production: According to the Wikipedia page
+Kenya produced in 2018:
+
+    5.2 million tons of sugarcane;
+    4 million tons of maize;
+    1.8 million tons of potato;
+    1.4 million tons of banana;
+    946 thousand tons of cassava;
+    871 thousand tons of sweet potato;
+    775 thousand tons of mango (including mangosteen and guava);
+    765 thousand tons of beans;
+    599 thousand tons of tomato;
+    674 thousand tons of cabbage;
+    492 thousand tons of tea (3rd largest producer in the world, losing only to China and India);
+    349 thousand tons of pineapple;
+    336 thousand tons of wheat;
+    239 thousand tons of carrot;
+    233 thousand tons of avocado;
+    206 thousand tons of sorghum;
+    188 thousand tons of watermelon;
+    179 thousand tons of cowpea;
+    169 thousand tons of spinach;
+
+In addition to smaller productions of other agricultural products, like papaya (131 thousand tons), coconut (92 thousand tons) and coffee (41 thousand tons)
+
+Let's look at the Heat Map for more clarification.
+
+
+{% highlight r %}
+library(wesanderson)
+
+pal <- wes_palette("Zissou1", 100, type = "continuous")
+
+crops %>%
+  filter(SubCounty != "KENYA") %>%
+  rename(Crops = Farming) %>%
+  pivot_longer(Crops:`Khat (Miraa)`, 
+               names_to = "Crop", values_to = "Count") %>%
+  filter(!is.na(Count)) %>%
+  mutate(SubCounty = str_to_title(SubCounty),
+         SubCounty = fct_reorder(SubCounty, Count, sum)) %>%
+  complete(Crop, SubCounty, fill = list(Count = 0)) %>%
+  ggplot(aes(Crop, SubCounty)) +
+  geom_tile(aes(fill = Count)) +
+  scale_fill_gradientn(colours = pal, labels = scales::comma) + 
+  scale_x_discrete(expand = c(0, 0)) +
+  scale_y_discrete(expand = c(0, 0)) +
+  labs(fill = "Population",
+       title = "Kenya Agriculture",
+       subtitle = "Population in Agriculture",
+       x = "")
+{% endhighlight %}
+
+![center](/figs/2021-01-19-kenya-census/unnamed-chunk-4-1.png)
+
+
+## Population in Agriculture?
+
+
+{% highlight r %}
+households_crops <- crops %>%
+  filter(SubCounty != "KENYA") %>%
+  rename(County = SubCounty,
+         Crops = Farming) %>%
+  pivot_longer(Crops:`Khat (Miraa)`, 
+               names_to = "Crop", values_to = "Count") %>%
+  filter(!is.na(Count)) %>%
+  mutate(County = str_to_title(County),
+         County = fct_reorder(County, Count, sum)) %>%
+  complete(Crop, County, fill = list(Count = 0)) %>%
+  inner_join(households, by = "County") 
+{% endhighlight %}
+
+
+
+{% highlight r %}
+households_crops %>%
+  mutate(pop_farm = round(Count/Population*100,0), 
+         house_farm = Count/NumberOfHouseholds) %>%
+  mutate(County = fct_reorder(County, pop_farm, sum)) %>%
+  ggplot(aes(pop_farm, County)) +
+  geom_col(fill = "#1380A1") +
+  geom_vline(xintercept = 0, size = 1, colour = "#333333") + 
+  scale_x_continuous(labels = scales::percent_format(scale = 1)) +
+  labs(x = "",
+       title = "Population in Agriculture",
+       subtitle = "% of Population w.r.t County",
+       x = "")
+{% endhighlight %}
+
+![center](/figs/2021-01-19-kenya-census/unnamed-chunk-6-1.png)
+
+## Tea Production in Kenya (County)
+
+
+{% highlight r %}
+library(rKenyaCensus)
+library(sf)
+library(ggthemes)
+
+kenya_sf <- KenyaCounties_SHP %>%
+  st_as_sf() %>%
+  st_simplify(dTolerance = 200) %>%
+  mutate(County = str_to_title(County)) %>%
+  left_join(households_crops %>% filter(Crop == "Tea"), by = "County") 
+  
+
+kenya_sf %>%
+  ggplot() +
+  geom_sf(aes(fill = Count)) +
+  scale_fill_gradient(low = "#1380A1", high = "#FAAB18") +
+  labs(title = "Tea Production") +
+  theme_map()
+{% endhighlight %}
+
+![center](/figs/2021-01-19-kenya-census/unnamed-chunk-7-1.png)
