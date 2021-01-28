@@ -185,6 +185,7 @@ plastics %>%
                                  color = "#222222")) 
 ```
 
+
 Lots of plastics are unbranded, a considerable amount of Company names are missing ($NULL$, $null$). If we remove the unbranded, null, NULL we will get Top plastic producers.
 
 ## Top 10 highest plastic producing companies
@@ -223,7 +224,7 @@ top_company %>%
                                  color = "#222222")) 
 ```
 
-Coca-Cola was the largest plastic polluter. (**Note: Lot of missing data**, But it gives a overview).
+Coca-Cola was the largest plastic polluter. (**Note: Lot of missing data**, But it gives a overview).<br>
 
 [Forbes Article](https://www.forbes.com/sites/trevornace/2019/10/29/coca-cola-named-the-worlds-most-polluting-brand-in-plastic-waste-audit/?sh=678cc92c74e0)
 

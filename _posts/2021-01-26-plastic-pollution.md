@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Plastic Pollution"
-description: "Analysis about plastic pollution - countries, types of plastic and companies that are heavily involved in the contribution of  plastic pollution. The data comes from [Break Free from Plastic](https://www.breakfreefromplastic.org/) courtesy of [Sarah Sauve](https://sarahasauve.wordpress.com/). "
+description: "Analysis about plastic pollution - countries, types of plastic and companies that are heavily involved in the contribution of  plastic pollution. The data comes from Break Free from Plastic courtesy of Sarah Sauve."
 output: html_document
 date: "2021-01-28"
 category: r
@@ -18,6 +18,7 @@ editor_options:
 ![Image](https://images.pexels.com/photos/2827735/pexels-photo-2827735.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940)
 
 [Photo by Lucien Wanda from Pexels](https://www.pexels.com/photo/piles-of-garbage-by-the-shore-2827735/)
+<br>
 
 This blog is about **Plastic Pollution**  We will look into the countries, types of plastic and companies that are heavily involved in the contribution of plastic pollution. The data comes from [Break Free from Plastic](https://www.breakfreefromplastic.org/) courtesy of [Sarah Sauve](https://sarahasauve.wordpress.com/). 
 
@@ -235,6 +236,7 @@ plastics %>%
 
 ![center](/figs/2021-01-26-plastic-pollution/unnamed-chunk-6-1.png)
 
+
 Lots of plastics are unbranded, a considerable amount of Company names are missing ($NULL$, $null$). If we remove the unbranded, null, NULL we will get Top plastic producers.
 
 ## Top 10 highest plastic producing companies
@@ -286,15 +288,15 @@ top_company %>%
 
 ![center](/figs/2021-01-26-plastic-pollution/unnamed-chunk-7-1.png)
 
-Coca-Cola was the largest plastic polluter. (**Note: Lot of missing data**, But it gives a overview).
+Coca-Cola was the largest plastic polluter. (**Note: Lot of missing data**, But it gives a overview).<br>
 
 [Forbes Article](https://www.forbes.com/sites/trevornace/2019/10/29/coca-cola-named-the-worlds-most-polluting-brand-in-plastic-waste-audit/?sh=678cc92c74e0)
 
 ## Conclusion 
 - Plastic Pollution is has become mainstream environmental problem Countries, companies should do more to tackle this problem.
-- Awareness should be spread about plastic pollution and its harm
+- Awareness should be spread about plastic pollution and its harm.
 
-### To tackle this problem
+### To tackle this problem, We should
 
 The increasingly apparent single-use plastic problem highlights the need to tackle the issue, in part, with three strategies:
 
