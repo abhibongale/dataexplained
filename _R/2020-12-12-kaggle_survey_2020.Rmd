@@ -158,7 +158,7 @@ data_scientists <- survey %>%
 
 ### Data Scientist Age distribution
 
-```{r}
+```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
 data_scientists %>%
   select(Q1, Q2) %>% # prepare data
   mutate(Q2 = ifelse(Q2 == "Prefer to self-describe" | Q2 == "Prefer not to say" | Q2 == "Nonbinary", "Other", Q2)) %>%
@@ -328,7 +328,7 @@ Most of the Data Scientists(86% of data scientists) used hardware:
 
 
 ### Most preferred coding environment? 
-```{r fig.width=10.5, fig.height=5.5}
+```{r fig.width=6.72, fig.height=4.8, dpi=200}
 data_scientists %>%
   select(Q10) %>% # prepare data
   filter(Q10 != "NA") %>%
@@ -361,7 +361,7 @@ are most preferred notebooks.
 
 #### visualization libraries
 
-```{r fig.width=10.5, fig.height=5.5}
+```{r fig.width=6.72, fig.height=4.8, dpi=200}
 # visualization library
 data_scientists %>%
   select(Q14) %>% # prepare data
@@ -398,7 +398,7 @@ Visualization library curve increases exponential. This libraries are most used 
 
 #### Common Machine Learning Methods used?
 
-```{r fig.width=15, fig.height=5, fig.fullwidth=TRUE}
+```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
 ml_library <- as_tibble(gsub("\\s*\\([^\\)]+\\)","",
                    as.character(data_scientists$Q17)
                    ))
@@ -439,7 +439,7 @@ more than 50% of data scientists used this ml methods on daily basis.
 
 #### Computer Vision Methods to know?
 
-```{r fig.width=15, fig.height=5, fig.fullwidth=TRUE}
+```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
 cv_algo <- as_tibble(gsub("\\s*\\([^\\)]+\\)","",
                    as.character(data_scientists$Q18)
                    ))
@@ -467,7 +467,7 @@ Most important OpenCV methods are:
 
 ### NLP Methods to know?
 
-```{r fig.width=15, fig.height=5, fig.fullwidth=TRUE}
+```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
 require(pack)
 nlp <- as_tibble(gsub("\\s*\\([^\\)]+\\)","",
                    as.character(data_scientists$Q19)
@@ -496,7 +496,7 @@ Most used Natural language Processing models are:
 
 ### Most famous cloud services among data scientists?
 
-```{r fig.width=10.5, fig.height=5.5}
+```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
 count(data_scientists) 
 
 data_scientists %>%
@@ -532,7 +532,7 @@ Most used cloud-platform by data scientists:
 
 ## Database to used for Big data?
 
-```{r fig.width=10.5, fig.height=5.5}
+```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
 # prepare data
 database <- data_scientists %>%
   select(Q29A) %>% 
@@ -561,7 +561,7 @@ Data Scientists don't have any clear preference in database.
 
 ## Most used Bussiness Intelligence software?
 
-```{r fig.width=10.5, fig.height=5.5}
+```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
 data_scientists %>%
   select(Q31A) %>%
   filter(Q31A != "") %>%
@@ -589,7 +589,7 @@ are most preferred.
 
 ### Where most of the data scientists preferred to deploy there work?
 
-```{r fig.width=10.5, fig.height=5.5}
+```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
 # prepare data
 deploy <- data_scientists %>%
   select(Q36) %>%
