@@ -1,0 +1,147 @@
+---
+layout: post
+title: "HBCU Enrollment"
+description: "The blog is about the enrollment in degree-granting historically Black colleges and universities. We have an analysis of gender-wise enrollment in the overall programme's and bachelor's programme"
+output: html_document
+date: "2021-02-02"
+category: r
+tags: [r, tidytuesday, tidyverse]
+comments: true
+editor_options: 
+  chunk_output_type: console
+---
+
+
+
+
+## Introduction
+
+
+![Image](https://images.pexels.com/photos/1804577/pexels-photo-1804577.jpeg)
+
+[Photo by Anastasia Zhenina from Pexels](https://www.pexels.com/photo/brown-and-white-concrete-building-1804577/)
+(Image has nothing to do with the article, it's just random image)
+
+The blog is about the enrollment in degree-granting historically Black colleges and universities.  We have an analysis of gender-wise enrollment in the overall programme's and bachelor's programme.
+
+
+
+{% highlight r %}
+library(tidyverse) # metadata of packages
+theme_set(theme_light())
+{% endhighlight %}
+
+
+{% highlight r %}
+hbcu_all <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-02/hbcu_all.csv')
+{% endhighlight %}
+
+## Institute Enrollment According to Gender?
+
+
+{% highlight r %}
+hbcu_all %>%
+  pivot_longer(c(Males, Females), names_to = "Gender", values_to = "total_gender") %>%
+  ggplot(aes(Year, total_gender)) +
+  geom_col(aes(fill = Gender), position = "dodge") +
+  geom_hline(yintercept = 0, size = 1, colour="#333333") +
+  scale_fill_manual(values = c("#FAAB18", "#1380A1")) +
+  labs(y = "",
+       x = "Years",
+       fill = "",
+       title = "HBCU Enrollment") +
+    theme(
+      legend.position = "top",
+      plot.title = element_text(family = "Helvetica", size = 20, 
+                                face = "bold", color = "#222222"), 
+      plot.subtitle = element_text(family = "Helvetica", size = 18, 
+                                   margin = margin(9, 0, 9, 0)),
+      axis.text = element_text(family = "Helvetica", size = 10,
+                               color = "#222222"),
+      legend.text = element_text(family = "Helvetica", size = 12,
+                               color = "#222222"),
+      panel.grid.major.x = element_line(color="#cbcbcb"), 
+      panel.grid.major.y=element_blank()) 
+{% endhighlight %}
+
+![center](/figs/2021-02-02-hbcu-enrollment/unnamed-chunk-3-1.png)
+
+
+Looks like females enrolled more into institutes than Males. How many enrollement happended compare to males all this years?
+
+
+## Ratio of Enrollment?
+
+
+{% highlight r %}
+hbcu_all %>%
+  select(Males, Females, `Total enrollment`) %>%
+  summarise(total_males = sum(Males),total_females = sum(Females), 
+            total_enrol = sum(`Total enrollment`)) %>%
+  mutate(ratio_males = total_males/total_enrol, ratio_females = total_females/total_enrol) %>%
+  pivot_longer(c(ratio_males, ratio_females), names_to = "gender", values_to = "count") %>%
+  ggplot(aes("", count)) +
+  geom_col(aes(fill = gender)) +
+  coord_polar(theta = "y", start = 0) +
+  geom_text(aes(label = round(count, 2)), position = position_stack(vjust = 0.5)) +
+  scale_fill_manual(values = c("#FAAB18", "#1380A1"), labels = c("Females", "Males")) +
+  labs(y = "",
+       fill = "",
+       title = "Overall Enrollment Ratio") +
+    theme(
+      legend.position = "top",
+      plot.title = element_text(family = "Helvetica", size = 20, 
+                                face = "bold", color = "#222222"), 
+      plot.subtitle = element_text(family = "Helvetica", size = 18, 
+                                   margin = margin(9, 0, 9, 0)),
+      axis.text = element_text(family = "Helvetica", size = 10,
+                               color = "#222222"),
+      legend.text = element_text(family = "Helvetica", size = 12,
+                               color = "#222222")) 
+{% endhighlight %}
+
+![center](/figs/2021-02-02-hbcu-enrollment/unnamed-chunk-4-1.png)
+
+Out of Total Students Enrolled in institutes almost 60% are females.
+
+
+## Bachelors Degree Enrollments?
+
+We know that 60% of them are females. So if we find 60% of the `4-year` (Bachelor's programme) we might get a rough estimate of females enrolled in that programme.
+
+
+
+{% highlight r %}
+hbcu_all %>%
+  mutate(females_bachelors = `4-year`*0.6, males_bachelors= `4-year`*0.4) %>%
+  pivot_longer(c(females_bachelors, males_bachelors), 
+               names_to = "gender_bachelors", values_to = "count_bachelors") %>%
+  ggplot(aes(Year, count_bachelors)) +
+  geom_col(aes(fill = gender_bachelors), position = "dodge") +
+  geom_hline(yintercept = 0, size = 1, colour="#333333") +
+  scale_fill_manual(values = c("#FAAB18", "#1380A1"),  labels = c("Females", "Males")) +
+  labs(y = "",
+       x = "Years",
+       fill = "",
+       title = "Students Enrolled in Bachelor's Programme") +
+    theme(
+      legend.position = "top",
+      plot.title = element_text(family = "Helvetica", size = 20, 
+                                face = "bold", color = "#222222"), 
+      plot.subtitle = element_text(family = "Helvetica", size = 18, 
+                                   margin = margin(9, 0, 9, 0)),
+      axis.text = element_text(family = "Helvetica", size = 10,
+                               color = "#222222"),
+      legend.text = element_text(family = "Helvetica", size = 12,
+                               color = "#222222"),
+      panel.grid.major.x = element_line(color="#cbcbcb"), 
+      panel.grid.major.y=element_blank()) 
+{% endhighlight %}
+
+![center](/figs/2021-02-02-hbcu-enrollment/unnamed-chunk-5-1.png)
+
+
+
+We can cross-check the details with this [Article](https://nces.ed.gov/fastfacts/display.asp?id=667) 
+(**Note**: The article is based on 2018 data, But it is a good estimate for our data (1976-2015))
+
