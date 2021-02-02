@@ -38,7 +38,7 @@ hbcu_all <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytues
 
 ## Institute Enrollment According to Gender?
 
-```{r}
+```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
 hbcu_all %>%
   pivot_longer(c(Males, Females), names_to = "Gender", values_to = "total_gender") %>%
   ggplot(aes(Year, total_gender)) +
@@ -69,7 +69,7 @@ Looks like females enrolled more into institutes than Males. How many enrollemen
 
 ## Ratio of Enrollment?
 
-```{r}
+```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
 hbcu_all %>%
   select(Males, Females, `Total enrollment`) %>%
   summarise(total_males = sum(Males),total_females = sum(Females), 
@@ -104,7 +104,7 @@ Out of Total Students Enrolled in institutes almost 60% are females.
 We know that 60% of them are females. So if we find 60% of the `4-year` (Bachelor's programme) we might get a rough estimate of females enrolled in that programme.
 
 
-```{r}
+```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
 hbcu_all %>%
   mutate(females_bachelors = `4-year`*0.6, males_bachelors= `4-year`*0.4) %>%
   pivot_longer(c(females_bachelors, males_bachelors), 
