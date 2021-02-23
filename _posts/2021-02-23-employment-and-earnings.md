@@ -1,0 +1,139 @@
+---
+layout: post
+title: "Employement and Earning"
+description: "February is Black History Month, when we celebrate the contributions of Blacks or African Americans. In 2016, Blacks accounted for nearly 1 out of 8 people in the labor force. And the U.S. Bureau of Labor Statistics (BLS) projects that share to increase slightly from 2016 to 2026 as the labor force continues to become more diverse. #DuboisChallenge"
+output: html_document
+date: "2021-02-23"
+category: r
+tags: [r, tidytuesday, tidyverse]
+comments: true
+editor_options: 
+  chunk_output_type: console
+---
+
+![https://images.pexels.com/photos/6147210/pexels-photo-6147210.jpeg](https://images.pexels.com/photos/6147210/pexels-photo-6147210.jpeg)
+
+[Photo by Keira Burton from Pexels](https://www.pexels.com/photo/multiethnic-group-of-young-people-studying-with-notebook-and-laptop-6147210/)
+
+February is Black History Month, when we celebrate the contributions of Blacks or African Americans. In 2016, Blacks accounted for nearly 1 out of 8 people in the labor force. And the U.S. Bureau of Labor Statistics (BLS) projects that share to increase slightly from 2016 to 2026 as the labor force continues to become more diverse.
+
+This article provides an overview of Blacks in the labor force, including their participation rates, educational attainment, and employment in occupations.  s
+
+
+
+
+
+{% highlight r %}
+library(tidyverse) # metadata of packages
+theme_set(theme_light())
+library(bbplot)
+{% endhighlight %}
+
+
+## read dataset
+
+{% highlight r %}
+employed <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-23/employed.csv')
+
+earn <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-23/earn.csv')
+{% endhighlight %}
+
+
+
+{% highlight r %}
+ab_style <-function () 
+ {
+     font <- "Helvetica"
+     ggplot2::theme(plot.title = ggplot2::element_text(family = font, size = 20, face = "bold",
+                                                       color = "#222222"), 
+         plot.subtitle = ggplot2::element_text(family = font, size = 16, 
+                                               margin = ggplot2::margin(9, 0, 9, 0)), 
+         plot.caption = ggplot2::element_blank(), 
+         legend.position = "top", legend.text.align = 0, 
+         legend.background = ggplot2::element_blank(), 
+         legend.title = ggplot2::element_blank(), 
+         legend.key = ggplot2::element_blank(), 
+         legend.text = ggplot2::element_text(family = font, size = 14, color = "#222222"), 
+         axis.title = ggplot2::element_blank(), 
+         axis.text = ggplot2::element_text(family = font, size = 14, color = "#222222"),
+         axis.text.x = ggplot2::element_text(margin = ggplot2::margin(5, b = 10)), 
+         axis.ticks = ggplot2::element_blank(), 
+         axis.line = ggplot2::element_blank() 
+         #panel.grid.minor = ggplot2::element_blank(), 
+         #panel.grid.major.y = ggplot2::element_line(color = "#cbcbcb"), 
+         #panel.grid.major.x = ggplot2::element_blank(), 
+         #panel.background = ggplot2::element_blank(), 
+         #strip.background = ggplot2::element_rect(fill = "white"), 
+         #strip.text = ggplot2::element_text(size = 14, hjust = 0)
+         )
+ }
+{% endhighlight %}
+
+
+## Changes in the Earning
+
+Black People Weekly Salary is still low compare to Asian and White People. Growth in Weekly Salary is very little.
+
+
+{% highlight r %}
+earn %>%
+  group_by(year, race) %>%
+  summarise(median_weekly_earn = median(median_weekly_earn)) %>%
+  filter(race != "All Races") %>%
+  ggplot(aes(year, median_weekly_earn)) +
+  geom_line(aes(colour = race), size = 1) +
+  geom_hline(yintercept = 0, size = 1, colour="#333333") +
+  ab_style() +
+  scale_colour_manual(values = c("#FAAB18","#990000", "#1380A1")) +
+  labs(subtitle = "Median of Weekly Salary w.r.t Race")
+{% endhighlight %}
+
+![center](/figs/2021-02-23-employment-and-earnings/unnamed-chunk-4-1.png)
+
+
+
+## Aging working force, lower growth rates
+
+Median salary shows little growth over the years until 2020.
+
+{% highlight r %}
+earn %>%
+  filter(race != "All Races", age == "16 years and over" | age == "25 years and over" | age == "55 years and over") %>%
+  group_by(age, year, race) %>%
+  summarise(median_weekly_earn = median(median_weekly_earn)) %>%
+  ggplot(aes(year, median_weekly_earn)) +
+  geom_col(aes(fill = age), position = "dodge") +
+  geom_hline(yintercept = 0, size = 1, colour="#333333") +
+  ab_style() +
+  scale_fill_manual(values = c("#FAAB18","#990000", "#1380A1")) +
+  labs(subtitle = "Median of Weekly Salary w.r.t Age Group")
+{% endhighlight %}
+
+![center](/figs/2021-02-23-employment-and-earnings/unnamed-chunk-5-1.png)
+
+## Occupational employment
+
+Black workers were employed in a variety of occupations. Whole Scale and Retail Trade had the largest concentration of Black Workers than any other occupational group.
+
+
+{% highlight r %}
+employed %>%
+  filter(!is.na(industry), 
+  race_gender == "Black or African American") %>%
+  mutate(industry = factor(industry)) %>%
+  mutate(industry = fct_lump_n(industry, n = 8)) %>%
+  group_by(industry) %>%
+  summarise(n = median(employ_n/industry_total*100)) %>%
+  filter(n != "0", n != "NA") %>%
+  ggplot(aes(x = "", n,fill = industry)) +
+  geom_bar(stat = "identity", size = 1) +
+  coord_polar(theta = "y", start = 0) +
+  geom_hline(yintercept = 0, size = 1, colour="#333333") +
+  geom_text(aes(label = paste0(round(n, 0), "%")),
+            position = position_stack(vjust = 0.58),
+             family="Helvetica", size = 3) +
+  ab_style()
+{% endhighlight %}
+
+![center](/figs/2021-02-23-employment-and-earnings/unnamed-chunk-6-1.png)
+
