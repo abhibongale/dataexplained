@@ -1,0 +1,125 @@
+---
+layout: post
+title: "Employement and Demographics"
+description: "Attempt to learn and apply k-means clustering on tidytuesday dataset to gain insight. #DuboisChallenge"
+output: html_document
+date: "`r Sys.Date()`"
+category: r
+tags: [r, tidytuesday, tidyverse]
+comments: true
+editor_options: 
+  chunk_output_type: console
+---
+
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, cache = TRUE)
+
+# packages
+library(tidyverse)
+
+# theme
+theme_set(theme_light())
+
+```
+
+
+## Read dataset
+
+```{r}
+employed <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-23/employed.csv')
+```
+
+
+## Data Wrangling
+
+```{r}
+employed_tidy <- employed %>%
+  filter(!is.na(employ_n)) %>%
+  group_by(occupation = paste(industry, minor_occupation),
+           race_gender) %>%
+  summarise(n = mean(employ_n)) %>%
+  ungroup()
+```
+
+
+```{r}
+employment_demo <- employed_tidy %>%
+  filter(race_gender %in% c("Women", "Black or African American", "Asian")) %>%
+  pivot_wider(names_from = race_gender, values_from = n, values_fill = 0) %>%
+  janitor::clean_names() %>%
+  left_join(employed_tidy %>%
+              filter(race_gender == "TOTAL") %>%
+              select(-race_gender) %>%
+              rename(total = n)) %>%
+  # reduce the size of the dataset
+  filter(total > 1e4) %>%
+  # Across Apply a function (or functions) across multiple columns, function  variables (.) divided by total
+  # we have to take log because total is in millions and broad range and k-means are sensitive how numbers are scale. So we have to scale with scale function
+  mutate(across(c(asian, black_or_african_american, women), ~ .  / total), 
+         total = log(total),
+         across(is.numeric, ~as.numeric(scale(.)))
+         ) %>%
+  mutate(occupation = snakecase::to_snake_case(occupation))
+
+employment_demo
+```
+
+
+## Implement k-means clustering
+
+```{r}
+employment_clust <- kmeans(select(employment_demo, -occupation), centers = 3)
+summary(employment_clust)
+```
+
+```{r}
+broom::tidy(employment_clust)
+```
+
+
+```{r}
+broom::augment(employment_clust, employment_demo) %>%
+  ggplot(aes(total, black_or_african_american, color = .cluster)) +
+  geom_point(alpha = 0.8)
+```
+
+there is no clean separation with 3 clusters we have to choose best number of clusters
+
+## choosing k
+
+```{r}
+library(broom)
+kclusts <- tibble(k = 1:9) %>%
+  mutate(
+    kclust = map(k, ~kmeans(select(employment_demo, -occupation), .x)),
+    tidied = map(kclust, broom::tidy),
+    glanced = map(kclust, broom::glance),
+    augmented = map(kclust, broom::augment, employment_demo)
+  )
+
+kclusts %>%
+  unnest(glanced) %>%
+  ggplot(aes(k, tot.withinss)) +
+  geom_line(alpha = 0.8) +
+  geom_point(size = 2)
+```
+
+
+```{r}
+library(plotly)
+
+employment_clust <- kmeans(select(employment_demo, -occupation), centers = 5)
+
+p <- broom::augment(employment_clust, employment_demo) %>%
+  ggplot( aes(total, black_or_african_american, color = .cluster,
+             name = occupation)) +
+  geom_point(alpha = 0.8)
+
+ggplotly(p)
+```
+
+## Refernce
+
+[Julia Silge](https://juliasilge.com/blog/kmeans-employment/)
