@@ -1,0 +1,220 @@
+---
+layout: post
+title: "Superbowl commercials"
+description: "The data this week comes from FiveThirtyEight. They have a corresponding article on the topic. Note that the original source was superbowl-ads.com. You can watch all the ads via the FiveThirtyEight article above."
+output: html_document
+date: "`r Sys.Date()`"
+category: r
+tags: [r, tidytuesday, tidyverse]
+comments: true
+editor_options: 
+  chunk_output_type: console
+---
+
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, cache = TRUE)
+
+# packages
+library(tidyverse)
+
+# theme
+theme_set(theme_light())
+```
+
+
+![superbowl](https://projects.fivethirtyeight.com/super-bowl-ads/images/SUPER-BOWL-ADS-Topper.png)
+
+
+```{r}
+youtube <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-02/youtube.csv')
+```
+
+
+
+```{r}
+youtube %>%
+  count(brand, sort = TRUE) %>%
+  head(20) %>%
+  mutate(brand = fct_reorder(brand, n)) %>%
+  ggplot(aes(brand, n)) +
+  geom_col()
+
+```
+
+```{r}
+youtube %>%
+  ggplot(aes(year, fill = brand)) +
+  geom_bar() +
+  facet_wrap(~ brand) +
+  theme(legend.position = "none")
+```
+
+
+```{r}
+youtube %>%
+  pivot_longer(like_count:comment_count, names_to = "metric") %>%
+  ggplot(aes(value)) +
+  geom_histogram(bindwith = 0.5) +
+  scale_x_log10(labels = scales::comma) +
+  labs(x = "# of views") +
+  facet_wrap(~ metric)
+```
+
+```{r}
+youtube %>%
+  filter(!is.na(view_count)) %>%
+  mutate(brand = fct_reorder(brand, view_count)) %>%
+  ggplot(aes(view_count, brand)) +
+  geom_boxplot(aes(fill = funny)) +
+  scale_x_log10(labels = scales::comma)
+```
+
+
+```{r}
+
+youtube %>%
+  filter(!is.na(view_count)) %>%
+  group_by(year) %>%
+  summarise(n = n(),
+            median_views = median(view_count)) %>%
+  filter(n > 7) %>%
+  ggplot(aes(year, median_views)) +
+  geom_line() +
+  geom_point(aes(size = n)) +
+  scale_y_continuous(labels = scales::comma) +
+  theme(legend.position = "none")
+```
+
+
+```{r}
+youtube %>%
+  filter(!is.na(view_count)) %>%
+  pivot_longer(funny:use_sex, names_to = "category") %>%
+  group_by(category) %>%
+  summarise(correlation = cor(value, log(view_count + 1))) %>%
+  arrange(desc(correlation))
+```
+
+
+```{r}
+youtube %>%
+  filter(!is.na(view_count)) %>%
+  pivot_longer(funny:use_sex, names_to = "category") %>%
+  group_by(category, value) %>%
+  summarise(n = n(), median_view_count = median(view_count)) %>%
+  ggplot(aes(category, median_view_count, fill = value)) +
+  geom_col(position = "dodge")
+
+
+
+youtube %>%
+  filter(!is.na(view_count)) %>%
+  pivot_longer(funny:use_sex, names_to = "category") %>%
+  group_by(category) %>%
+  summarise(correlation = cor(value, log(view_count + 1))) %>%
+  arrange(desc(correlation))
+
+
+lm(log2(view_count) ~ danger + patriotic + funny + show_product_quickly
+   + celebrity + animals + use_sex, data = youtube) %>%
+  summary()
+```
+
+
+```{r}
+youtube %>%
+  pivot_longer(funny:use_sex, names_to = "category") %>%
+  group_by(category, year = 2 * (year %/% 2)) %>%
+  summarise(percent = mean(value),
+            n = n()) %>%
+  ggplot(aes(year, percent, color = category)) +
+  geom_line() +
+  scale_y_continuous(labels = scales::percent) +
+  facet_wrap(~ category) +
+  theme(legend.position = "none") +
+  labs(x = "2-year period", 
+       y = "% of ads with this quality")
+
+
+
+glm(animals ~ year, 
+    data = youtube, 
+    family = "binomial") %>%
+ summary()
+
+model <- youtube %>%
+  pivot_longer(funny:use_sex, names_to = "category") %>%
+  group_by(category) %>%
+  summarize(model = list(glm(value ~ year, family = "binomial"))) %>%
+  mutate(td = map(model, broom::tidy)) %>%
+  unnest(td) %>%
+  filter(term != "(Intercept)") %>%
+  arrange(desc(estimate))
+
+
+youtube %>%
+  pivot_longer(funny:use_sex, names_to = "category") %>%
+  group_by(category, 
+           year = 2 * (year %/% 2)) %>%
+  summarize(percnt = mean(value),
+            n = n()) %>%
+  inner_join(model, by = "category") %>%
+  mutate(category = str_to_title(str_replace_all(category, "_", " "))) %>%
+  filter(p.value <= .05) %>%
+  ggplot(aes(year, percnt, colour = category)) +
+  geom_line() +
+  scale_y_continuous(labels = scales::percent) +
+  facet_wrap(~ category) +
+  theme(legend.position = "none") 
+  labs(x = "Time(rounded to 2-years)",
+       y = "% of ads with this quality")
+```
+
+
+
+```{r}
+library(tidytext)
+
+youtube %>%
+  pivot_longer(funny:use_sex, names_to = "category") %>%
+  group_by(brand, category) %>%
+  mutate(category = str_to_title(str_replace_all(category, "_", " "))) %>%
+  summarise(percnt = mean(value)) %>%
+  ungroup() %>%
+  mutate(category = reorder_within(category, percnt, brand)) %>%
+  ggplot(aes(percnt, category)) +
+  geom_col() +
+  scale_y_reordered() +
+  scale_x_continuous(labels = scales::percent) +
+  facet_wrap(~ brand, scales = "free_y") +
+  labs(title = "What's is each brand preferred ads genre/category?")
+```
+
+```{r}
+youtube %>%
+  pivot_longer(funny:use_sex, names_to = "category") %>%
+  group_by(brand, category) %>%
+  mutate(category = str_to_title(str_replace_all(category, "_", " "))) %>%
+  summarise(percnt = mean(value)) %>%
+  ggplot(aes(category, brand, fill = percnt)) +
+  geom_tile() +
+  scale_fill_gradient2(low = "#1380A1", high = "#990000", midpoint = 0.5)
+```
+
+
+```{r}
+youtube %>%
+  pivot_longer(funny:use_sex, names_to = "category") %>%
+  group_by(brand, category) %>%
+  mutate(category = str_to_title(str_replace_all(category, "_", " "))) %>%
+  summarise(percnt = mean(value)) %>%
+  reshape2::acast(brand ~ category, value.var = "percnt") %>%
+  heatmap() 
+```
+
+```{r}
+# liked and dislike ads category+brands
+```
+
