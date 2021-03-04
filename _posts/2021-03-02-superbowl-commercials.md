@@ -16,6 +16,7 @@ editor_options:
 
 
 ![superbowl](https://projects.fivethirtyeight.com/super-bowl-ads/images/SUPER-BOWL-ADS-Topper.png)
+[Image from fivethirtyeight](https://projects.fivethirtyeight.com/super-bowl-ads/images/SUPER-BOWL-ADS-Topper.png)
 
 Millions of viewers who tune into the big game year after year, I wanted to know everything about them … by analyzing and categorizing, of course. I dug into the defining characteristics of a Super Bowl ad, then grouped commercials.
 The data this week comes from [FiveThirtyEight](https://github.com/fivethirtyeight/superbowl-ads). 
