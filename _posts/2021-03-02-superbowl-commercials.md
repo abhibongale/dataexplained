@@ -3,7 +3,7 @@ layout: post
 title: "Superbowl commercials"
 description: "The data this week comes from FiveThirtyEight. They have a corresponding article on the topic. Note that the original source was superbowl-ads.com. You can watch all the ads via the FiveThirtyEight article above."
 output: html_document
-date: "`r Sys.Date()`"
+date: "2021-03-04"
 category: r
 tags: [r, tidytuesday, tidyverse]
 comments: true
@@ -12,16 +12,7 @@ editor_options:
 ---
 
 
-```{r setup, include=FALSE}
 
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, cache = TRUE)
-
-# packages
-library(tidyverse)
-
-# theme
-theme_set(theme_light())
-```
 
 
 ![superbowl](https://projects.fivethirtyeight.com/super-bowl-ads/images/SUPER-BOWL-ADS-Topper.png)
@@ -32,18 +23,21 @@ The data this week comes from [FiveThirtyEight](https://github.com/fivethirtyeig
 [data-source](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-03-02/readme.md)
 
 
-```{r}
-youtube <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-02/youtube.csv')
-```
 
-```{r}
+{% highlight r %}
+youtube <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-02/youtube.csv')
+{% endhighlight %}
+
+
+{% highlight r %}
 # data wrangling
 youtube <- youtube %>%
   mutate(brand = fct_recode(brand, Hyundai = "Hynudai"))
-```
+{% endhighlight %}
 
 
-```{r}
+
+{% highlight r %}
 # aesthetic style
 my_style <-function () 
  {
@@ -71,10 +65,11 @@ my_style <-function ()
          #strip.text = ggplot2::element_text(size = 14, hjust = 0)
          )
  }
-```
+{% endhighlight %}
 
 ## Which brand has the highest Superbowl ads?
-```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+
+{% highlight r %}
 youtube %>%
   count(brand, sort = TRUE) %>%
   head(20) %>%
@@ -83,12 +78,15 @@ youtube %>%
   geom_col(fill="#1380A1") +
   geom_hline(yintercept = 0, size = 1, colour="#333333") +
   my_style()
-```
+{% endhighlight %}
+
+![center](/figs/2021-03-02-superbowl-commercials/unnamed-chunk-4-1.png)
 
 
 ## Superbowl ads by each brand (2000-2020)?
 
-```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+
+{% highlight r %}
 youtube %>%
   ggplot(aes(year, fill = brand)) +
   geom_bar() +
@@ -96,11 +94,14 @@ youtube %>%
   geom_hline(yintercept = 0, size = 1, colour = "#333333") +
   theme(legend.position = "none") +
   my_style()
-```
+{% endhighlight %}
+
+![center](/figs/2021-03-02-superbowl-commercials/unnamed-chunk-5-1.png)
 
 
 ## count metric per view count?
-```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+
+{% highlight r %}
 youtube %>%
   pivot_longer(like_count:comment_count, names_to = "metric") %>%
   ggplot(aes(value)) +
@@ -110,12 +111,15 @@ youtube %>%
   labs(x = "# of views") +
   facet_wrap(~ metric) +
   my_style()
-```
+{% endhighlight %}
+
+![center](/figs/2021-03-02-superbowl-commercials/unnamed-chunk-6-1.png)
 
 
 ## Funny and Non-Funny ads view Count of each Brand?
 
-```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+
+{% highlight r %}
 youtube %>%
   filter(!is.na(view_count)) %>%
   mutate(brand = fct_reorder(brand, view_count)) %>%
@@ -124,13 +128,16 @@ youtube %>%
   geom_vline(xintercept = 0, size = 2, colour = "#333333") +
   scale_x_log10(labels = scales::comma) +
   my_style()
-```
+{% endhighlight %}
+
+![center](/figs/2021-03-02-superbowl-commercials/unnamed-chunk-7-1.png)
 
 
 
 ## Median of View Count of the Superbowl ads?
 
-```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+
+{% highlight r %}
 youtube %>%
   filter(!is.na(view_count)) %>%
   group_by(year) %>%
@@ -144,22 +151,41 @@ youtube %>%
   scale_y_continuous(labels = scales::comma) +
   theme(legend.position = "none") +
   my_style()
-```
+{% endhighlight %}
+
+![center](/figs/2021-03-02-superbowl-commercials/unnamed-chunk-8-1.png)
 
 ## what is the correlation between types of ads and total view count?
 
-```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+
+{% highlight r %}
 youtube %>%
   filter(!is.na(view_count)) %>%
   pivot_longer(funny:use_sex, names_to = "category") %>%
   group_by(category) %>%
   summarise(correlation = cor(value, log(view_count + 1))) %>%
   arrange(desc(correlation))
-```
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## # A tibble: 7 x 2
+##   category             correlation
+##   <chr>                      <dbl>
+## 1 danger                   0.107  
+## 2 funny                    0.0686 
+## 3 show_product_quickly     0.0348 
+## 4 patriotic                0.0255 
+## 5 celebrity                0.00303
+## 6 animals                 -0.0295 
+## 7 use_sex                 -0.0520
+{% endhighlight %}
 
 ## View Count for each ads genre/category?
 
-```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+
+{% highlight r %}
 youtube %>%
   filter(!is.na(view_count)) %>%
   pivot_longer(funny:use_sex, names_to = "category") %>%
@@ -170,25 +196,77 @@ youtube %>%
   geom_hline(yintercept = 0, size = 1, colour="#333333") +
   scale_fill_manual(values = c("#FAAB18", "#1380A1")) +
   my_style()
+{% endhighlight %}
 
+![center](/figs/2021-03-02-superbowl-commercials/unnamed-chunk-10-1.png)
 
-
+{% highlight r %}
 youtube %>%
   filter(!is.na(view_count)) %>%
   pivot_longer(funny:use_sex, names_to = "category") %>%
   group_by(category) %>%
   summarise(correlation = cor(value, log(view_count + 1))) %>%
   arrange(desc(correlation))
+{% endhighlight %}
 
 
+
+{% highlight text %}
+## # A tibble: 7 x 2
+##   category             correlation
+##   <chr>                      <dbl>
+## 1 danger                   0.107  
+## 2 funny                    0.0686 
+## 3 show_product_quickly     0.0348 
+## 4 patriotic                0.0255 
+## 5 celebrity                0.00303
+## 6 animals                 -0.0295 
+## 7 use_sex                 -0.0520
+{% endhighlight %}
+
+
+
+{% highlight r %}
 lm(log2(view_count) ~ danger + patriotic + funny + show_product_quickly
    + celebrity + animals + use_sex, data = youtube) %>%
   summary()
-```
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## 
+## Call:
+## lm(formula = log2(view_count) ~ danger + patriotic + funny + 
+##     show_product_quickly + celebrity + animals + use_sex, data = youtube)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -11.4053  -2.2006   0.1322   2.2986  12.2874 
+## 
+## Coefficients:
+##                          Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)               14.0569     0.7224  19.458   <2e-16 ***
+## dangerTRUE                 0.9167     0.6030   1.520    0.130    
+## patrioticTRUE              0.7831     0.7704   1.016    0.310    
+## funnyTRUE                  0.7292     0.6569   1.110    0.268    
+## show_product_quicklyTRUE   0.3205     0.5838   0.549    0.584    
+## celebrityTRUE              0.1328     0.5933   0.224    0.823    
+## animalsTRUE               -0.4333     0.5669  -0.764    0.445    
+## use_sexTRUE               -0.6258     0.6349  -0.986    0.325    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 4.02 on 223 degrees of freedom
+##   (16 observations deleted due to missingness)
+## Multiple R-squared:  0.02545,	Adjusted R-squared:  -0.005137 
+## F-statistic: 0.8321 on 7 and 223 DF,  p-value: 0.5616
+{% endhighlight %}
 
 
 ## Superbowl ads genre/category trend?
-```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+
+{% highlight r %}
 youtube %>%
   pivot_longer(funny:use_sex, names_to = "category") %>%
   group_by(category, year = 2 * (year %/% 2)) %>%
@@ -203,17 +281,49 @@ youtube %>%
   labs(x = "2-year period", 
        y = "% of ads with this quality") +
   my_style()
-```
+{% endhighlight %}
+
+![center](/figs/2021-03-02-superbowl-commercials/unnamed-chunk-11-1.png)
 
 
 ## Modelling the genre/category 
 
-```{r}
+
+{% highlight r %}
 glm(animals ~ year, 
     data = youtube, 
     family = "binomial") %>%
  summary()
+{% endhighlight %}
 
+
+
+{% highlight text %}
+## 
+## Call:
+## glm(formula = animals ~ year, family = "binomial", data = youtube)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -0.9682  -0.9659  -0.9636   1.4045   1.4089  
+## 
+## Coefficients:
+##               Estimate Std. Error z value Pr(>|z|)
+## (Intercept) -2.0421594 45.2334161  -0.045    0.964
+## year         0.0007564  0.0225019   0.034    0.973
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 326.17  on 246  degrees of freedom
+## Residual deviance: 326.17  on 245  degrees of freedom
+## AIC: 330.17
+## 
+## Number of Fisher Scoring iterations: 4
+{% endhighlight %}
+
+
+
+{% highlight r %}
 model <- youtube %>%
   pivot_longer(funny:use_sex, names_to = "category") %>%
   group_by(category) %>%
@@ -222,10 +332,11 @@ model <- youtube %>%
   unnest(td) %>%
   filter(term != "(Intercept)") %>%
   arrange(desc(estimate))
-```
+{% endhighlight %}
 
 
-```{r fig.width=6.83, fig.height=3.52, dpi=200, fig.fullwidth=TRUE}
+
+{% highlight r %}
 youtube %>%
   pivot_longer(funny:use_sex, names_to = "category") %>%
   group_by(category, 
@@ -244,12 +355,15 @@ youtube %>%
   my_style() +
   labs(x = "Time(rounded to 2-years)",
        y = "% of ads with this quality")
-```
+{% endhighlight %}
+
+![center](/figs/2021-03-02-superbowl-commercials/unnamed-chunk-13-1.png)
 
 
 ## Brand's preferred genre/category?
 
-```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+
+{% highlight r %}
 library(tidytext)
 
 youtube %>%
@@ -266,10 +380,13 @@ youtube %>%
   scale_x_continuous(labels = scales::percent) +
   facet_wrap(~ brand, scales = "free_y") +
   my_style()
-```
+{% endhighlight %}
+
+![center](/figs/2021-03-02-superbowl-commercials/unnamed-chunk-14-1.png)
 
 
-```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+
+{% highlight r %}
 youtube %>%
   pivot_longer(funny:use_sex, names_to = "category") %>%
   group_by(brand, category) %>%
@@ -279,10 +396,13 @@ youtube %>%
   geom_tile() +
   scale_fill_gradient2(low = "#FAAB18", high = "#990000", midpoint = 0.5) +
   my_style()
-```
+{% endhighlight %}
+
+![center](/figs/2021-03-02-superbowl-commercials/unnamed-chunk-15-1.png)
 
 
-```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+
+{% highlight r %}
 youtube %>%
   pivot_longer(funny:use_sex, names_to = "category") %>%
   group_by(brand, category) %>%
@@ -290,11 +410,14 @@ youtube %>%
   summarise(percnt = mean(value)) %>%
   reshape2::acast(brand ~ category, value.var = "percnt") %>%
   heatmap()
-```
+{% endhighlight %}
+
+![center](/figs/2021-03-02-superbowl-commercials/unnamed-chunk-16-1.png)
 
 ## What is the like_dislike ratio with genre/category?
 
-```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+
+{% highlight r %}
 youtube %>%
   pivot_longer(funny:use_sex, names_to = "category") %>%
   mutate(like_ratio = like_count/(like_count + dislike_count)) %>%
@@ -308,7 +431,9 @@ youtube %>%
   geom_text(aes(label = category), check_overlap = TRUE, vjust = 1) +
   scale_x_log10(labels = scales::comma) +
   my_style()
-```
+{% endhighlight %}
+
+![center](/figs/2021-03-02-superbowl-commercials/unnamed-chunk-17-1.png)
 
 
 ## Reference:
