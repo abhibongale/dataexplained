@@ -1,0 +1,95 @@
+---
+layout: post
+title: "Bechdel Test"
+description: "One of the most enduring tools to measure Hollywood’s gender bias is a test originally promoted by cartoonist Alison Bechdel in a 1985 strip from her “Dykes To Watch Out For” series. Bechdel said that if a movie can satisfy three criteria — there are at least two named women in the picture, they have a conversation with each other at some point, and that conversation isn’t about a male character — then it passes “The Rule,” whereby female characters are allocated a bare minimum of depth. You can see a copy of that strip here."
+output: html_document
+date: "`r Sys.Date()`"
+category: r
+tags: [r, fivethiryeight.data, tidyverse]
+comments: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, cache = TRUE)
+
+# packages
+library(tidyverse)
+
+# theme
+theme_set(theme_light())
+```
+
+![bechdel-test](https://fivethirtyeight.com/wp-content/uploads/2014/04/477092007.jpg)
+
+[Five Thirty Eight](https://fivethirtyeight.com/features/the-dollar-and-cents-case-against-hollywoods-exclusion-of-women/)
+
+
+```{r}
+movies <- read_csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/bechdel/movies.csv")
+```
+
+## data wrangling
+```{r}
+movies <- movies %>%
+  mutate(across(contains("gross"), parse_number))
+```
+
+
+
+```{r}
+movies %>%
+  count(year, binary) %>%
+  ggplot(aes(year, n, fill = binary)) +
+  geom_col()
+
+
+movies %>%
+  group_by(decade = 10 * (year %/% 10)) %>%
+  summarize(n_movies = n(),
+            pct_pass = mean(binary == "PASS")) %>%
+  ggplot(aes(decade, pct_pass)) +
+  geom_line() +
+  geom_point(aes(size = n_movies)) +
+  expand_limits(y = 0)
+
+
+movies %>%
+  filter(year >= 1990) %>%
+  arrange(desc(`intgross_2013$`)) %>%
+  select(title, budget, intgross, `intgross_2013$`, binary) %>%
+  head(25) %>%
+  mutate(title = fct_reorder(title, `intgross_2013$`)) %>%
+  ggplot(aes(`intgross_2013$`, title, fill = binary)) +
+  geom_col()
+
+
+movies %>%
+  ggplot(aes(`intgross_2013$`, binary)) +
+  geom_boxplot() +
+  scale_x_log10()
+
+movies %>%
+  ggplot(aes(`intgross_2013$`, fill = binary)) +
+  geom_density(alpha = 0.5) +
+  scale_x_log10()
+
+
+lm(log2(`intgross_2013$`) ~ binary, data = movies) %>%
+  summary()
+
+lm(log2(`domgross_2013$`) ~ binary, data = movies) %>%
+  summary()
+```
+
+
+```{r}
+movies %>%
+  count(clean_test, binary) %>%
+  mutate(clean_test = fct_reorder(clean_test, n)) %>%
+  ggplot(aes(n, clean_test)) +
+  geom_col(aes(fill = binary)) 
+```
+
