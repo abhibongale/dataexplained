@@ -1,0 +1,263 @@
+---
+layout: post
+title: "Video Games and Sliced"
+description: "The data this week comes from Steam by way of Kaggle and originally came from SteamCharts. The data was scraped and uploaded to Kaggle."
+output: html_document
+date: "`r Sys.Date()`"
+category: r
+tags: [r, tidytuesday, tidyverse, kaggle]
+comments: true
+editor_options: 
+  chunk_output_type: console
+---
+
+
+![Game Console](https://unboxedreviews.com/wp-content/uploads/2019/07/game-consoles.png)
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, cache = TRUE)
+
+# packages
+library(tidyverse)
+
+# theme
+theme_set(theme_light())
+```
+
+
+```{r}
+# aesthetic style
+my_style <-function () 
+ {
+     font <- "Helvetica"
+     ggplot2::theme(plot.title = ggplot2::element_text(family = font, size = 14, face = "bold",
+                                                       color = "#222222"), 
+         plot.subtitle = ggplot2::element_text(family = font, size = 12, 
+                                               margin = ggplot2::margin(9, 0, 9, 0)), 
+         plot.caption = ggplot2::element_blank(), 
+         legend.position = "top", legend.text.align = 0, 
+         legend.background = ggplot2::element_blank(), 
+         legend.title = ggplot2::element_blank(), 
+         legend.key = ggplot2::element_blank(), 
+         legend.text = ggplot2::element_text(family = font, size = 10, color = "#222222"), 
+         axis.title = ggplot2::element_blank(), 
+         axis.text = ggplot2::element_text(family = font, size = 10, color = "#222222"),
+         axis.text.x = ggplot2::element_text(margin = ggplot2::margin(5, b = 10)), 
+         axis.ticks = ggplot2::element_blank(), 
+         axis.line = ggplot2::element_blank() 
+         #panel.grid.minor = ggplot2::element_blank(), 
+         #panel.grid.major.y = ggplot2::element_line(color = "#cbcbcb"), 
+         #panel.grid.major.x = ggplot2::element_blank(), 
+         #panel.background = ggplot2::element_blank(), 
+         #strip.background = ggplot2::element_rect(fill = "white"), 
+         #strip.text = ggplot2::element_text(size = 14, hjust = 0)
+         )
+ }
+```
+
+## Data Wrangling
+
+```{r}
+games <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-16/games.csv')
+```
+
+
+```{r}
+library(lubridate)
+
+games <- games %>%
+  #  make into number
+  mutate(avg_peak_perc = parse_number(avg_peak_perc)/100) %>%
+  # create new variable
+  mutate(date = ymd(paste(year, str_sub(month, 1, 3), 1))) %>%
+  # reorder months as per calendar (not alphabet)
+  mutate(month = fct_reorder(month, month(date)))
+```
+
+## Discover and Visualization
+
+
+### Steam's Concurrent players (playing at the same time)
+
+
+```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+games %>%
+  group_by(year) %>%
+  summarise(median_avg = median(avg),
+            median_peak = median(peak)) %>%
+  ggplot() +
+  geom_line(aes(year, median_avg), color = "#1380A1") +
+  geom_line(aes(year, median_peak), color = "#FAAB18") +
+  geom_label(aes(x = 2012, y = 550, label = "Peak"), 
+             label.size = NA, fill = "white", size = 5, color = "#FAAB18") +
+  geom_label(aes(x = 2012, y = 250, label = "Average"), hjust = 0, vjust = 0.5, 
+             label.size = NA, fill = "white", size = 5, color = "#1380A1") +
+  geom_hline(yintercept = 0, size = 1, colour="#333333") +
+  my_style() +
+  labs(title = "Players gaming on steam at the same time",
+       subtitle = "Median of players playing games, 2012-Current")
+```
+
+
+
+### Trend in playing time
+
+```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+games %>%
+  group_by(year, month) %>%
+  summarise(median_avg = median(avg)) %>%
+  ggplot(aes(month, median_avg)) +
+  geom_line(aes(color = factor(year), group = year)) +
+  geom_hline(yintercept = 0, size = 1, colour="#333333") +
+  my_style() +
+    labs(title = "Highest Number of Steam gamers")
+```
+
+
+### All Time Trending Games
+
+Peak / Average =  the Highest number of players at the same time / Average number of players at the same time
+
+
+```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+games %>%
+  filter(avg >= 1000) %>%
+  group_by(gamename) %>%
+  summarise(median_avg = median(avg),
+            median_peak_avg = median(avg_peak_perc)) %>%
+  arrange(median_peak_avg) %>%
+  ggplot(aes(median_avg, 1/median_peak_avg, label = gamename)) +
+  geom_point() +
+  geom_text(vjust = 1, hjust = 1, check_overlap = TRUE) +
+  scale_x_log10(labels = scales::comma) +
+  scale_y_log10() +
+  labs(x = "Players playing at the Same time", y = "Ratio of Peak / Average",
+       title = "Trending Games, 2012-2021")
+```
+
+
+### Top Record Holders
+
+Highest Number of Players at the same time
+
+```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+games %>%
+  filter(avg >= 1000) %>%
+  group_by(gamename) %>%
+  summarise(mean_peak = mean(peak)) %>%
+  mutate(gamename = fct_reorder(gamename, mean_peak)) %>%
+  top_n(10) %>%
+  ggplot(aes(gamename, mean_peak)) +
+  geom_col(fill = "#1380A1") +
+  geom_hline(yintercept = 0, size = 1, colour="#333333") +
+  scale_y_continuous(labels = scales::comma) +
+  theme(axis.text.x = element_text(angle = 40)) +
+  my_style() +
+  labs(title = "Top Records",
+       subtitle = "Peak of the games, 2012-2020")
+```
+
+
+### All Time Top Games on Steam
+
+```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+games %>%
+  filter(avg >= 1000) %>%
+  group_by(gamename) %>%
+  summarise(mean_games = mean(avg)) %>%
+  mutate(gamename = fct_reorder(gamename, mean_games)) %>%
+  top_n(10) %>%
+  ggplot(aes(gamename, mean_games)) +
+  geom_col(fill = "#1380A1") +
+  geom_hline(yintercept = 0, size = 1, colour="#333333") +
+  scale_y_continuous(labels = scales::comma) +
+  theme(axis.text.x = element_text(angle = 40)) +
+  my_style() +
+  labs(title = "Most Played Games")
+```
+
+
+### Covid-19 effect on Top 2020 Games
+
+```{r}
+top_games_2020 <- games %>%
+  filter(year == 2020) %>%
+  add_count(gamename) %>%
+  group_by(gamename) %>%
+  filter(n >= 8) %>%
+  summarise(mean_avg = mean(avg)) %>%
+  top_n(10)
+```
+
+
+```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+games %>%
+  filter(date >= "2018-01-01") %>%
+  inner_join(top_games_2020, by = "gamename") %>%
+  complete(gamename, date, fill = list(avg = 0)) %>%
+  ggplot(aes(date, avg)) +
+  geom_line(color = "#1380A1") +
+  geom_vline(xintercept = as.Date("2020-03-01"), 
+             color = "#990000", lty = 2) +
+  geom_hline(yintercept = 0, size = 1, colour="#333333") +
+  scale_y_log10(labels = scales::comma) +
+  facet_wrap(~ gamename) +
+  my_style()
+```
+
+
+### Trending games during Pendemic
+```{r}
+trending_games_2020 <- games %>%
+  filter(year == 2020) %>%
+  add_count(gamename) %>%
+  group_by(gamename) %>%
+  filter(n >= 8) %>%
+  summarise(mean_peak = mean(peak)) %>%
+  top_n(10) 
+```
+
+```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+games %>%
+  filter(date >= "2018-01-01") %>%
+  inner_join(trending_games_2020, by = "gamename") %>%
+  complete(gamename, date, fill = list(gain = 0)) %>%
+  ggplot(aes(date, gain)) +
+  geom_line(color = "#1380A1") +
+  geom_vline(xintercept = as.Date("2020-02-01"), 
+             color = "#990000", lty = 2) +
+  geom_hline(yintercept = 0, size = 1, colour="#333333") +
+  scale_y_continuous(labels = scales::comma) +
+  facet_wrap(~ gamename) +
+  my_style()
+```
+
+### Which Games Gained Players During Early days of Lockdown?
+
+```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+trending_games_2020 <- games %>%
+  filter(year == 2020) %>%
+  add_count(gamename) %>%
+  group_by(gamename) %>%
+  filter(n >= 8) %>%
+  summarise(mean_gain = mean(gain)) %>%
+  top_n(10) 
+```
+
+```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+games %>%
+  filter(date >= "2018-01-01") %>%
+  inner_join(trending_games_2020, by = "gamename") %>%
+  complete(gamename, date, fill = list(gain = 0)) %>%
+  ggplot(aes(date, gain)) +
+  geom_line(color = "#1380A1") +
+  geom_vline(xintercept = as.Date("2020-03-01"), 
+             color = "#990000", lty = 2) +
+  geom_hline(yintercept = 0, size = 1, colour="#333333") +
+  scale_y_continuous(labels = scales::comma) +
+  facet_wrap(~ gamename) +
+  my_style()
+```
+```
+
