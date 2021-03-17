@@ -3,7 +3,7 @@ layout: post
 title: "Video Games and Sliced"
 description: "The data this week comes from Steam by way of Kaggle and originally came from SteamCharts. The data was scraped and uploaded to Kaggle."
 output: html_document
-date: "`r Sys.Date()`"
+date: "2021-03-18"
 category: r
 tags: [r, tidytuesday, tidyverse, kaggle]
 comments: true
@@ -14,19 +14,11 @@ editor_options:
 
 ![Game Console](https://unboxedreviews.com/wp-content/uploads/2019/07/game-consoles.png)
 
-```{r setup, include=FALSE}
-
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, cache = TRUE)
-
-# packages
-library(tidyverse)
-
-# theme
-theme_set(theme_light())
-```
 
 
-```{r}
+
+
+{% highlight r %}
 # aesthetic style
 my_style <-function () 
  {
@@ -54,16 +46,18 @@ my_style <-function ()
          #strip.text = ggplot2::element_text(size = 14, hjust = 0)
          )
  }
-```
+{% endhighlight %}
 
 ## Data Wrangling
 
-```{r}
+
+{% highlight r %}
 games <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-16/games.csv')
-```
+{% endhighlight %}
 
 
-```{r}
+
+{% highlight r %}
 library(lubridate)
 
 games <- games %>%
@@ -73,7 +67,7 @@ games <- games %>%
   mutate(date = ymd(paste(year, str_sub(month, 1, 3), 1))) %>%
   # reorder months as per calendar (not alphabet)
   mutate(month = fct_reorder(month, month(date)))
-```
+{% endhighlight %}
 
 ## Discover and Visualization
 
@@ -81,7 +75,8 @@ games <- games %>%
 ### Steam's Concurrent players (playing at the same time)
 
 
-```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+
+{% highlight r %}
 games %>%
   group_by(year) %>%
   summarise(median_avg = median(avg),
@@ -97,13 +92,16 @@ games %>%
   my_style() +
   labs(title = "Players gaming on steam at the same time",
        subtitle = "Median of players playing games, 2012-Current")
-```
+{% endhighlight %}
+
+![center](/figs/2021-03-16-video-games-and-sliced/unnamed-chunk-4-1.png)
 
 
 
 ### Trend in playing time
 
-```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+
+{% highlight r %}
 games %>%
   group_by(year, month) %>%
   summarise(median_avg = median(avg)) %>%
@@ -112,7 +110,9 @@ games %>%
   geom_hline(yintercept = 0, size = 1, colour="#333333") +
   my_style() +
     labs(title = "Highest Number of Steam gamers")
-```
+{% endhighlight %}
+
+![center](/figs/2021-03-16-video-games-and-sliced/unnamed-chunk-5-1.png)
 
 
 ### All Time Trending Games
@@ -120,7 +120,8 @@ games %>%
 Peak / Average =  the Highest number of players at the same time / Average number of players at the same time
 
 
-```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+
+{% highlight r %}
 games %>%
   filter(avg >= 1000) %>%
   group_by(gamename) %>%
@@ -134,14 +135,17 @@ games %>%
   scale_y_log10() +
   labs(x = "Players playing at the Same time", y = "Ratio of Peak / Average",
        title = "Trending Games, 2012-2021")
-```
+{% endhighlight %}
+
+![center](/figs/2021-03-16-video-games-and-sliced/unnamed-chunk-6-1.png)
 
 
 ### Top Record Holders
 
 Highest Number of Players at the same time
 
-```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+
+{% highlight r %}
 games %>%
   filter(avg >= 1000) %>%
   group_by(gamename) %>%
@@ -156,12 +160,15 @@ games %>%
   my_style() +
   labs(title = "Top Records",
        subtitle = "Peak of the games, 2012-2020")
-```
+{% endhighlight %}
+
+![center](/figs/2021-03-16-video-games-and-sliced/unnamed-chunk-7-1.png)
 
 
 ### All Time Top Games on Steam
 
-```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+
+{% highlight r %}
 games %>%
   filter(avg >= 1000) %>%
   group_by(gamename) %>%
@@ -175,12 +182,15 @@ games %>%
   theme(axis.text.x = element_text(angle = 40)) +
   my_style() +
   labs(title = "Most Played Games")
-```
+{% endhighlight %}
+
+![center](/figs/2021-03-16-video-games-and-sliced/unnamed-chunk-8-1.png)
 
 
 ### Covid-19 effect on Top 2020 Games
 
-```{r}
+
+{% highlight r %}
 top_games_2020 <- games %>%
   filter(year == 2020) %>%
   add_count(gamename) %>%
@@ -188,10 +198,11 @@ top_games_2020 <- games %>%
   filter(n >= 8) %>%
   summarise(mean_avg = mean(avg)) %>%
   top_n(10)
-```
+{% endhighlight %}
 
 
-```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+
+{% highlight r %}
 games %>%
   filter(date >= "2018-01-01") %>%
   inner_join(top_games_2020, by = "gamename") %>%
@@ -204,11 +215,14 @@ games %>%
   scale_y_log10(labels = scales::comma) +
   facet_wrap(~ gamename) +
   my_style()
-```
+{% endhighlight %}
+
+![center](/figs/2021-03-16-video-games-and-sliced/unnamed-chunk-10-1.png)
 
 
 ### Trending games during Pendemic
-```{r}
+
+{% highlight r %}
 trending_games_2020 <- games %>%
   filter(year == 2020) %>%
   add_count(gamename) %>%
@@ -216,9 +230,10 @@ trending_games_2020 <- games %>%
   filter(n >= 8) %>%
   summarise(mean_peak = mean(peak)) %>%
   top_n(10) 
-```
+{% endhighlight %}
 
-```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+
+{% highlight r %}
 games %>%
   filter(date >= "2018-01-01") %>%
   inner_join(trending_games_2020, by = "gamename") %>%
@@ -231,11 +246,14 @@ games %>%
   scale_y_continuous(labels = scales::comma) +
   facet_wrap(~ gamename) +
   my_style()
-```
+{% endhighlight %}
+
+![center](/figs/2021-03-16-video-games-and-sliced/unnamed-chunk-12-1.png)
 
 ### Which Games Gained Players During Early days of Lockdown?
 
-```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+
+{% highlight r %}
 trending_games_2020 <- games %>%
   filter(year == 2020) %>%
   add_count(gamename) %>%
@@ -243,9 +261,10 @@ trending_games_2020 <- games %>%
   filter(n >= 8) %>%
   summarise(mean_gain = mean(gain)) %>%
   top_n(10) 
-```
+{% endhighlight %}
 
-```{r fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+
+{% highlight r %}
 games %>%
   filter(date >= "2018-01-01") %>%
   inner_join(trending_games_2020, by = "gamename") %>%
@@ -258,6 +277,8 @@ games %>%
   scale_y_continuous(labels = scales::comma) +
   facet_wrap(~ gamename) +
   my_style()
-```
+{% endhighlight %}
+
+![center](/figs/2021-03-16-video-games-and-sliced/unnamed-chunk-14-1.png)
 
 
