@@ -1,0 +1,145 @@
+---
+layout: post
+title: "UN Votes"
+description: "The data this week comes from Harvard's Dataverse by way of Mine Çetinkaya-Rundel, David Robinson, and Nicholas Goguen-Compagnoni."
+output: html_document
+date: "`r Sys.Date()`"
+category: r
+tags: [r, tidytuesday, tidyverse, kaggle]
+comments: true
+editor_options: 
+  chunk_output_type: console
+---
+
+
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, cache = TRUE)
+
+# packages
+library(tidyverse)
+
+# theme
+theme_set(theme_light())
+```
+
+
+
+```{r}
+unvotes <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-23/unvotes.csv')
+roll_calls <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-23/roll_calls.csv')
+issues <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-23/issues.csv')
+```
+
+
+```{r}
+unvotes <- unvotes %>%
+  mutate(vote_number = match(vote, c("no", "abstain", "yes"))-2) %>%
+  left_join(roll_calls %>%
+              select(rcid, date, amend), by = "rcid")
+
+unvotes %>%
+  count(vote, vote_number, sort = TRUE)
+```
+
+```{r}
+summarise_votes <- function(ds, min_votes = 100) {
+  ds %>%
+    summarize(n_votes = n(),
+            n_yes = sum(vote == "yes"),
+            pct_yes = n_yes / n_votes,
+            .groups = "drop") %>%
+  filter(n_votes >= 100) %>%
+  arrange(desc(pct_yes))
+}
+
+
+by_country <- unvotes %>%
+  group_by(country, country_code) %>%
+  summarise_votes()
+
+
+by_country %>%
+  head(20) %>%
+  mutate(country = fct_reorder(country, pct_yes)) %>%
+  ggplot(aes(pct_yes, country)) +
+  geom_point(aes(size = n_votes)) +
+  scale_x_continuous(labels = scales::percent) +
+  labs(x = "% of yes votes in UN")
+```
+
+
+```{r}
+library(lubridate)
+
+by_year <- unvotes %>%
+  group_by(year = year(date)) %>%
+  summarise_votes()
+
+
+by_year %>%
+  ggplot(aes(year, pct_yes)) +
+  geom_line(colour = "#1380A1", size = 1) +
+  geom_vline(xintercept = 1991, size = 1, colour="#990000", lty = 2) +
+  expand_limits(y = 0) +
+  geom_curve(aes(x = 1980, y = 0.25, xend = 1990, yend = 0.25), 
+                           colour = "#555555", 
+                           curvature = -0.2,
+                           size=0.5,
+             arrow = arrow(length = unit(0.03, "npc"))) +
+  geom_label(aes(x = 1960, y = 0.25, label = "Cold War Ended"), 
+                           hjust = 0, 
+                           vjust = 0.5, 
+                           colour = "#555555", 
+                           fill = "white", 
+                           label.size = NA, 
+                           family="Helvetica", 
+                           size = 5)
+```
+
+
+```{r}
+ 
+by_country_year <- unvotes %>%
+  group_by(year = year(date),
+           country) %>%
+  summarise_votes()
+
+
+by_country_year %>%
+  filter(country %in% c("United States", "Canada", "Mali")) %>%
+  mutate(country = fct_reorder(country, pct_yes)) %>%
+  ggplot(aes(year, pct_yes)) +
+  geom_line(aes(color = country)) +
+  geom_line(data = by_year, size = 1) +
+  expand_limits(y = 0) +
+  scale_color_discrete(guide = guide_legend(reverse = TRUE)) +
+  expand_limits(y = 0)
+```
+
+```{r}
+map_data("world") %>%
+  filter(region != "Antarctica") %>%
+  ggplot(aes(long, lat, group = group)) +
+  geom_polygon()
+```
+
+
+```{r}
+library(fuzzyjoin)
+
+world_data <- map_data("world") %>%
+  as_tibble() %>%
+  regex_left_join(maps::iso3166 %>%
+                    select(mapname, country_code = a2),
+                  c(region = "mapname")) %>%
+  filter(region != "Antarctica")
+
+
+world_data %>%
+  left_join(by_country, by = "country_code") %>%
+  ggplot(aes(long, lat, group = group, fill = pct_yes)) +
+  geom_polygon()
+```
+
