@@ -1,0 +1,1118 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>What's it takes to be a Data Scientists &#8211; Data Explained</title>
+<meta name="description" content="
+survey &lt;- read_csv("../_data/kaggle_survey_2020_responses.csv")
+dim(survey) # dimension of data (rows  columns)
+">
+<meta name="keywords" content="r, kaggle, tidyverse">
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="What's it takes to be a Data Scientists">
+<meta name="twitter:description" content="
+survey &lt;- read_csv("../_data/kaggle_survey_2020_responses.csv")
+dim(survey) # dimension of data (rows  columns)
+">
+<meta name="twitter:site" content="@abhibongale">
+<meta name="twitter:creator" content="@abhibongale">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://localhost:4000/images/default-thumb.png">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="What's it takes to be a Data Scientists">
+<meta property="og:description" content="
+survey &lt;- read_csv("../_data/kaggle_survey_2020_responses.csv")
+dim(survey) # dimension of data (rows  columns)
+">
+<meta property="og:url" content="http://localhost:4000/r/kaggle_survey_2020/">
+<meta property="og:site_name" content="Data Explained">
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/r/kaggle_survey_2020/">
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Data Explained Feed">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+	<script src="http://localhost:4000/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="http://localhost:4000/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="http://localhost:4000/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<!-- MathJax -->
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<link href='//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700%7CPT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://localhost:4000/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144-precomposed.png">
+
+<!-- Google Analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-57723549-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+</head>
+
+<body class="post">
+
+<!--[if lt IE 9]><div class="browser-upgrade alert alert-info">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]-->
+
+<div class="navigation-wrapper">
+	<div class="site-name">
+		<a href="http://localhost:4000">Data Explained</a>
+	</div><!-- /.site-name -->
+	<div class="top-navigation">
+		<nav role="navigation" id="site-nav" class="nav">
+		    <ul>
+		        
+					    
+					    <li><a href="http://localhost:4000/about/" >About Me</a></li>
+					  
+					    
+					    <li><a href="http://localhost:4000/posts/" >Posts</a></li>
+					  
+		    </ul>
+		</nav>
+	</div><!-- /.top-navigation -->
+</div><!-- /.navigation-wrapper -->
+
+
+
+<div id="main" role="main">
+  <div class="article-author-side">
+    
+
+
+	<img src="http://localhost:4000/images/abhishekbongale.jpg" class="bio-photo" alt="Abhishek Bongale bio photo">
+
+<h3>Abhishek Bongale</h3>
+<p>AI student at the Dublin City University. Interested in mathematics, software development, Vim, design.</p>
+<a href="mailto:abhibongale97@gmail.com" class="author-social" target="_blank"><i class="fa fa-envelope-square"></i> Email</a>
+<a href="http://twitter.com/abhibongale" class="author-social" target="_blank"><i class="fa fa-twitter-square"></i> Twitter</a>
+
+
+
+
+
+<a href="http://github.com/abhibongale" class="author-social" target="_blank"><i class="fa fa-github"></i> Github</a>
+<a href="http://stackoverflow.com/users/8269522" class="author-social" target="_blank"><i class="fa fa-stack-overflow"></i> Stack Overflow</a>
+
+
+
+
+
+
+<h4>Subscribe</h4>
+
+<form method='post' action='http://blogtrottr.com'>
+    <input type='text' name='btr_email' placeholder = 'Your email'/><br />
+    <input type='hidden' name='btr_url' value='http://dataexplained.in/feed.xml' />
+    <input type='hidden' name='schedule_type' value='0' />
+    <input type='submit' class="styled-button-4" value='Subscribe to this blog' />
+</form>
+
+<style type="text/css"> 
+.styled-button-4 {
+	-webkit-box-shadow:rgba(0,0,0,0.98) 0 1px 0 0;
+	-moz-box-shadow:rgba(0,0,0,0.98) 0 1px 0 0;
+	box-shadow:rgba(0,0,0,0.98) 0 1px 0 0;
+	background-color:#EEE;
+	border-radius:0;
+	-webkit-border-radius:0;
+	-moz-border-radius:0;
+	border:1px solid #999;
+	color:#666;
+	font-family:'Lucida Grande',Tahoma,Verdana,Arial,Sans-serif;
+	font-size:11px;
+	font-weight:700;
+	padding:2px 6px;
+	height:28px
+}
+</style>
+
+
+<h4>Recommended Blogs</h4>
+<ul>
+    <li><a href="http://www.r-bloggers.com/">R Bloggers</a></li>
+    <li><a href="http://blog.rstudio.org/">RStudio Blog</a></li>
+    <li><a href="http://r4stats.com/">R4Stats</a></li>
+    <li><a href="http://simplystatistics.org/">Simply Statistics</a></li>
+</ul>
+
+  </div>
+  <article class="post">
+    <div class="headline-wrap">
+      
+        <h1><a href="http://localhost:4000/r/kaggle_survey_2020/" rel="bookmark" title="What's it takes to be a Data Scientists">What's it takes to be a Data Scientists</a></h1>
+      
+    </div><!--/ .headline-wrap -->
+    <div class="article-wrap">
+      
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">survey</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"../_data/kaggle_survey_2020_responses.csv"</span><span class="p">)</span><span class="w">
+</span><span class="nf">dim</span><span class="p">(</span><span class="n">survey</span><span class="p">)</span><span class="w"> </span><span class="c1"># dimension of data (rows  columns)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## [1] 20037   355</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1">#skimr::skim(survey) # insight of data</span></code></pre></figure>
+
+<p>columns represents answer to specific questions and some questions have multiple answers so they have more than one column for representation.</p>
+
+<p>We can merge the columns which represents multi-choice questions for clarity.</p>
+
+<h2 id="1-data-wrangling">1. Data Wrangling</h2>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># merge columns which represents multi-choice questions.</span><span class="w">
+</span><span class="n">merge_cols</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">survey</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="n">survey</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">survey</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+     </span><span class="n">unite</span><span class="p">(</span><span class="s2">"Q7"</span><span class="p">,</span><span class="n">Q7_Part_1</span><span class="o">:</span><span class="n">Q7_OTHER</span><span class="p">,</span><span class="w"> 
+          </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">","</span><span class="w"> </span><span class="p">,</span><span class="w">
+          </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">unite</span><span class="p">(</span><span class="s2">"Q9"</span><span class="p">,</span><span class="n">Q9_Part_1</span><span class="o">:</span><span class="n">Q9_OTHER</span><span class="p">,</span><span class="w">
+          </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+          </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">unite</span><span class="p">(</span><span class="s2">"Q10"</span><span class="p">,</span><span class="w"> </span><span class="n">Q10_Part_1</span><span class="o">:</span><span class="n">Q10_OTHER</span><span class="p">,</span><span class="w">
+           </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+           </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">unite</span><span class="p">(</span><span class="s2">"Q12"</span><span class="p">,</span><span class="w"> </span><span class="n">Q12_Part_1</span><span class="o">:</span><span class="n">Q12_OTHER</span><span class="p">,</span><span class="w">
+          </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+          </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">unite</span><span class="p">(</span><span class="s2">"Q14"</span><span class="p">,</span><span class="w"> </span><span class="n">Q14_Part_1</span><span class="o">:</span><span class="n">Q14_OTHER</span><span class="p">,</span><span class="w">
+          </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+          </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">unite</span><span class="p">(</span><span class="s2">"Q16"</span><span class="p">,</span><span class="w"> </span><span class="n">Q16_Part_1</span><span class="o">:</span><span class="n">Q16_OTHER</span><span class="p">,</span><span class="w">
+          </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+          </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">unite</span><span class="p">(</span><span class="s2">"Q17"</span><span class="p">,</span><span class="w"> </span><span class="n">Q17_Part_1</span><span class="o">:</span><span class="n">Q17_OTHER</span><span class="p">,</span><span class="w">
+          </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+          </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">unite</span><span class="p">(</span><span class="s2">"Q18"</span><span class="p">,</span><span class="w"> </span><span class="n">Q18_Part_1</span><span class="o">:</span><span class="n">Q18_OTHER</span><span class="p">,</span><span class="w">
+          </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+          </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">unite</span><span class="p">(</span><span class="s2">"Q19"</span><span class="p">,</span><span class="w"> </span><span class="n">Q19_Part_1</span><span class="o">:</span><span class="n">Q19_OTHER</span><span class="p">,</span><span class="w">
+          </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+          </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">unite</span><span class="p">(</span><span class="s2">"Q23"</span><span class="p">,</span><span class="w"> </span><span class="n">Q23_Part_1</span><span class="o">:</span><span class="n">Q23_OTHER</span><span class="p">,</span><span class="w">
+          </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+          </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">unite</span><span class="p">(</span><span class="s2">"Q26A"</span><span class="p">,</span><span class="w"> </span><span class="n">Q26_A_Part_1</span><span class="o">:</span><span class="n">Q26_A_OTHER</span><span class="p">,</span><span class="w">
+          </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+          </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">unite</span><span class="p">(</span><span class="s2">"Q26B"</span><span class="p">,</span><span class="w"> </span><span class="n">Q26_B_Part_1</span><span class="o">:</span><span class="n">Q26_B_OTHER</span><span class="p">,</span><span class="w">
+          </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+          </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">unite</span><span class="p">(</span><span class="s2">"Q27A"</span><span class="p">,</span><span class="w"> </span><span class="n">Q27_A_Part_1</span><span class="o">:</span><span class="n">Q27_A_OTHER</span><span class="p">,</span><span class="w">
+          </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+          </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">unite</span><span class="p">(</span><span class="s2">"Q27B"</span><span class="p">,</span><span class="w"> </span><span class="n">Q27_B_Part_1</span><span class="o">:</span><span class="n">Q27_B_OTHER</span><span class="p">,</span><span class="w">
+          </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+          </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">unite</span><span class="p">(</span><span class="s2">"Q28A"</span><span class="p">,</span><span class="w"> </span><span class="n">Q28_A_Part_1</span><span class="o">:</span><span class="n">Q28_A_OTHER</span><span class="p">,</span><span class="w">
+          </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+          </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">unite</span><span class="p">(</span><span class="s2">"Q28B"</span><span class="p">,</span><span class="w"> </span><span class="n">Q28_B_Part_1</span><span class="o">:</span><span class="n">Q28_B_OTHER</span><span class="p">,</span><span class="w">
+          </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+          </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">unite</span><span class="p">(</span><span class="s2">"Q29A"</span><span class="p">,</span><span class="w"> </span><span class="n">Q29_A_Part_1</span><span class="o">:</span><span class="n">Q29_A_OTHER</span><span class="p">,</span><span class="w">
+          </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+          </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">unite</span><span class="p">(</span><span class="s2">"Q29B"</span><span class="p">,</span><span class="w"> </span><span class="n">Q29_B_Part_1</span><span class="o">:</span><span class="n">Q29_B_OTHER</span><span class="p">,</span><span class="w">
+          </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+          </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">unite</span><span class="p">(</span><span class="s2">"Q31A"</span><span class="p">,</span><span class="w"> </span><span class="n">Q31_A_Part_1</span><span class="o">:</span><span class="n">Q31_A_OTHER</span><span class="p">,</span><span class="w">
+          </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+          </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">unite</span><span class="p">(</span><span class="s2">"Q31B"</span><span class="p">,</span><span class="w"> </span><span class="n">Q31_B_Part_1</span><span class="o">:</span><span class="n">Q31_B_OTHER</span><span class="p">,</span><span class="w">
+          </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+          </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">unite</span><span class="p">(</span><span class="s2">"Q33A"</span><span class="p">,</span><span class="w"> </span><span class="n">Q33_A_Part_1</span><span class="o">:</span><span class="n">Q33_A_OTHER</span><span class="p">,</span><span class="w">
+          </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+          </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">unite</span><span class="p">(</span><span class="s2">"Q33B"</span><span class="p">,</span><span class="w"> </span><span class="n">Q33_B_Part_1</span><span class="o">:</span><span class="n">Q33_B_OTHER</span><span class="p">,</span><span class="w">
+          </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+          </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">unite</span><span class="p">(</span><span class="s2">"Q34A"</span><span class="p">,</span><span class="w"> </span><span class="n">Q34_A_Part_1</span><span class="o">:</span><span class="n">Q34_A_OTHER</span><span class="p">,</span><span class="w">
+          </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+          </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">unite</span><span class="p">(</span><span class="s2">"Q34B"</span><span class="p">,</span><span class="w"> </span><span class="n">Q34_B_Part_1</span><span class="o">:</span><span class="n">Q34_B_OTHER</span><span class="p">,</span><span class="w">
+          </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+          </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">unite</span><span class="p">(</span><span class="s2">"Q35A"</span><span class="p">,</span><span class="w"> </span><span class="n">Q35_A_Part_1</span><span class="o">:</span><span class="n">Q35_A_OTHER</span><span class="p">,</span><span class="w">
+          </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+          </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">unite</span><span class="p">(</span><span class="s2">"Q35B"</span><span class="p">,</span><span class="w"> </span><span class="n">Q35_B_Part_1</span><span class="o">:</span><span class="n">Q35_B_OTHER</span><span class="p">,</span><span class="w">
+          </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+          </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">unite</span><span class="p">(</span><span class="s2">"Q36"</span><span class="p">,</span><span class="w"> </span><span class="n">Q36_Part_1</span><span class="o">:</span><span class="n">Q36_OTHER</span><span class="p">,</span><span class="w">
+          </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+          </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">unite</span><span class="p">(</span><span class="s2">"Q37"</span><span class="p">,</span><span class="w"> </span><span class="n">Q37_Part_1</span><span class="o">:</span><span class="n">Q37_OTHER</span><span class="p">,</span><span class="w">
+          </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+          </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">unite</span><span class="p">(</span><span class="s2">"Q39"</span><span class="p">,</span><span class="w"> </span><span class="n">Q39_Part_1</span><span class="o">:</span><span class="n">Q39_OTHER</span><span class="p">,</span><span class="w">
+          </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+          </span><span class="n">na.rm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+  
+  </span><span class="nf">return</span><span class="p">(</span><span class="n">survey</span><span class="p">)</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="n">survey</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">merge_cols</span><span class="p">(</span><span class="n">survey</span><span class="p">)</span><span class="w"> </span><span class="c1"># merge_cols function call</span><span class="w">
+
+</span><span class="nf">dim</span><span class="p">(</span><span class="n">survey</span><span class="p">)</span><span class="w"> </span><span class="c1"># dimension of data</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## [1] 20037    48</code></pre></figure>
+
+<p>We have merge all questions which represents more than one answer columns.</p>
+
+<p>first row contains the survey questions.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># separate questions from dataset</span><span class="w">
+</span><span class="n">questions</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">survey</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">row.names</span><span class="p">(</span><span class="n">survey</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">t</span><span class="p">()</span><span class="w"> </span><span class="c1"># transpose</span><span class="w">
+
+</span><span class="n">survey</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">survey</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="o">!</span><span class="n">row.names</span><span class="p">(</span><span class="n">survey</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="p">)</span></code></pre></figure>
+
+<h2 id="2-exploratory-analysis">2. Exploratory Analysis</h2>
+
+<h2 id="data-scientist">Data Scientist</h2>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">data_scientists</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">survey</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">Q5</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">'Data Scientist'</span><span class="p">)</span></code></pre></figure>
+
+<h3 id="data-scientist-age-distribution">Data Scientist Age distribution</h3>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">data_scientists</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">Q1</span><span class="p">,</span><span class="w"> </span><span class="n">Q2</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="c1"># prepare data</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">Q2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ifelse</span><span class="p">(</span><span class="n">Q2</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"Prefer to self-describe"</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Q2</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"Prefer not to say"</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Q2</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"Nonbinary"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Other"</span><span class="p">,</span><span class="w"> </span><span class="n">Q2</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">Q1</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Q2</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="c1"># create plot</span><span class="w">
+  </span><span class="n">geom_bar</span><span class="p">(</span><span class="n">stat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"count"</span><span class="p">,</span><span class="w"> </span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"dodge2"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_text</span><span class="p">(</span><span class="n">stat</span><span class="o">=</span><span class="s2">"count"</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="n">..count..</span><span class="p">),</span><span class="w"> </span><span class="n">vjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">-0.01</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">scale_fill_viridis_d</span><span class="p">(</span><span class="n">direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">-1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_hline</span><span class="p">(</span><span class="n">yintercept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#333333"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">labs</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Data Scientist Age Group"</span><span class="p">,</span><span class="w">
+       </span><span class="n">subtitle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"# of Data Scientists took kaggle survey, 2020"</span><span class="p">,</span><span class="w">
+       </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+       </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Age"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">bbplot</span><span class="o">::</span><span class="n">bbc_style</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"top"</span><span class="p">,</span><span class="w"> 
+        </span><span class="n">legend.justification</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"left"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">guides</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">guide_legend</span><span class="p">(</span><span class="n">reverse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">))</span></code></pre></figure>
+
+<p><img src="/figs/2020-12-12-kaggle_survey_2020/unnamed-chunk-5-1.png" alt="center" /></p>
+
+<h3 id="most-data-scientists-educational-qualifications">Most data scientists’ educational qualifications?</h3>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">data_scientists</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">Q4</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="c1"># prepare data </span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">Q4</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s1">'NA'</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">Q4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ifelse</span><span class="p">(</span><span class="n">Q4</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"Some college/university study without earning a bachelor’s degree"</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Q4</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"No formal education past high school"</span><span class="p">,</span><span class="w"> </span><span class="s2">"None"</span><span class="p">,</span><span class="w"> </span><span class="n">Q4</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">Q4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">str_remove_all</span><span class="p">(</span><span class="n">Q4</span><span class="p">,</span><span class="w"> </span><span class="s2">"degree"</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">add_count</span><span class="p">(</span><span class="n">Q4</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"count"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">unique</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">count</span><span class="p">),</span><span class="w"> 
+         </span><span class="n">percent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="n">count</span><span class="o">/</span><span class="n">total</span><span class="o">*</span><span class="m">100</span><span class="p">,</span><span class="w"> </span><span class="n">digits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">Q4</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s2">"I prefer not to answer"</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">Q4</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s2">"None"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="n">percent</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="o">=</span><span class="w"> </span><span class="n">Q4</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="c1">#Make plot </span><span class="w">
+  </span><span class="n">geom_bar</span><span class="p">(</span><span class="n">stat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"identity"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">coord_polar</span><span class="p">(</span><span class="n">theta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"y"</span><span class="p">,</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_text</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="n">paste0</span><span class="p">(</span><span class="n">percent</span><span class="p">,</span><span class="w"> </span><span class="s2">"%"</span><span class="p">),</span><span class="w">
+             </span><span class="n">family</span><span class="o">=</span><span class="s2">"Helvetica"</span><span class="p">,</span><span class="w">
+             </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">5</span><span class="p">),</span><span class="w">  
+            </span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">position_stack</span><span class="p">(</span><span class="n">vjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.5</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">labs</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Data Scientists educational qualification"</span><span class="p">,</span><span class="w">
+       </span><span class="n">subtitle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"% of degree holders, 2020 kaggle Survey"</span><span class="p">,</span><span class="w">
+       </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+       </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+       </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">bbplot</span><span class="o">::</span><span class="n">bbc_style</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">guides</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">guide_legend</span><span class="p">(</span><span class="n">reverse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">),</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span></code></pre></figure>
+
+<p><img src="/figs/2020-12-12-kaggle_survey_2020/unnamed-chunk-6-1.png" alt="center" /></p>
+
+<p>Most of Data Scientists have Masters, Bachelors and Doctoral degrees. 
+We can generalize that Data Scientists required one of the above three degrees as this degrees account for 94% of total.</p>
+
+<h3 id="for-how-long-they-are-coding">For how long they are coding?</h3>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">data_scientists</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">Q6</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="c1"># prepare data</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">Q6</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s1">'NA'</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate_if</span><span class="p">(</span><span class="n">is.character</span><span class="p">,</span><span class="w"> </span><span class="n">factor</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">Q6</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fct_relevel</span><span class="p">(</span><span class="n">Q6</span><span class="p">,</span><span class="w"> </span><span class="s2">"I have never written code"</span><span class="p">,</span><span class="w"> </span><span class="s2">"&lt; 1 years"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1-2 years"</span><span class="p">,</span><span class="w"> </span><span class="s2">"3-5 years"</span><span class="p">,</span><span class="w"> </span><span class="s2">"5-10 years"</span><span class="p">,</span><span class="w"> </span><span class="s2">"10-20 years"</span><span class="p">,</span><span class="w"> </span><span class="s2">"20+ years"</span><span class="p">),</span><span class="w">
+         </span><span class="n">Q6</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fct_collapse</span><span class="p">(</span><span class="n">Q6</span><span class="p">,</span><span class="w"> </span><span class="s2">"Never coded"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"I have never written code"</span><span class="p">,</span><span class="w"> </span><span class="s2">"10+ years"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"10-20 years"</span><span class="p">,</span><span class="w"> </span><span class="s2">"20+ years"</span><span class="p">))</span><span class="w">
+         </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">group_by</span><span class="p">(</span><span class="n">Q6</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">count</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">Q6</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_col</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"identity"</span><span class="p">,</span><span class="w"> 
+           </span><span class="n">fill</span><span class="o">=</span><span class="s2">"#1380A1"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_hline</span><span class="p">(</span><span class="n">yintercept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="o">=</span><span class="s2">"#333333"</span><span class="p">)</span><span class="w">  </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_hline</span><span class="p">(</span><span class="n">yintercept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">300</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> 
+             </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"red"</span><span class="p">,</span><span class="w"> </span><span class="n">linetype</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"dashed"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_text</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="n">vjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.01</span><span class="p">,</span><span class="w"> </span><span class="n">family</span><span class="o">=</span><span class="s2">"Helvetica"</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">6</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_label</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"&lt; 1 years"</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">600</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Atleast above 1 year of coding experience must be"</span><span class="p">,</span><span class="w"> </span><span class="n">family</span><span class="o">=</span><span class="s2">"Helvetica"</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">labs</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Coding Experience"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">bbplot</span><span class="o">::</span><span class="n">bbc_style</span><span class="p">()</span><span class="w"> </span></code></pre></figure>
+
+<p><img src="/figs/2020-12-12-kaggle_survey_2020/unnamed-chunk-7-1.png" alt="center" /></p>
+
+<p>Approximately 90% of data scientists have more than 1 year of coding Experience.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">data_scientists</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">Q6</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="c1"># prepare data</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">Q6</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s1">'NA'</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate_if</span><span class="p">(</span><span class="n">is.character</span><span class="p">,</span><span class="w"> </span><span class="n">factor</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">Q6</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fct_relevel</span><span class="p">(</span><span class="n">Q6</span><span class="p">,</span><span class="w"> </span><span class="s2">"I have never written code"</span><span class="p">,</span><span class="w"> </span><span class="s2">"&lt; 1 years"</span><span class="p">,</span><span class="w"> </span><span class="s2">"1-2 years"</span><span class="p">,</span><span class="w"> </span><span class="s2">"3-5 years"</span><span class="p">,</span><span class="w"> </span><span class="s2">"5-10 years"</span><span class="p">,</span><span class="w"> </span><span class="s2">"10-20 years"</span><span class="p">,</span><span class="w"> </span><span class="s2">"20+ years"</span><span class="p">),</span><span class="w">
+         </span><span class="n">Q6</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fct_collapse</span><span class="p">(</span><span class="n">Q6</span><span class="p">,</span><span class="w"> </span><span class="s2">"Never coded"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"I have never written code"</span><span class="p">,</span><span class="w"> </span><span class="s2">"10+ years"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"10-20 years"</span><span class="p">,</span><span class="w"> </span><span class="s2">"20+ years"</span><span class="p">))</span><span class="w">
+         </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">add_count</span><span class="p">(</span><span class="n">Q6</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"count"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">unique</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">count</span><span class="p">),</span><span class="w"> </span><span class="n">percent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">count</span><span class="o">/</span><span class="n">total</span><span class="o">*</span><span class="m">100</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## # A tibble: 6 x 4
+##   Q6          count total percent
+##   &lt;fct&gt;       &lt;int&gt; &lt;int&gt;   &lt;dbl&gt;
+## 1 5-10 years    584  2659   22.0 
+## 2 &lt; 1 years     247  2659    9.29
+## 3 3-5 years     743  2659   27.9 
+## 4 10+ years     578  2659   21.7 
+## 5 1-2 years     460  2659   17.3 
+## 6 Never coded    47  2659    1.77</code></pre></figure>
+
+<p>Coding Experience is must only 47 of the data scientist professional is without any coding experience which account just $1.77%$. At least 1 years of coding experience will increase the chance.</p>
+
+<h3 id="programming-language-used-on-regular-basis-and-recommended">Programming Language used on Regular basis and Recommended.</h3>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">library</span><span class="p">(</span><span class="n">formattable</span><span class="p">)</span><span class="w">
+
+</span><span class="n">data_scientists</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">Q7</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="c1"># prepare data</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">Q7</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s1">'NA'</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">Q7</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">strsplit</span><span class="p">(</span><span class="n">Q7</span><span class="p">,</span><span class="w"> </span><span class="s2">","</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">unnest</span><span class="p">(</span><span class="n">Q7</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">add_count</span><span class="p">(</span><span class="n">Q7</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"count"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">unique</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">rename</span><span class="p">(</span><span class="s2">"Programming language"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Q7</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">count</span><span class="p">),</span><span class="w"> </span><span class="n">percent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="n">count</span><span class="o">/</span><span class="n">total</span><span class="o">*</span><span class="m">100</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">arrange</span><span class="p">(</span><span class="n">desc</span><span class="p">(</span><span class="n">percent</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">formattable</span><span class="p">()</span></code></pre></figure>
+
+<table class="table table-condensed">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> Programming language </th>
+   <th style="text-align:right;"> count </th>
+   <th style="text-align:right;"> total </th>
+   <th style="text-align:right;"> percent </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> Python </td>
+   <td style="text-align:right;"> 2453 </td>
+   <td style="text-align:right;"> 7048 </td>
+   <td style="text-align:right;"> 34.80 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> SQL </td>
+   <td style="text-align:right;"> 1473 </td>
+   <td style="text-align:right;"> 7048 </td>
+   <td style="text-align:right;"> 20.90 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> R </td>
+   <td style="text-align:right;"> 975 </td>
+   <td style="text-align:right;"> 7048 </td>
+   <td style="text-align:right;"> 13.83 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> Bash </td>
+   <td style="text-align:right;"> 405 </td>
+   <td style="text-align:right;"> 7048 </td>
+   <td style="text-align:right;"> 5.75 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> C++ </td>
+   <td style="text-align:right;"> 323 </td>
+   <td style="text-align:right;"> 7048 </td>
+   <td style="text-align:right;"> 4.58 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> Java </td>
+   <td style="text-align:right;"> 305 </td>
+   <td style="text-align:right;"> 7048 </td>
+   <td style="text-align:right;"> 4.33 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> Javascript </td>
+   <td style="text-align:right;"> 290 </td>
+   <td style="text-align:right;"> 7048 </td>
+   <td style="text-align:right;"> 4.11 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> C </td>
+   <td style="text-align:right;"> 247 </td>
+   <td style="text-align:right;"> 7048 </td>
+   <td style="text-align:right;"> 3.50 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> Other </td>
+   <td style="text-align:right;"> 245 </td>
+   <td style="text-align:right;"> 7048 </td>
+   <td style="text-align:right;"> 3.48 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> MATLAB </td>
+   <td style="text-align:right;"> 242 </td>
+   <td style="text-align:right;"> 7048 </td>
+   <td style="text-align:right;"> 3.43 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> Julia </td>
+   <td style="text-align:right;"> 71 </td>
+   <td style="text-align:right;"> 7048 </td>
+   <td style="text-align:right;"> 1.01 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> Swift </td>
+   <td style="text-align:right;"> 14 </td>
+   <td style="text-align:right;"> 7048 </td>
+   <td style="text-align:right;"> 0.20 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> None </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 7048 </td>
+   <td style="text-align:right;"> 0.07 </td>
+  </tr>
+</tbody>
+</table>
+
+<p>By far Python, SQL, R are most Important language.
+We have to compare to recommended language by data scientists.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">data_scientists</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">Q8</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">Q8</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s1">'NA'</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">add_count</span><span class="p">(</span><span class="n">Q8</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"count"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">unique</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">count</span><span class="p">),</span><span class="w"> </span><span class="n">percent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">count</span><span class="o">/</span><span class="n">total</span><span class="o">*</span><span class="m">100</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">arrange</span><span class="p">(</span><span class="n">desc</span><span class="p">(</span><span class="n">percent</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">percent</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="n">percent</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Q8</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_bar</span><span class="p">(</span><span class="n">stat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"identity"</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">coord_polar</span><span class="p">(</span><span class="n">theta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"y"</span><span class="p">,</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_hline</span><span class="p">(</span><span class="n">yintercept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="o">=</span><span class="s2">"#333333"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_text</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="nf">round</span><span class="p">(</span><span class="n">percent</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">),</span><span class="w"> </span><span class="s2">"%"</span><span class="p">)),</span><span class="w">
+            </span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">position_stack</span><span class="p">(</span><span class="n">vjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.58</span><span class="p">),</span><span class="w">
+             </span><span class="n">family</span><span class="o">=</span><span class="s2">"Helvetica"</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">5</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">scale_fill_manual</span><span class="p">(</span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"#FAAB18"</span><span class="p">,</span><span class="w"> </span><span class="s2">"#1380A1"</span><span class="p">,</span><span class="s2">"#990000"</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">bbplot</span><span class="o">::</span><span class="n">bbc_style</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">labs</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Recommended Language"</span><span class="p">,</span><span class="w">
+       </span><span class="n">subtitle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"% of Data Scientist recommended"</span><span class="p">)</span></code></pre></figure>
+
+<p><img src="/figs/2020-12-12-kaggle_survey_2020/unnamed-chunk-10-1.png" alt="center" /></p>
+
+<p>By far Python, SQL, R are most used and recommended by Data Scientists.</p>
+
+<h3 id="hardware-required-on-day-to-day-basis">Hardware Required on day-to-day basis?</h3>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">data_scientists</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">Q11</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="c1"># prepare data</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">Q11</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s1">'NA'</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">add_count</span><span class="p">(</span><span class="n">Q11</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"count"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">unique</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">Q11</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">recode_factor</span><span class="p">(</span><span class="n">Q11</span><span class="p">,</span><span class="w"> </span><span class="s2">"A cloud computing platform (AWS, Azure, GCP, hosted notebooks, etc)"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"cloud platform"</span><span class="p">,</span><span class="w"> </span><span class="s2">"A personal computer or laptop"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"PC or laptop"</span><span class="p">,</span><span class="w"> </span><span class="s2">"A deep learning workstation (NVIDIA GTX, LambdaLabs, etc)"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"workstation"</span><span class="p">),</span><span class="w">
+         </span><span class="n">Q11</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fct_reorder</span><span class="p">(</span><span class="n">Q11</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">Q11</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="c1"># make plot</span><span class="w">
+  </span><span class="n">geom_col</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_col</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s2">"identity"</span><span class="p">,</span><span class="w"> 
+           </span><span class="n">fill</span><span class="o">=</span><span class="s2">"#1380A1"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_hline</span><span class="p">(</span><span class="n">yintercept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="o">=</span><span class="s2">"#333333"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_text</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">count</span><span class="p">),</span><span class="w"> </span><span class="n">vjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">-0.05</span><span class="p">,</span><span class="w"> 
+            </span><span class="n">family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Helvetica"</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">6</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">bbplot</span><span class="o">::</span><span class="n">bbc_style</span><span class="p">()</span></code></pre></figure>
+
+<p><img src="/figs/2020-12-12-kaggle_survey_2020/unnamed-chunk-11-1.png" alt="center" /></p>
+
+<p>Most of them required no special hardware to do data related tasks.
+Most of the Data Scientists(86% of data scientists) used hardware:</p>
+<ol>
+  <li>Personal Computers(64%)</li>
+  <li>Cloud Platforms(23%)</li>
+</ol>
+
+<h3 id="most-preferred-coding-environment">Most preferred coding environment?</h3>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">data_scientists</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">Q10</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="c1"># prepare data</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">Q10</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s2">"NA"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">Q10</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">strsplit</span><span class="p">(</span><span class="n">Q10</span><span class="p">,</span><span class="w"> </span><span class="s2">","</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">unnest</span><span class="p">(</span><span class="n">Q10</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">group_by</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">add_count</span><span class="p">(</span><span class="n">Q10</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"count"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">unique</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">Q10</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fct_reorder</span><span class="p">(</span><span class="n">Q10</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">count</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">15</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">Q10</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_col</span><span class="p">(</span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"identity"</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="o">=</span><span class="s2">"#1380A1"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">coord_flip</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_hline</span><span class="p">(</span><span class="n">yintercept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="o">=</span><span class="s2">"#333333"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_text</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">count</span><span class="p">),</span><span class="w"> </span><span class="n">hjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">vjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> 
+            </span><span class="n">family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Helvetica"</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"white"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">labs</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Notebooks"</span><span class="p">,</span><span class="w">
+       </span><span class="n">subtitle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"# of Data Scientist used Notebooks"</span><span class="p">)</span><span class="o">+</span><span class="w">
+  </span><span class="n">bbplot</span><span class="o">::</span><span class="n">bbc_style</span><span class="p">()</span></code></pre></figure>
+
+<p><img src="/figs/2020-12-12-kaggle_survey_2020/unnamed-chunk-12-1.png" alt="center" /></p>
+
+<ol>
+  <li>Colab Notebooks</li>
+  <li>Kaggle Notebooks</li>
+</ol>
+
+<p>are most preferred notebooks.</p>
+
+<h3 id="must-know-librariesmethods-">Must know Libraries/Methods ?</h3>
+
+<h4 id="visualization-libraries">visualization libraries</h4>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># visualization library</span><span class="w">
+</span><span class="n">data_scientists</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">Q14</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="c1"># prepare data</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">Q14</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s1">'NA'</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">Q14</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">strsplit</span><span class="p">(</span><span class="n">Q14</span><span class="p">,</span><span class="w"> </span><span class="s2">","</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">unnest</span><span class="p">(</span><span class="n">Q14</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">add_count</span><span class="p">(</span><span class="n">Q14</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"count"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">Q14</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fct_reorder</span><span class="p">(</span><span class="n">Q14</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">unique</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">as.factor</span><span class="p">(</span><span class="n">Q14</span><span class="p">),</span><span class="w"> </span><span class="n">count</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#FAAB18"</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="c1"># make plot</span><span class="w">
+  </span><span class="n">geom_line</span><span class="p">(</span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#333333"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_hline</span><span class="p">(</span><span class="n">yintercept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#333333"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_text</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">count</span><span class="p">),</span><span class="w"> </span><span class="n">vjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">-0.5</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"black"</span><span class="p">,</span><span class="w">
+            </span><span class="n">family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Helvetica"</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">6</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">scale_colour_manual</span><span class="p">(</span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#FAAB18"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">coord_flip</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">labs</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> 
+       </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+       </span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Visualization Libraries"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"none"</span><span class="p">,</span><span class="w"> 
+        </span><span class="n">axis.text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="w"> </span><span class="m">14</span><span class="p">,</span><span class="w"> </span><span class="n">family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Helvetica"</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#333333"</span><span class="p">),</span><span class="w"> 
+        </span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="w"> </span><span class="m">14</span><span class="p">,</span><span class="w"> </span><span class="n">family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Helvetica"</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#333333"</span><span class="p">))</span></code></pre></figure>
+
+<p><img src="/figs/2020-12-12-kaggle_survey_2020/unnamed-chunk-13-1.png" alt="center" /></p>
+
+<p>Visualization library curve increases exponential. This libraries are most used one:</p>
+<ol>
+  <li>Shiny</li>
+  <li>Ggplot</li>
+  <li>Plotly</li>
+  <li>Seaborn</li>
+  <li>Matplotlib</li>
+</ol>
+
+<h4 id="common-machine-learning-methods-used">Common Machine Learning Methods used?</h4>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">ml_library</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as_tibble</span><span class="p">(</span><span class="n">gsub</span><span class="p">(</span><span class="s2">"\\s*\\([^\\)]+\\)"</span><span class="p">,</span><span class="s2">""</span><span class="p">,</span><span class="w">
+                   </span><span class="nf">as.character</span><span class="p">(</span><span class="n">data_scientists</span><span class="o">$</span><span class="n">Q17</span><span class="p">)</span><span class="w">
+                   </span><span class="p">))</span><span class="w">
+
+</span><span class="c1"># prepare data</span><span class="w">
+</span><span class="n">ml_library</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ml_library</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">strsplit</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="s2">","</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">unnest</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">add_count</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"count"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">unique</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">count</span><span class="p">),</span><span class="w"> </span><span class="n">percent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">round</span><span class="p">((</span><span class="n">count</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">total</span><span class="p">)</span><span class="o">*</span><span class="m">100</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">))</span><span class="w">
+
+</span><span class="c1"># make plot</span><span class="w">
+</span><span class="n">ml_library</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s2">"NA"</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">percent</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fct_reorder</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">percent</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="n">percent</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_col</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_text</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="n">percent</span><span class="p">,</span><span class="w"> </span><span class="s2">"%"</span><span class="p">)),</span><span class="w"> </span><span class="n">vjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> 
+            </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"white"</span><span class="p">,</span><span class="w"> </span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">position_stack</span><span class="p">(</span><span class="n">vjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.5</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">coord_polar</span><span class="p">(</span><span class="n">theta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"y"</span><span class="p">,</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_hline</span><span class="p">(</span><span class="n">yintercept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#333333"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">labs</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"ML Methods"</span><span class="p">,</span><span class="w">
+       </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+       </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+       </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"left"</span><span class="p">,</span><span class="w">
+        </span><span class="n">axis.text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="w"> </span><span class="m">14</span><span class="p">,</span><span class="w"> </span><span class="n">family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Helvetica"</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#333333"</span><span class="p">),</span><span class="w"> 
+        </span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="w"> </span><span class="m">14</span><span class="p">,</span><span class="w"> </span><span class="n">family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Helvetica"</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#333333"</span><span class="p">))</span><span class="w"> </span></code></pre></figure>
+
+<p><img src="/figs/2020-12-12-kaggle_survey_2020/unnamed-chunk-14-1.png" alt="center" /></p>
+
+<p>Most methods used by data scientists are:</p>
+<ol>
+  <li>Linear or Logistic Regression.</li>
+  <li>Decision Trees or Random Forest</li>
+  <li>Gradient Boosting Machines</li>
+</ol>
+
+<p>more than 50% of data scientists used this ml methods on daily basis.</p>
+
+<h4 id="computer-vision-methods-to-know">Computer Vision Methods to know?</h4>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">cv_algo</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as_tibble</span><span class="p">(</span><span class="n">gsub</span><span class="p">(</span><span class="s2">"\\s*\\([^\\)]+\\)"</span><span class="p">,</span><span class="s2">""</span><span class="p">,</span><span class="w">
+                   </span><span class="nf">as.character</span><span class="p">(</span><span class="n">data_scientists</span><span class="o">$</span><span class="n">Q18</span><span class="p">)</span><span class="w">
+                   </span><span class="p">))</span><span class="w">
+
+</span><span class="c1"># prepare data</span><span class="w">
+</span><span class="n">cv_algo</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">cv_algo</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">strsplit</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="s2">","</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">unnest</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">add_count</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"count"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">unique</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">count</span><span class="p">),</span><span class="w"> </span><span class="n">percent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">round</span><span class="p">((</span><span class="n">count</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">total</span><span class="p">)</span><span class="o">*</span><span class="m">100</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">))</span><span class="w"> 
+  
+</span><span class="c1"># make a table</span><span class="w">
+</span><span class="n">cv_algo</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">arrange</span><span class="p">(</span><span class="n">desc</span><span class="p">(</span><span class="n">count</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">formattable</span><span class="p">()</span></code></pre></figure>
+
+<table class="table table-condensed">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> value </th>
+   <th style="text-align:right;"> count </th>
+   <th style="text-align:right;"> total </th>
+   <th style="text-align:right;"> percent </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> Image classification and other general purpose networks </td>
+   <td style="text-align:right;"> 679 </td>
+   <td style="text-align:right;"> 2259 </td>
+   <td style="text-align:right;"> 30.06 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> General purpose image/video tools </td>
+   <td style="text-align:right;"> 429 </td>
+   <td style="text-align:right;"> 2259 </td>
+   <td style="text-align:right;"> 18.99 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> Image segmentation methods </td>
+   <td style="text-align:right;"> 396 </td>
+   <td style="text-align:right;"> 2259 </td>
+   <td style="text-align:right;"> 17.53 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> Object detection methods </td>
+   <td style="text-align:right;"> 387 </td>
+   <td style="text-align:right;"> 2259 </td>
+   <td style="text-align:right;"> 17.13 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> None </td>
+   <td style="text-align:right;"> 187 </td>
+   <td style="text-align:right;"> 2259 </td>
+   <td style="text-align:right;"> 8.28 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> Generative Networks </td>
+   <td style="text-align:right;"> 173 </td>
+   <td style="text-align:right;"> 2259 </td>
+   <td style="text-align:right;"> 7.66 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> Other </td>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> 2259 </td>
+   <td style="text-align:right;"> 0.35 </td>
+  </tr>
+</tbody>
+</table>
+
+<p>Most important OpenCV methods are:</p>
+
+<ol>
+  <li>Image classification and other general purpose networks</li>
+  <li>General purpose image/video tools</li>
+  <li>Image segmentation methods</li>
+  <li>Object detection methods</li>
+</ol>
+
+<h3 id="nlp-methods-to-know">NLP Methods to know?</h3>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">require</span><span class="p">(</span><span class="n">pack</span><span class="p">)</span><span class="w">
+</span><span class="n">nlp</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as_tibble</span><span class="p">(</span><span class="n">gsub</span><span class="p">(</span><span class="s2">"\\s*\\([^\\)]+\\)"</span><span class="p">,</span><span class="s2">""</span><span class="p">,</span><span class="w">
+                   </span><span class="nf">as.character</span><span class="p">(</span><span class="n">data_scientists</span><span class="o">$</span><span class="n">Q19</span><span class="p">)</span><span class="w">
+                   </span><span class="p">))</span><span class="w">
+
+</span><span class="c1"># prepare data</span><span class="w">
+</span><span class="n">nlp</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">nlp</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">strsplit</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="s2">","</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">unnest</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">add_count</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"count"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">unique</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">count</span><span class="p">),</span><span class="w"> </span><span class="n">percent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">round</span><span class="p">((</span><span class="n">count</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">total</span><span class="p">)</span><span class="o">*</span><span class="m">100</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">))</span><span class="w"> 
+
+
+</span><span class="c1"># make plot</span><span class="w">
+</span><span class="n">bubbles</span><span class="o">::</span><span class="n">bubbles</span><span class="p">(</span><span class="n">nlp</span><span class="o">$</span><span class="n">percent</span><span class="p">,</span><span class="w"> </span><span class="n">nlp</span><span class="o">$</span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rainbow</span><span class="p">(</span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="n">alpha</span><span class="o">=</span><span class="kc">NULL</span><span class="p">)[</span><span class="m">6</span><span class="p">],</span><span class="w"> </span><span class="n">width</span><span class="o">=</span><span class="m">1000</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="o">=</span><span class="m">900</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in loadNamespace(name): there is no package called 'bubbles'</code></pre></figure>
+
+<p>Most used Natural language Processing models are:</p>
+<ol>
+  <li>Transformer language models</li>
+  <li>Word embeddings/vectors</li>
+  <li>Encoder-decoder models</li>
+  <li>Contextualized embeddings</li>
+</ol>
+
+<h3 id="most-famous-cloud-services-among-data-scientists">Most famous cloud services among data scientists?</h3>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">count</span><span class="p">(</span><span class="n">data_scientists</span><span class="p">)</span><span class="w"> </span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## # A tibble: 1 x 1
+##       n
+##   &lt;int&gt;
+## 1  2676</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">data_scientists</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">Q26A</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">Q26A</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s2">""</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">summarise</span><span class="p">(</span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">(),</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2676</span><span class="p">,</span><span class="w"> </span><span class="n">percent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">count</span><span class="o">/</span><span class="n">total</span><span class="o">*</span><span class="m">100</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## # A tibble: 1 x 3
+##   count total percent
+##   &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;
+## 1  1772  2676    66.2</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">data_scientists</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">Q26A</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">Q26A</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s2">""</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">Q26A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">strsplit</span><span class="p">(</span><span class="n">Q26A</span><span class="p">,</span><span class="w"> </span><span class="s2">","</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">unnest</span><span class="p">(</span><span class="n">Q26A</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">add_count</span><span class="p">(</span><span class="n">Q26A</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"count"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">unique</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">arrange</span><span class="p">(</span><span class="n">desc</span><span class="p">(</span><span class="n">count</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">count</span><span class="p">),</span><span class="w"> </span><span class="n">percent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="n">count</span><span class="o">/</span><span class="n">total</span><span class="o">*</span><span class="m">100</span><span class="p">,</span><span class="m">0</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">percent</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="n">percent</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Q26A</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_bar</span><span class="p">(</span><span class="n">stat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"identity"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_text</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="n">percent</span><span class="p">,</span><span class="w"> </span><span class="s2">"%"</span><span class="p">)),</span><span class="w"> 
+            </span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">position_stack</span><span class="p">(</span><span class="n">vjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.5</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">coord_polar</span><span class="p">(</span><span class="n">theta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"y"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">labs</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Cloud Platform"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">axis.text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="w"> </span><span class="m">14</span><span class="p">,</span><span class="w"> </span><span class="n">family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Helvetica"</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#333333"</span><span class="p">),</span><span class="w"> 
+        </span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="w"> </span><span class="m">14</span><span class="p">,</span><span class="w"> </span><span class="n">family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Helvetica"</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#333333"</span><span class="p">))</span></code></pre></figure>
+
+<p><img src="/figs/2020-12-12-kaggle_survey_2020/unnamed-chunk-17-1.png" alt="center" /></p>
+
+<p>Most used cloud-platform by data scientists:</p>
+<ol>
+  <li>AWS</li>
+  <li>GCP</li>
+  <li>Azure</li>
+</ol>
+
+<h2 id="database-to-used-for-big-data">Database to used for Big data?</h2>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># prepare data</span><span class="w">
+</span><span class="n">database</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data_scientists</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">Q29A</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">Q29A</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s2">""</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">Q29A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">strsplit</span><span class="p">(</span><span class="n">Q29A</span><span class="p">,</span><span class="w"> </span><span class="s2">","</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">unnest</span><span class="p">(</span><span class="n">Q29A</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">add_count</span><span class="p">(</span><span class="n">Q29A</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"count"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">unique</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">arrange</span><span class="p">(</span><span class="n">desc</span><span class="p">(</span><span class="n">count</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">count</span><span class="p">),</span><span class="w"> </span><span class="n">percent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="n">count</span><span class="o">/</span><span class="n">total</span><span class="o">*</span><span class="m">100</span><span class="p">,</span><span class="m">0</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">Q29A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fct_reorder</span><span class="p">(</span><span class="n">Q29A</span><span class="p">,</span><span class="w"> </span><span class="n">percent</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">percent</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w">
+  
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">database</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">Q29A</span><span class="p">,</span><span class="w"> </span><span class="n">percent</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_col</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ifelse</span><span class="p">(</span><span class="n">database</span><span class="o">$</span><span class="n">Q29A</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"None"</span><span class="p">,</span><span class="s2">"#1380A1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"#FAAB18"</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_text</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="n">percent</span><span class="p">,</span><span class="w"> </span><span class="s2">"%"</span><span class="p">)),</span><span class="w"> 
+            </span><span class="n">hjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">vjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> 
+            </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ifelse</span><span class="p">(</span><span class="n">database</span><span class="o">$</span><span class="n">Q29A</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"None"</span><span class="p">,</span><span class="w"> </span><span class="s2">"white"</span><span class="p">,</span><span class="w"> </span><span class="s2">"black"</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">coord_flip</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">labs</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Database"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_hline</span><span class="p">(</span><span class="n">yintercept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#333333"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">bbplot</span><span class="o">::</span><span class="n">bbc_style</span><span class="p">()</span></code></pre></figure>
+
+<p><img src="/figs/2020-12-12-kaggle_survey_2020/unnamed-chunk-18-1.png" alt="center" /></p>
+
+<p>Data Scientists don’t have any clear preference in database.</p>
+
+<h2 id="most-used-bussiness-intelligence-software">Most used Bussiness Intelligence software?</h2>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">data_scientists</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">Q31A</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">Q31A</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s2">""</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">Q31A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">strsplit</span><span class="p">(</span><span class="n">Q31A</span><span class="p">,</span><span class="w"> </span><span class="s2">","</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">unnest</span><span class="p">(</span><span class="n">Q31A</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">add_count</span><span class="p">(</span><span class="n">Q31A</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"count"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">unique</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">arrange</span><span class="p">(</span><span class="n">desc</span><span class="p">(</span><span class="n">count</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">count</span><span class="p">),</span><span class="w"> </span><span class="n">percent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="n">count</span><span class="o">/</span><span class="n">total</span><span class="o">*</span><span class="m">100</span><span class="p">,</span><span class="m">0</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">Q31A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fct_reorder</span><span class="p">(</span><span class="n">Q31A</span><span class="p">,</span><span class="w"> </span><span class="n">percent</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">percent</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">Q31A</span><span class="p">,</span><span class="w"> </span><span class="n">percent</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_col</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#990000"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_text</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="n">percent</span><span class="p">,</span><span class="w"> </span><span class="s2">"%"</span><span class="p">)),</span><span class="w"> </span><span class="n">hjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">vjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"white"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_hline</span><span class="p">(</span><span class="n">yintercept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#333333"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">bbplot</span><span class="o">::</span><span class="n">bbc_style</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">axis.text.x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">angle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">12</span><span class="p">))</span></code></pre></figure>
+
+<p><img src="/figs/2020-12-12-kaggle_survey_2020/unnamed-chunk-19-1.png" alt="center" /></p>
+
+<p>Out of our sample only 60% of data scientists used BI tools. 
+Out of them:</p>
+<ol>
+  <li>Tableau</li>
+  <li>Microsoft Power BI
+are most preferred.</li>
+</ol>
+
+<h3 id="where-most-of-the-data-scientists-preferred-to-deploy-there-work">Where most of the data scientists preferred to deploy there work?</h3>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># prepare data</span><span class="w">
+</span><span class="n">deploy</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data_scientists</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">Q36</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">Q36</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s2">""</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">Q36</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">strsplit</span><span class="p">(</span><span class="n">Q36</span><span class="p">,</span><span class="w"> </span><span class="s2">","</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">unnest</span><span class="p">(</span><span class="n">Q36</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">add_count</span><span class="p">(</span><span class="n">Q36</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"count"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">unique</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">arrange</span><span class="p">(</span><span class="n">desc</span><span class="p">(</span><span class="n">count</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">Q36</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ifelse</span><span class="p">(</span><span class="n">Q36</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"I do not share my work publicly"</span><span class="p">,</span><span class="w">
+                      </span><span class="s2">"No sharing"</span><span class="p">,</span><span class="w"> </span><span class="n">Q36</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate_if</span><span class="p">(</span><span class="n">is.character</span><span class="p">,</span><span class="w"> </span><span class="n">factor</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">count</span><span class="p">),</span><span class="w"> </span><span class="n">percent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="n">count</span><span class="o">/</span><span class="n">total</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">100</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">Q36</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fct_reorder</span><span class="p">(</span><span class="n">Q36</span><span class="p">,</span><span class="w"> </span><span class="n">percent</span><span class="p">))</span><span class="w">
+
+</span><span class="c1"># make a plot</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">deploy</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">Q36</span><span class="p">,</span><span class="w"> </span><span class="n">percent</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_col</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ifelse</span><span class="p">(</span><span class="n">deploy</span><span class="o">$</span><span class="n">Q36</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"No sharing"</span><span class="p">,</span><span class="w"> 
+                         </span><span class="s2">"#1380A1"</span><span class="p">,</span><span class="s2">"#588300"</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_text</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="n">percent</span><span class="p">,</span><span class="w"> </span><span class="s2">"%"</span><span class="p">)),</span><span class="w"> 
+            </span><span class="n">hjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.3</span><span class="p">,</span><span class="w"> </span><span class="n">vjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">-0.1</span><span class="p">,</span><span class="w"> </span><span class="n">family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Helvetica"</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">5</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_hline</span><span class="p">(</span><span class="n">yintercept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#333333"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">bbplot</span><span class="o">::</span><span class="n">bbc_style</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">axis.text.x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">angle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">18</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">12</span><span class="p">))</span></code></pre></figure>
+
+<p><img src="/figs/2020-12-12-kaggle_survey_2020/unnamed-chunk-20-1.png" alt="center" /></p>
+
+<ol>
+  <li>Github</li>
+  <li>Kaggle</li>
+  <li>Colab</li>
+</ol>
+
+<p>are most preferred platform to public show there work.</p>
+
+<h2 id="summary">Summary</h2>
+
+<p>We can conclude from above exploration skills, education, Hardware and  experience required to be a data scientists.</p>
+<ol>
+  <li><strong>Education</strong>: Most of the employers preferred employee’s with Masters degree.</li>
+  <li><strong>Language to learn</strong> : Python, SQL, R</li>
+  <li><strong>Coding Experience</strong>: greater than 1 year
+4.<strong>Specific Hardware required</strong>: I don’t think so most of them use PC or laptop. I think midrange configuration laptops or PC are sufficient for most of the data scientists tasks.</li>
+  <li><strong>Must have skills(Knowledge)</strong>: 
+    - <strong>visualization Libraries</strong>: Shiny, Ggplot, Plotly, Seaborn, Matplotlib.
+    - <strong>ML Methods(Concepts must have)</strong>:  Linear or Logistic Regression, Decision Trees or Random Forest, Gradient Boosting Machines, Neural Networks(CNN, RNN).
+    - <strong>Compuer Vision(concepts must have)</strong>: Image classification and other general purpose networks, General purpose image/video tools, Image segmentation methods, Object detection methods.
+    - <strong>NLP(concepts must have)</strong>: Transformer language models, Word embeddings/vectors, Encoder-decoder models, Contextualized embeddings
+    -<strong>BI software to know</strong>: Tableau, Microsoft Power BI.</li>
+  <li><strong>Notebooks used and Platform to deploy Work</strong>
+    <ul>
+      <li><strong>Notebooks(should be familiar with)</strong> Colab,Kaggle</li>
+      <li><strong>Platform to deploy to show skills(work)</strong>: Github, Kaggle, Colab.</li>
+    </ul>
+  </li>
+</ol>
+
+<p>(<strong>Note</strong>: data scientist position is a mixture of a lot of roles)</p>
+
+<p><img src="https://miro.medium.com/max/2400/1*bw6Q4AkG9l6vZqaRgOAkfA.png" alt="Source: Jason Jung" /></p>
+
+<p>Reference:</p>
+
+<ol>
+  <li><a href="https://towardsdatascience.com/mlevsds-3c89425baabb">Machine Learning Engineer vs Data Scientist (Is Data Science Over?)</a></li>
+</ol>
+
+
+      <hr />
+      <footer role="contentinfo">
+        <div class="article-author-bottom">
+          
+
+
+	<img src="http://localhost:4000/images/abhishekbongale.jpg" class="bio-photo" alt="Abhishek Bongale bio photo">
+
+<h3>Abhishek Bongale</h3>
+<p>AI student at the Dublin City University. Interested in mathematics, software development, Vim, design.</p>
+<a href="mailto:abhibongale97@gmail.com" class="author-social" target="_blank"><i class="fa fa-envelope-square"></i> Email</a>
+<a href="http://twitter.com/abhibongale" class="author-social" target="_blank"><i class="fa fa-twitter-square"></i> Twitter</a>
+
+
+
+
+
+<a href="http://github.com/abhibongale" class="author-social" target="_blank"><i class="fa fa-github"></i> Github</a>
+<a href="http://stackoverflow.com/users/8269522" class="author-social" target="_blank"><i class="fa fa-stack-overflow"></i> Stack Overflow</a>
+
+
+
+
+
+
+<h4>Subscribe</h4>
+
+<form method='post' action='http://blogtrottr.com'>
+    <input type='text' name='btr_email' placeholder = 'Your email'/><br />
+    <input type='hidden' name='btr_url' value='http://dataexplained.in/feed.xml' />
+    <input type='hidden' name='schedule_type' value='0' />
+    <input type='submit' class="styled-button-4" value='Subscribe to this blog' />
+</form>
+
+<style type="text/css"> 
+.styled-button-4 {
+	-webkit-box-shadow:rgba(0,0,0,0.98) 0 1px 0 0;
+	-moz-box-shadow:rgba(0,0,0,0.98) 0 1px 0 0;
+	box-shadow:rgba(0,0,0,0.98) 0 1px 0 0;
+	background-color:#EEE;
+	border-radius:0;
+	-webkit-border-radius:0;
+	-moz-border-radius:0;
+	border:1px solid #999;
+	color:#666;
+	font-family:'Lucida Grande',Tahoma,Verdana,Arial,Sans-serif;
+	font-size:11px;
+	font-weight:700;
+	padding:2px 6px;
+	height:28px
+}
+</style>
+
+
+<h4>Recommended Blogs</h4>
+<ul>
+    <li><a href="http://www.r-bloggers.com/">R Bloggers</a></li>
+    <li><a href="http://blog.rstudio.org/">RStudio Blog</a></li>
+    <li><a href="http://r4stats.com/">R4Stats</a></li>
+    <li><a href="http://simplystatistics.org/">Simply Statistics</a></li>
+</ul>
+
+        </div>
+        <p class="byline"><strong>What's it takes to be a Data Scientists</strong> was published on <time datetime="2021-01-28T00:00:00+05:30">January 28, 2021</time>.</p>
+      </footer>
+    </div><!-- /.article-wrap -->
+  
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+  
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrap">
+  <div class="related-articles">
+  <h4>You might also enjoy <small class="pull-right">(<a href="http://localhost:4000/posts/">View all posts</a>)</small></h4>
+    <ul>
+    
+      <li><a href="http://localhost:4000/r/netflix-shows/" title="Netflix Shows">Netflix Shows</a></li>
+    
+      <li><a href="http://localhost:4000/r/un-votes/" title="UN Votes">UN Votes</a></li>
+    
+      <li><a href="http://localhost:4000/r/video-games-and-sliced/" title="Video Games and Sliced">Video Games and Sliced</a></li>
+    
+    </ul>
+    <hr />
+  </div><!-- /.related-articles -->
+  <footer>
+    
+
+<span>&copy; 2021 Abhishek Bongale. Powered by <a href="http://jekyllrb.com">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/">Minimal Mistakes</a> theme.</span>
+
+  </footer>
+</div><!-- /.footer-wrap -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="http://localhost:4000/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="http://localhost:4000/assets/js/scripts.min.js"></script>
+
+
+  
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'dataexplained'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+	        
+
+</body>
+</html>

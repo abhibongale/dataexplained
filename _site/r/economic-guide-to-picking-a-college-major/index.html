@@ -1,0 +1,947 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Economic Guide to Picking a College Major - A tidy analysis &#8211; Data Explained</title>
+<meta name="description" content="
+library(tidyverse)
+theme_set(theme_light())
+">
+<meta name="keywords" content="r, statistics">
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="Economic Guide to Picking a College Major - A tidy analysis">
+<meta name="twitter:description" content="
+library(tidyverse)
+theme_set(theme_light())
+">
+<meta name="twitter:site" content="@abhibongale">
+<meta name="twitter:creator" content="@abhibongale">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://localhost:4000/images/default-thumb.png">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Economic Guide to Picking a College Major - A tidy analysis">
+<meta property="og:description" content="
+library(tidyverse)
+theme_set(theme_light())
+">
+<meta property="og:url" content="http://localhost:4000/r/economic-guide-to-picking-a-college-major/">
+<meta property="og:site_name" content="Data Explained">
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/r/economic-guide-to-picking-a-college-major/">
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Data Explained Feed">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+	<script src="http://localhost:4000/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="http://localhost:4000/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="http://localhost:4000/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<!-- MathJax -->
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<link href='//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700%7CPT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://localhost:4000/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144-precomposed.png">
+
+<!-- Google Analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-57723549-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+</head>
+
+<body class="post">
+
+<!--[if lt IE 9]><div class="browser-upgrade alert alert-info">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]-->
+
+<div class="navigation-wrapper">
+	<div class="site-name">
+		<a href="http://localhost:4000">Data Explained</a>
+	</div><!-- /.site-name -->
+	<div class="top-navigation">
+		<nav role="navigation" id="site-nav" class="nav">
+		    <ul>
+		        
+					    
+					    <li><a href="http://localhost:4000/about/" >About Me</a></li>
+					  
+					    
+					    <li><a href="http://localhost:4000/posts/" >Posts</a></li>
+					  
+		    </ul>
+		</nav>
+	</div><!-- /.top-navigation -->
+</div><!-- /.navigation-wrapper -->
+
+
+
+<div id="main" role="main">
+  <div class="article-author-side">
+    
+
+
+	<img src="http://localhost:4000/images/abhishekbongale.jpg" class="bio-photo" alt="Abhishek Bongale bio photo">
+
+<h3>Abhishek Bongale</h3>
+<p>AI student at the Dublin City University. Interested in mathematics, software development, Vim, design.</p>
+<a href="mailto:abhibongale97@gmail.com" class="author-social" target="_blank"><i class="fa fa-envelope-square"></i> Email</a>
+<a href="http://twitter.com/abhibongale" class="author-social" target="_blank"><i class="fa fa-twitter-square"></i> Twitter</a>
+
+
+
+
+
+<a href="http://github.com/abhibongale" class="author-social" target="_blank"><i class="fa fa-github"></i> Github</a>
+<a href="http://stackoverflow.com/users/8269522" class="author-social" target="_blank"><i class="fa fa-stack-overflow"></i> Stack Overflow</a>
+
+
+
+
+
+
+<h4>Subscribe</h4>
+
+<form method='post' action='http://blogtrottr.com'>
+    <input type='text' name='btr_email' placeholder = 'Your email'/><br />
+    <input type='hidden' name='btr_url' value='http://dataexplained.in/feed.xml' />
+    <input type='hidden' name='schedule_type' value='0' />
+    <input type='submit' class="styled-button-4" value='Subscribe to this blog' />
+</form>
+
+<style type="text/css"> 
+.styled-button-4 {
+	-webkit-box-shadow:rgba(0,0,0,0.98) 0 1px 0 0;
+	-moz-box-shadow:rgba(0,0,0,0.98) 0 1px 0 0;
+	box-shadow:rgba(0,0,0,0.98) 0 1px 0 0;
+	background-color:#EEE;
+	border-radius:0;
+	-webkit-border-radius:0;
+	-moz-border-radius:0;
+	border:1px solid #999;
+	color:#666;
+	font-family:'Lucida Grande',Tahoma,Verdana,Arial,Sans-serif;
+	font-size:11px;
+	font-weight:700;
+	padding:2px 6px;
+	height:28px
+}
+</style>
+
+
+<h4>Recommended Blogs</h4>
+<ul>
+    <li><a href="http://www.r-bloggers.com/">R Bloggers</a></li>
+    <li><a href="http://blog.rstudio.org/">RStudio Blog</a></li>
+    <li><a href="http://r4stats.com/">R4Stats</a></li>
+    <li><a href="http://simplystatistics.org/">Simply Statistics</a></li>
+</ul>
+
+  </div>
+  <article class="post">
+    <div class="headline-wrap">
+      
+        <h1><a href="http://localhost:4000/r/economic-guide-to-picking-a-college-major/" rel="bookmark" title="Economic Guide to Picking a College Major - A tidy analysis">Economic Guide to Picking a College Major - A tidy analysis</a></h1>
+      
+    </div><!--/ .headline-wrap -->
+    <div class="article-wrap">
+      
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">library</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span><span class="w">
+</span><span class="n">theme_set</span><span class="p">(</span><span class="n">theme_light</span><span class="p">())</span></code></pre></figure>
+
+<p>Attempt of this blog is to practice data analysis and improve myself through watching how data science pioneers do analysis on there data.</p>
+
+<h1 id="explore-data">Explore Data</h1>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">recent_grads</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018/2018-10-16/recent-grads.csv'</span><span class="p">)</span><span class="w">
+</span><span class="n">skimr</span><span class="o">::</span><span class="n">skim</span><span class="p">(</span><span class="n">recent_grads</span><span class="p">)</span></code></pre></figure>
+
+<p>Table: Data summary</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left"> </th>
+      <th style="text-align: left"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Name</td>
+      <td style="text-align: left">recent_grads</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Number of rows</td>
+      <td style="text-align: left">173</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Number of columns</td>
+      <td style="text-align: left">21</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>__</strong><strong>__</strong><strong>__</strong>_____</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Column type frequency:</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">character</td>
+      <td style="text-align: left">2</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">numeric</td>
+      <td style="text-align: left">19</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>__</strong><strong>__</strong><strong>__</strong><strong>__</strong></td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Group variables</td>
+      <td style="text-align: left">None</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Variable type: character</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">skim_variable</th>
+      <th style="text-align: right">n_missing</th>
+      <th style="text-align: right">complete_rate</th>
+      <th style="text-align: right">min</th>
+      <th style="text-align: right">max</th>
+      <th style="text-align: right">empty</th>
+      <th style="text-align: right">n_unique</th>
+      <th style="text-align: right">whitespace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Major</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">5</td>
+      <td style="text-align: right">65</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">173</td>
+      <td style="text-align: right">0</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Major_category</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">4</td>
+      <td style="text-align: right">35</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">16</td>
+      <td style="text-align: right">0</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Variable type: numeric</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">skim_variable</th>
+      <th style="text-align: right">n_missing</th>
+      <th style="text-align: right">complete_rate</th>
+      <th style="text-align: right">mean</th>
+      <th style="text-align: right">sd</th>
+      <th style="text-align: right">p0</th>
+      <th style="text-align: right">p25</th>
+      <th style="text-align: right">p50</th>
+      <th style="text-align: right">p75</th>
+      <th style="text-align: right">p100</th>
+      <th style="text-align: left">hist</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Rank</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.00</td>
+      <td style="text-align: right">87.00</td>
+      <td style="text-align: right">50.08</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">44.00</td>
+      <td style="text-align: right">87.00</td>
+      <td style="text-align: right">130.00</td>
+      <td style="text-align: right">173.00</td>
+      <td style="text-align: left">▇▇▇▇▇</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Major_code</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.00</td>
+      <td style="text-align: right">3879.82</td>
+      <td style="text-align: right">1687.75</td>
+      <td style="text-align: right">1100</td>
+      <td style="text-align: right">2403.00</td>
+      <td style="text-align: right">3608.00</td>
+      <td style="text-align: right">5503.00</td>
+      <td style="text-align: right">6403.00</td>
+      <td style="text-align: left">▃▇▅▃▇</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Total</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">0.99</td>
+      <td style="text-align: right">39370.08</td>
+      <td style="text-align: right">63483.49</td>
+      <td style="text-align: right">124</td>
+      <td style="text-align: right">4549.75</td>
+      <td style="text-align: right">15104.00</td>
+      <td style="text-align: right">38909.75</td>
+      <td style="text-align: right">393735.00</td>
+      <td style="text-align: left">▇▁▁▁▁</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Men</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">0.99</td>
+      <td style="text-align: right">16723.41</td>
+      <td style="text-align: right">28122.43</td>
+      <td style="text-align: right">119</td>
+      <td style="text-align: right">2177.50</td>
+      <td style="text-align: right">5434.00</td>
+      <td style="text-align: right">14631.00</td>
+      <td style="text-align: right">173809.00</td>
+      <td style="text-align: left">▇▁▁▁▁</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Women</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">0.99</td>
+      <td style="text-align: right">22646.67</td>
+      <td style="text-align: right">41057.33</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1778.25</td>
+      <td style="text-align: right">8386.50</td>
+      <td style="text-align: right">22553.75</td>
+      <td style="text-align: right">307087.00</td>
+      <td style="text-align: left">▇▁▁▁▁</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ShareWomen</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">0.99</td>
+      <td style="text-align: right">0.52</td>
+      <td style="text-align: right">0.23</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0.34</td>
+      <td style="text-align: right">0.53</td>
+      <td style="text-align: right">0.70</td>
+      <td style="text-align: right">0.97</td>
+      <td style="text-align: left">▂▆▆▇▃</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Sample_size</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.00</td>
+      <td style="text-align: right">356.08</td>
+      <td style="text-align: right">618.36</td>
+      <td style="text-align: right">2</td>
+      <td style="text-align: right">39.00</td>
+      <td style="text-align: right">130.00</td>
+      <td style="text-align: right">338.00</td>
+      <td style="text-align: right">4212.00</td>
+      <td style="text-align: left">▇▁▁▁▁</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Employed</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.00</td>
+      <td style="text-align: right">31192.76</td>
+      <td style="text-align: right">50675.00</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">3608.00</td>
+      <td style="text-align: right">11797.00</td>
+      <td style="text-align: right">31433.00</td>
+      <td style="text-align: right">307933.00</td>
+      <td style="text-align: left">▇▁▁▁▁</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Full_time</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.00</td>
+      <td style="text-align: right">26029.31</td>
+      <td style="text-align: right">42869.66</td>
+      <td style="text-align: right">111</td>
+      <td style="text-align: right">3154.00</td>
+      <td style="text-align: right">10048.00</td>
+      <td style="text-align: right">25147.00</td>
+      <td style="text-align: right">251540.00</td>
+      <td style="text-align: left">▇▁▁▁▁</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Part_time</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.00</td>
+      <td style="text-align: right">8832.40</td>
+      <td style="text-align: right">14648.18</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1030.00</td>
+      <td style="text-align: right">3299.00</td>
+      <td style="text-align: right">9948.00</td>
+      <td style="text-align: right">115172.00</td>
+      <td style="text-align: left">▇▁▁▁▁</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Full_time_year_round</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.00</td>
+      <td style="text-align: right">19694.43</td>
+      <td style="text-align: right">33160.94</td>
+      <td style="text-align: right">111</td>
+      <td style="text-align: right">2453.00</td>
+      <td style="text-align: right">7413.00</td>
+      <td style="text-align: right">16891.00</td>
+      <td style="text-align: right">199897.00</td>
+      <td style="text-align: left">▇▁▁▁▁</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Unemployed</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.00</td>
+      <td style="text-align: right">2416.33</td>
+      <td style="text-align: right">4112.80</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">304.00</td>
+      <td style="text-align: right">893.00</td>
+      <td style="text-align: right">2393.00</td>
+      <td style="text-align: right">28169.00</td>
+      <td style="text-align: left">▇▁▁▁▁</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Unemployment_rate</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.00</td>
+      <td style="text-align: right">0.07</td>
+      <td style="text-align: right">0.03</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0.05</td>
+      <td style="text-align: right">0.07</td>
+      <td style="text-align: right">0.09</td>
+      <td style="text-align: right">0.18</td>
+      <td style="text-align: left">▂▇▆▁▁</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Median</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.00</td>
+      <td style="text-align: right">40151.45</td>
+      <td style="text-align: right">11470.18</td>
+      <td style="text-align: right">22000</td>
+      <td style="text-align: right">33000.00</td>
+      <td style="text-align: right">36000.00</td>
+      <td style="text-align: right">45000.00</td>
+      <td style="text-align: right">110000.00</td>
+      <td style="text-align: left">▇▅▁▁▁</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">P25th</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.00</td>
+      <td style="text-align: right">29501.45</td>
+      <td style="text-align: right">9166.01</td>
+      <td style="text-align: right">18500</td>
+      <td style="text-align: right">24000.00</td>
+      <td style="text-align: right">27000.00</td>
+      <td style="text-align: right">33000.00</td>
+      <td style="text-align: right">95000.00</td>
+      <td style="text-align: left">▇▂▁▁▁</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">P75th</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.00</td>
+      <td style="text-align: right">51494.22</td>
+      <td style="text-align: right">14906.28</td>
+      <td style="text-align: right">22000</td>
+      <td style="text-align: right">42000.00</td>
+      <td style="text-align: right">47000.00</td>
+      <td style="text-align: right">60000.00</td>
+      <td style="text-align: right">125000.00</td>
+      <td style="text-align: left">▅▇▂▁▁</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">College_jobs</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.00</td>
+      <td style="text-align: right">12322.64</td>
+      <td style="text-align: right">21299.87</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1675.00</td>
+      <td style="text-align: right">4390.00</td>
+      <td style="text-align: right">14444.00</td>
+      <td style="text-align: right">151643.00</td>
+      <td style="text-align: left">▇▁▁▁▁</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Non_college_jobs</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.00</td>
+      <td style="text-align: right">13284.50</td>
+      <td style="text-align: right">23789.66</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1591.00</td>
+      <td style="text-align: right">4595.00</td>
+      <td style="text-align: right">11783.00</td>
+      <td style="text-align: right">148395.00</td>
+      <td style="text-align: left">▇▁▁▁▁</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Low_wage_jobs</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.00</td>
+      <td style="text-align: right">3859.02</td>
+      <td style="text-align: right">6945.00</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">340.00</td>
+      <td style="text-align: right">1231.00</td>
+      <td style="text-align: right">3466.00</td>
+      <td style="text-align: right">48207.00</td>
+      <td style="text-align: left">▇▁▁▁▁</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">by_major_category</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">majors_processed</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="o">!</span><span class="nf">is.na</span><span class="p">(</span><span class="n">Total</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">group_by</span><span class="p">(</span><span class="n">Major_category</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">summarise</span><span class="p">(</span><span class="n">Men</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">Men</span><span class="p">),</span><span class="w">
+            </span><span class="n">Women</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">Women</span><span class="p">),</span><span class="w">
+            </span><span class="n">Total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">Total</span><span class="p">),</span><span class="w">
+            </span><span class="n">MedianSalary</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">Median</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Sample_size</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">Sample_size</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">ShareWomen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Women</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">Total</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">arrange</span><span class="p">(</span><span class="n">desc</span><span class="p">(</span><span class="n">ShareWomen</span><span class="p">))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in filter(., !is.na(Total)): object 'majors_processed' not found</code></pre></figure>
+
+<h3 id="what-are-trending-major-category">What are trending Major Category?</h3>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">recent_grads</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">count</span><span class="p">(</span><span class="n">Major_category</span><span class="p">,</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Total</span><span class="p">,</span><span class="w"> </span><span class="n">sort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">Major_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fct_reorder</span><span class="p">(</span><span class="n">Major_category</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">Major_category</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Major_category</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_col</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">coord_flip</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">labs</span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Total # of graduates"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"none"</span><span class="p">)</span></code></pre></figure>
+
+<p><img src="/figs/2018-10-16-economic-guide-to-picking-a-college-major/unnamed-chunk-3-1.png" alt="center" /></p>
+
+<p>Lets look at the median</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">recent_grads</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">Median</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_histogram</span><span class="p">()</span></code></pre></figure>
+
+<p><img src="/figs/2018-10-16-economic-guide-to-picking-a-college-major/unnamed-chunk-4-1.png" alt="center" /></p>
+
+<h3 id="how-majors-money-distribution">How majors-money distribution?</h3>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">recent_grads</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">group_by</span><span class="p">(</span><span class="n">Major_category</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">summarise</span><span class="p">(</span><span class="n">Median</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">median</span><span class="p">(</span><span class="n">Median</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">Major_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fct_reorder</span><span class="p">(</span><span class="n">Major_category</span><span class="p">,</span><span class="w"> </span><span class="n">Median</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">Major_category</span><span class="p">,</span><span class="w"> </span><span class="n">Median</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_col</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">scale_y_continuous</span><span class="p">(</span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scales</span><span class="o">::</span><span class="n">dollar_format</span><span class="p">())</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">coord_flip</span><span class="p">()</span></code></pre></figure>
+
+<p><img src="/figs/2018-10-16-economic-guide-to-picking-a-college-major/unnamed-chunk-5-1.png" alt="center" /></p>
+
+<p>Lets look same thing using boxplot to get more clarity</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">recent_grads</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">Major_category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fct_reorder</span><span class="p">(</span><span class="n">Major_category</span><span class="p">,</span><span class="w"> </span><span class="n">Median</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">Major_category</span><span class="p">,</span><span class="w"> </span><span class="n">Median</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Major_category</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_boxplot</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">scale_y_continuous</span><span class="p">(</span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scales</span><span class="o">::</span><span class="n">dollar_format</span><span class="p">())</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">expand_limits</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">coord_flip</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"none"</span><span class="p">)</span></code></pre></figure>
+
+<p><img src="/figs/2018-10-16-economic-guide-to-picking-a-college-major/unnamed-chunk-6-1.png" alt="center" /></p>
+
+<h3 id="what-are-the--highest-earning-majors">What are the  Highest earning majors?</h3>
+
+<p>Lets look at top 20 highest earning majors</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">recent_grads</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">arrange</span><span class="p">(</span><span class="n">desc</span><span class="p">(</span><span class="n">Median</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">Major</span><span class="p">,</span><span class="w"> </span><span class="n">Major_category</span><span class="p">,</span><span class="w"> </span><span class="n">Median</span><span class="p">,</span><span class="w"> </span><span class="n">P25th</span><span class="p">,</span><span class="w"> </span><span class="n">P75th</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">head</span><span class="p">(</span><span class="m">20</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">Major</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fct_reorder</span><span class="p">(</span><span class="n">Major</span><span class="p">,</span><span class="w"> </span><span class="n">Median</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">Major</span><span class="p">,</span><span class="w"> </span><span class="n">Median</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Major_category</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_errorbar</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">ymin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">P25th</span><span class="p">,</span><span class="w"> </span><span class="n">ymax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">P75th</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">expand_limits</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">coord_flip</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">labs</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"What are the highest-earning majors?"</span><span class="p">,</span><span class="w">
+       </span><span class="n">subtitle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Top 20 majors with at least 100 graduates surveyed. Bars represent the 25th to 75th percentile"</span><span class="p">)</span></code></pre></figure>
+
+<p><img src="/figs/2018-10-16-economic-guide-to-picking-a-college-major/unnamed-chunk-7-1.png" alt="center" /></p>
+
+<p><code class="highlighter-rouge">geom_errorbar</code> shows us the range of the salary. Petroleum engineering 25th percentile salary is greater than the most of the  major 75th percentile salary.</p>
+
+<h2 id="what-are-the-lowest-earning-majors">What are the lowest earning majors?</h2>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">recent_grads</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">arrange</span><span class="p">(</span><span class="n">Median</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">Major</span><span class="p">,</span><span class="w"> </span><span class="n">Major_category</span><span class="p">,</span><span class="w"> </span><span class="n">Median</span><span class="p">,</span><span class="w"> </span><span class="n">P25th</span><span class="p">,</span><span class="w"> </span><span class="n">P75th</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">head</span><span class="p">(</span><span class="m">20</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">Major</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fct_reorder</span><span class="p">(</span><span class="n">Major</span><span class="p">,</span><span class="w"> </span><span class="n">Median</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">Major</span><span class="p">,</span><span class="w"> </span><span class="n">Median</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Major_category</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_errorbar</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">ymin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">P25th</span><span class="p">,</span><span class="w"> </span><span class="n">ymax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">P75th</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">expand_limits</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">coord_flip</span><span class="p">()</span></code></pre></figure>
+
+<p><img src="/figs/2018-10-16-economic-guide-to-picking-a-college-major/unnamed-chunk-8-1.png" alt="center" /></p>
+
+<p>We have to look at the sample size if the sample size is low then we don’t want to trust that data.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">recent_grads</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">arrange</span><span class="p">(</span><span class="n">Sample_size</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">Major</span><span class="p">,</span><span class="w"> </span><span class="n">Major_category</span><span class="p">,</span><span class="w"> </span><span class="n">Median</span><span class="p">,</span><span class="w"> </span><span class="n">P25th</span><span class="p">,</span><span class="w"> </span><span class="n">P75th</span><span class="p">,</span><span class="w"> </span><span class="n">Sample_size</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## # A tibble: 173 x 6
+##    Major               Major_category        Median P25th  P75th Sample_size
+##    &lt;chr&gt;               &lt;chr&gt;                  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;       &lt;dbl&gt;
+##  1 LIBRARY SCIENCE     Education              22000 20000  22000           2
+##  2 METALLURGICAL ENGI… Engineering            73000 50000 105000           3
+##  3 PHARMACOLOGY        Biology &amp; Life Scien…  45000 40000  45000           3
+##  4 SCHOOL STUDENT COU… Education              41000 41000  43000           4
+##  5 MILITARY TECHNOLOG… Industrial Arts &amp; Co…  40000 40000  40000           4
+##  6 SOIL SCIENCE        Agriculture &amp; Natura…  35000 18500  44000           4
+##  7 GEOLOGICAL AND GEO… Engineering            50000 42800  57000           5
+##  8 EDUCATIONAL ADMINI… Education              34000 29000  35000           5
+##  9 MINING AND MINERAL… Engineering            75000 55000  90000           7
+## 10 MATHEMATICS AND CO… Computers &amp; Mathemat…  42000 30000  78000           7
+## # … with 163 more rows</code></pre></figure>
+
+<p>lets look at the median vs sample size graph</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">recent_grads</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">Sample_size</span><span class="p">,</span><span class="w"> </span><span class="n">Median</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Major_category</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_text</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Major</span><span class="p">),</span><span class="w"> </span><span class="n">check_overlap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">vjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">hjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">scale_x_log10</span><span class="p">()</span></code></pre></figure>
+
+<p><img src="/figs/2018-10-16-economic-guide-to-picking-a-college-major/unnamed-chunk-10-1.png" alt="center" /></p>
+
+<p>Major with Sample Size is less than 10. We can see they have lot of variance(stretch) and they are not use full at all they cannot tell the full picture of it.</p>
+
+<p>So we have to set cutoff point for sample size. We should choose good value so that it generalize the data.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">recent_grads</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">Sample_size</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="m">100</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">head</span><span class="p">(</span><span class="m">20</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">Major</span><span class="p">,</span><span class="w"> </span><span class="n">Major_category</span><span class="p">,</span><span class="w"> </span><span class="n">Median</span><span class="p">,</span><span class="w"> </span><span class="n">P25th</span><span class="p">,</span><span class="w"> </span><span class="n">P75th</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">Major</span><span class="p">,</span><span class="w"> </span><span class="n">Median</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Major_category</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_errorbar</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">ymin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">P25th</span><span class="p">,</span><span class="w"> </span><span class="n">ymax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">P75th</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">expand_limits</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">coord_flip</span><span class="p">()</span></code></pre></figure>
+
+<p><img src="/figs/2018-10-16-economic-guide-to-picking-a-college-major/unnamed-chunk-11-1.png" alt="center" /></p>
+
+<p>We should go for Sample size cutoff value 100.</p>
+
+<h3 id="how-does-gender-breakdown-relate-to-typical-earnings">How does gender breakdown relate to typical earnings?</h3>
+
+<p>We will use <code class="highlighter-rouge">gather</code> function</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">recent_grads</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">arrange</span><span class="p">(</span><span class="n">desc</span><span class="p">(</span><span class="n">Total</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">head</span><span class="p">(</span><span class="m">20</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">Major</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fct_reorder</span><span class="p">(</span><span class="n">Major</span><span class="p">,</span><span class="w"> </span><span class="n">Total</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">gather</span><span class="p">(</span><span class="n">Gender</span><span class="p">,</span><span class="w"> </span><span class="n">Number</span><span class="p">,</span><span class="w"> </span><span class="n">Men</span><span class="p">,</span><span class="w"> </span><span class="n">Women</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">Major</span><span class="p">,</span><span class="w"> </span><span class="n">Gender</span><span class="p">,</span><span class="w"> </span><span class="n">Number</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">Major</span><span class="p">,</span><span class="w"> </span><span class="n">Number</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Gender</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_col</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">coord_flip</span><span class="p">()</span></code></pre></figure>
+
+<p><img src="/figs/2018-10-16-economic-guide-to-picking-a-college-major/unnamed-chunk-12-1.png" alt="center" /></p>
+
+<h3 id="what-is-a-sharewomen-and-average-salary-correlation">What is a ShareWomen and Average Salary Correlation?</h3>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">majors_processed</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">recent_grads</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">arrange</span><span class="p">(</span><span class="n">desc</span><span class="p">(</span><span class="n">Median</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">Major</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">str_to_title</span><span class="p">(</span><span class="n">Major</span><span class="p">),</span><span class="w">
+         </span><span class="n">Major</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fct_reorder</span><span class="p">(</span><span class="n">Major</span><span class="p">,</span><span class="w"> </span><span class="n">Median</span><span class="p">))</span></code></pre></figure>
+
+<p><code class="highlighter-rouge">MedianSalary</code> is a weighted by <code class="highlighter-rouge">Sample_size</code>. The more Sample one will have more effect on the outcome.</p>
+
+<p>Lets look at the correlation</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">by_major_category</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">ShareWomen</span><span class="p">,</span><span class="w"> </span><span class="n">MedianSalary</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_smooth</span><span class="p">(</span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"lm"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">ggrepel</span><span class="o">::</span><span class="n">geom_text_repel</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Major_category</span><span class="p">),</span><span class="w"> </span><span class="n">forces</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">expand_limits</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in ggplot(., aes(ShareWomen, MedianSalary)): object 'by_major_category' not found</code></pre></figure>
+
+<p>My first instinct will be Engineering and Computer &amp; Mathematics will be outliers. (they are too away from the center). Health is also a outlier(Simpson paradox).
+Seems like a negative correlation.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">g</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">majors_processed</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">ShareWomen</span><span class="p">,</span><span class="w"> </span><span class="n">Median</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Major_category</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Sample_size</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Major</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_smooth</span><span class="p">(</span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"lm"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">scale_x_continuous</span><span class="p">(</span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scales</span><span class="o">::</span><span class="n">percent_format</span><span class="p">())</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">scale_y_continuous</span><span class="p">(</span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scales</span><span class="o">::</span><span class="w"> </span><span class="n">dollar_format</span><span class="p">())</span><span class="w">
+  </span><span class="n">expand_limits</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## mapping: y = ~y 
+## geom_blank: na.rm = FALSE
+## stat_identity: na.rm = FALSE
+## position_identity</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">plotly</span><span class="o">::</span><span class="n">ggplotly</span><span class="p">(</span><span class="n">g</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Auto configuration failed
+## 139813609778816:error:25066067:DSO support routines:DLFCN_LOAD:could not load the shared library:dso_dlfcn.c:185:filename(libssl_conf.so): libssl_conf.so: cannot open shared object file: No such file or directory
+## 139813609778816:error:25070067:DSO support routines:DSO_load:could not load the shared library:dso_lib.c:244:
+## 139813609778816:error:0E07506E:configuration file routines:MODULE_LOAD_DSO:error loading dso:conf_mod.c:285:module=ssl_conf, path=ssl_conf
+## 139813609778816:error:0E076071:configuration file routines:MODULE_RUN:unknown module name:conf_mod.c:222:module=ssl_conf</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in (function (url = NULL, file = "webshot.png", vwidth = 992, vheight = 744, : webshot.js returned failure value: 1</code></pre></figure>
+
+<p>So its negative correlation.</p>
+
+<p>Looking at the which variables we wanna select</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">majors_processed</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">Major</span><span class="p">,</span><span class="w"> </span><span class="n">Total</span><span class="p">,</span><span class="w"> </span><span class="n">ShareWomen</span><span class="p">,</span><span class="w"> </span><span class="n">Sample_size</span><span class="p">,</span><span class="w"> </span><span class="n">Median</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">lm</span><span class="p">(</span><span class="n">Median</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">ShareWomen</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">.</span><span class="p">,</span><span class="w"> </span><span class="n">weights</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Sample_size</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## 
+## Call:
+## lm(formula = Median ~ ShareWomen, data = ., weights = Sample_size)
+## 
+## Coefficients:
+## (Intercept)   ShareWomen  
+##       52073       -23650</code></pre></figure>
+
+<p>weighted linear regression.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">majors_processed</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">Major</span><span class="p">,</span><span class="w"> </span><span class="n">Total</span><span class="p">,</span><span class="w"> </span><span class="n">ShareWomen</span><span class="p">,</span><span class="w"> </span><span class="n">Sample_size</span><span class="p">,</span><span class="w"> </span><span class="n">Median</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">lm</span><span class="p">(</span><span class="n">Median</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">ShareWomen</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">.</span><span class="p">,</span><span class="w"> </span><span class="n">weights</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Sample_size</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">summary</span><span class="p">()</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## 
+## Call:
+## lm(formula = Median ~ ShareWomen, data = ., weights = Sample_size)
+## 
+## Weighted Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -260500  -61042  -13899   33262  865081 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)    52073       1436  36.255   &lt;2e-16 ***
+## ShareWomen    -23650       2403  -9.842   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 123000 on 170 degrees of freedom
+##   (1 observation deleted due to missingness)
+## Multiple R-squared:  0.363,	Adjusted R-squared:  0.3592 
+## F-statistic: 96.87 on 1 and 170 DF,  p-value: &lt; 2.2e-16</code></pre></figure>
+
+<p>This is a weighted linear regression. Regression expect Mean rather than Median
+. Because Salary data is log distributed Median will be close to Geometric Mean.</p>
+
+<p>There may be negative correlation. means there will be decrease in salary upto 23000</p>
+
+<p>There are lot of work to be done and more to be explore like 
+unemployment and other variables etc.</p>
+
+      <hr />
+      <footer role="contentinfo">
+        <div class="article-author-bottom">
+          
+
+
+	<img src="http://localhost:4000/images/abhishekbongale.jpg" class="bio-photo" alt="Abhishek Bongale bio photo">
+
+<h3>Abhishek Bongale</h3>
+<p>AI student at the Dublin City University. Interested in mathematics, software development, Vim, design.</p>
+<a href="mailto:abhibongale97@gmail.com" class="author-social" target="_blank"><i class="fa fa-envelope-square"></i> Email</a>
+<a href="http://twitter.com/abhibongale" class="author-social" target="_blank"><i class="fa fa-twitter-square"></i> Twitter</a>
+
+
+
+
+
+<a href="http://github.com/abhibongale" class="author-social" target="_blank"><i class="fa fa-github"></i> Github</a>
+<a href="http://stackoverflow.com/users/8269522" class="author-social" target="_blank"><i class="fa fa-stack-overflow"></i> Stack Overflow</a>
+
+
+
+
+
+
+<h4>Subscribe</h4>
+
+<form method='post' action='http://blogtrottr.com'>
+    <input type='text' name='btr_email' placeholder = 'Your email'/><br />
+    <input type='hidden' name='btr_url' value='http://dataexplained.in/feed.xml' />
+    <input type='hidden' name='schedule_type' value='0' />
+    <input type='submit' class="styled-button-4" value='Subscribe to this blog' />
+</form>
+
+<style type="text/css"> 
+.styled-button-4 {
+	-webkit-box-shadow:rgba(0,0,0,0.98) 0 1px 0 0;
+	-moz-box-shadow:rgba(0,0,0,0.98) 0 1px 0 0;
+	box-shadow:rgba(0,0,0,0.98) 0 1px 0 0;
+	background-color:#EEE;
+	border-radius:0;
+	-webkit-border-radius:0;
+	-moz-border-radius:0;
+	border:1px solid #999;
+	color:#666;
+	font-family:'Lucida Grande',Tahoma,Verdana,Arial,Sans-serif;
+	font-size:11px;
+	font-weight:700;
+	padding:2px 6px;
+	height:28px
+}
+</style>
+
+
+<h4>Recommended Blogs</h4>
+<ul>
+    <li><a href="http://www.r-bloggers.com/">R Bloggers</a></li>
+    <li><a href="http://blog.rstudio.org/">RStudio Blog</a></li>
+    <li><a href="http://r4stats.com/">R4Stats</a></li>
+    <li><a href="http://simplystatistics.org/">Simply Statistics</a></li>
+</ul>
+
+        </div>
+        <p class="byline"><strong>Economic Guide to Picking a College Major - A tidy analysis</strong> was published on <time datetime="2020-12-01T20:00:27+05:30">December 01, 2020</time>.</p>
+      </footer>
+    </div><!-- /.article-wrap -->
+  
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+  
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrap">
+  <div class="related-articles">
+  <h4>You might also enjoy <small class="pull-right">(<a href="http://localhost:4000/posts/">View all posts</a>)</small></h4>
+    <ul>
+    
+      <li><a href="http://localhost:4000/r/netflix-shows/" title="Netflix Shows">Netflix Shows</a></li>
+    
+      <li><a href="http://localhost:4000/r/un-votes/" title="UN Votes">UN Votes</a></li>
+    
+      <li><a href="http://localhost:4000/r/video-games-and-sliced/" title="Video Games and Sliced">Video Games and Sliced</a></li>
+    
+    </ul>
+    <hr />
+  </div><!-- /.related-articles -->
+  <footer>
+    
+
+<span>&copy; 2021 Abhishek Bongale. Powered by <a href="http://jekyllrb.com">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/">Minimal Mistakes</a> theme.</span>
+
+  </footer>
+</div><!-- /.footer-wrap -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="http://localhost:4000/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="http://localhost:4000/assets/js/scripts.min.js"></script>
+
+
+  
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'dataexplained'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+	        
+
+</body>
+</html>

@@ -5,7 +5,15 @@ tags: [about]
 comments: false
 ---
 
-I'm a honing my skills as a  data scientist. My interests include statistics, data analysis, neural networks, and programming in R, Python, and Java.
+Statistical modelling is an art of deduction.
+
+I grew up playing chess, which helps to learn how to hold complexity in mind and still make excellent decisions. The game thought me about how attention for spotting a hidden detail could guarantee victory while missing it could lead to inexorable defeat. While much of chess thinking has a narrative quality, this seeking called for the logic of calculation. It’s about keeping track of the balance of material forces as they attempt to eliminate each other in a battle for supremacy. To make great chess moves, you need to see the whole position in all its reverberating dynamism. It is a game of deduction moves with proper attention to details to spot future move to gain an advantage.
+
+In recent years, I have worked in academic projects, attempting to integrate our understanding of complex societal challenges. And solving these complex challenges embark me into a journey of statistics and artificial intelligence. In this journey, I learned that AI is just like chess its an art of deduction of complex challenges.
+
+My love for solving intriguing problems bought me more close to mathematics, programming, modelling. It oddly satisfies me when I solve complex problems using statistical modelling or neural networks. It helps me to keep my creativity intact.
+
+My specialities include quick learning of new skills and programming languages, problem-solving, statistical modelling, problem-framing, neural networks, data visualization, data mining, statistics. So far, I have R, SQL, Core Java, Python, Git/Github, Linux, under my belt. I am still enthusiastically grabbing new concepts, learning new frameworks.
 
 Education
 ============

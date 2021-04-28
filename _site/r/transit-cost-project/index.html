@@ -1,0 +1,396 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Which Construction cost more per km Railways or Metros? &#8211; Data Explained</title>
+<meta name="description" content="Dataset information:  We investigate this question across hundreds of transit projects from around the world. 
+We have created a database that spans more than 50 countries and totals more than 11,000 km of urban rail built since the late 1990s. 
+We will also examine this question in greater detail by carrying out six in-depth case studies that take a closer look at unique considerations and variables that aren’t easily quantified, like project management, governance, and site conditions.
+">
+<meta name="keywords" content="r, kaggle, tidyverse">
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="Which Construction cost more per km Railways or Metros?">
+<meta name="twitter:description" content="Dataset information:  We investigate this question across hundreds of transit projects from around the world. 
+We have created a database that spans more than 50 countries and totals more than 11,000 km of urban rail built since the late 1990s. 
+We will also examine this question in greater detail by carrying out six in-depth case studies that take a closer look at unique considerations and variables that aren’t easily quantified, like project management, governance, and site conditions.
+">
+<meta name="twitter:site" content="@abhibongale">
+<meta name="twitter:creator" content="@abhibongale">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://localhost:4000/images/default-thumb.png">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Which Construction cost more per km Railways or Metros?">
+<meta property="og:description" content="Dataset information:  We investigate this question across hundreds of transit projects from around the world. 
+We have created a database that spans more than 50 countries and totals more than 11,000 km of urban rail built since the late 1990s. 
+We will also examine this question in greater detail by carrying out six in-depth case studies that take a closer look at unique considerations and variables that aren’t easily quantified, like project management, governance, and site conditions.
+">
+<meta property="og:url" content="http://localhost:4000/r/transit-cost-project/">
+<meta property="og:site_name" content="Data Explained">
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/r/transit-cost-project/">
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Data Explained Feed">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+	<script src="http://localhost:4000/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="http://localhost:4000/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="http://localhost:4000/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<!-- MathJax -->
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<link href='//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700%7CPT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://localhost:4000/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144-precomposed.png">
+
+<!-- Google Analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-57723549-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+</head>
+
+<body class="post">
+
+<!--[if lt IE 9]><div class="browser-upgrade alert alert-info">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]-->
+
+<div class="navigation-wrapper">
+	<div class="site-name">
+		<a href="http://localhost:4000">Data Explained</a>
+	</div><!-- /.site-name -->
+	<div class="top-navigation">
+		<nav role="navigation" id="site-nav" class="nav">
+		    <ul>
+		        
+					    
+					    <li><a href="http://localhost:4000/about/" >About Me</a></li>
+					  
+					    
+					    <li><a href="http://localhost:4000/posts/" >Posts</a></li>
+					  
+		    </ul>
+		</nav>
+	</div><!-- /.top-navigation -->
+</div><!-- /.navigation-wrapper -->
+
+
+
+<div id="main" role="main">
+  <div class="article-author-side">
+    
+
+
+	<img src="http://localhost:4000/images/abhishekbongale.jpg" class="bio-photo" alt="Abhishek Bongale bio photo">
+
+<h3>Abhishek Bongale</h3>
+<p>AI student at the Dublin City University. Interested in mathematics, software development, Vim, design.</p>
+<a href="mailto:abhibongale97@gmail.com" class="author-social" target="_blank"><i class="fa fa-envelope-square"></i> Email</a>
+<a href="http://twitter.com/abhibongale" class="author-social" target="_blank"><i class="fa fa-twitter-square"></i> Twitter</a>
+
+
+
+
+
+<a href="http://github.com/abhibongale" class="author-social" target="_blank"><i class="fa fa-github"></i> Github</a>
+<a href="http://stackoverflow.com/users/8269522" class="author-social" target="_blank"><i class="fa fa-stack-overflow"></i> Stack Overflow</a>
+
+
+
+
+
+
+<h4>Subscribe</h4>
+
+<form method='post' action='http://blogtrottr.com'>
+    <input type='text' name='btr_email' placeholder = 'Your email'/><br />
+    <input type='hidden' name='btr_url' value='http://dataexplained.in/feed.xml' />
+    <input type='hidden' name='schedule_type' value='0' />
+    <input type='submit' class="styled-button-4" value='Subscribe to this blog' />
+</form>
+
+<style type="text/css"> 
+.styled-button-4 {
+	-webkit-box-shadow:rgba(0,0,0,0.98) 0 1px 0 0;
+	-moz-box-shadow:rgba(0,0,0,0.98) 0 1px 0 0;
+	box-shadow:rgba(0,0,0,0.98) 0 1px 0 0;
+	background-color:#EEE;
+	border-radius:0;
+	-webkit-border-radius:0;
+	-moz-border-radius:0;
+	border:1px solid #999;
+	color:#666;
+	font-family:'Lucida Grande',Tahoma,Verdana,Arial,Sans-serif;
+	font-size:11px;
+	font-weight:700;
+	padding:2px 6px;
+	height:28px
+}
+</style>
+
+
+<h4>Recommended Blogs</h4>
+<ul>
+    <li><a href="http://www.r-bloggers.com/">R Bloggers</a></li>
+    <li><a href="http://blog.rstudio.org/">RStudio Blog</a></li>
+    <li><a href="http://r4stats.com/">R4Stats</a></li>
+    <li><a href="http://simplystatistics.org/">Simply Statistics</a></li>
+</ul>
+
+  </div>
+  <article class="post">
+    <div class="headline-wrap">
+      
+        <h1><a href="http://localhost:4000/r/transit-cost-project/" rel="bookmark" title="Which Construction cost more per km Railways or Metros?">Which Construction cost more per km Railways or Metros?</a></h1>
+      
+    </div><!--/ .headline-wrap -->
+    <div class="article-wrap">
+      <p><strong>Dataset information</strong>:  We investigate this question across hundreds of transit projects from around the world. 
+We have created a database that spans more than 50 countries and totals more than 11,000 km of urban rail built since the late 1990s. 
+We will also examine this question in greater detail by carrying out six in-depth case studies that take a closer look at unique considerations and variables that aren’t easily quantified, like project management, governance, and site conditions.</p>
+
+<h2 id="1-read-the-data">1. Read the data</h2>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># read the data</span><span class="w">
+</span><span class="n">transit_cost</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-01-05/transit_cost.csv'</span><span class="p">)</span><span class="w">
+
+</span><span class="nf">dim</span><span class="p">(</span><span class="n">transit_cost</span><span class="p">)</span><span class="w"> </span><span class="c1"># dimension of data</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## [1] 544  20</code></pre></figure>
+
+<h2 id="2-data-wrangling">2. Data Wrangling</h2>
+
+<p>The country column we have country code instead of country name.
+while start_year, end_year and real_cost are character rather than numeric.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">transit_cost</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">transit_cost</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="c1"># remove 'NA' rows</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="o">!</span><span class="nf">is.na</span><span class="p">(</span><span class="n">e</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+  </span><span class="c1"># into numeric</span><span class="w">
+  </span><span class="n">mutate_at</span><span class="p">(</span><span class="n">vars</span><span class="p">(</span><span class="n">start_year</span><span class="p">,</span><span class="w"> </span><span class="n">end_year</span><span class="p">,</span><span class="w"> </span><span class="n">real_cost</span><span class="p">),</span><span class="w"> </span><span class="n">as.numeric</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">country_code</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ifelse</span><span class="p">(</span><span class="n">country</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"UK"</span><span class="p">,</span><span class="w"> </span><span class="s2">"GB"</span><span class="p">,</span><span class="w"> </span><span class="n">country</span><span class="p">),</span><span class="w">
+         </span><span class="n">country</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">countrycode</span><span class="p">(</span><span class="n">country_code</span><span class="p">,</span><span class="w"> </span><span class="s2">"iso2c"</span><span class="p">,</span><span class="s2">"country.name"</span><span class="p">))</span><span class="w"> </span></code></pre></figure>
+
+<h2 id="3-explorartory-analysis">3. Explorartory Analysis</h2>
+
+<h3 id="transit-projects-in-united-states-and-its-total-costs">Transit Projects in United States? And its Total Costs?</h3>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">transit_cost</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">country</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"United States"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="o">-</span><span class="nf">c</span><span class="p">(</span><span class="n">source1</span><span class="p">,</span><span class="w"> </span><span class="n">source2</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">line</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fct_reorder</span><span class="p">(</span><span class="n">line</span><span class="p">,</span><span class="w"> </span><span class="n">start_year</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">xmin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">start_year</span><span class="p">,</span><span class="w"> </span><span class="n">xmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">end_year</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">line</span><span class="p">,</span><span class="w"> 
+             </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">city</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_errorbarh</span><span class="p">(</span><span class="n">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.1</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1.5</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_text</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glue</span><span class="o">::</span><span class="n">glue</span><span class="p">(</span><span class="s2">"{real_cost} MM"</span><span class="p">),</span><span class="w"> 
+                </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">end_year</span><span class="p">),</span><span class="w"> </span><span class="n">vjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">-0.2</span><span class="p">,</span><span class="w"> </span><span class="n">hjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"black"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">scale_colour_viridis_d</span><span class="p">(</span><span class="n">direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">-1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">labs</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Years"</span><span class="p">,</span><span class="w">
+       </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"top"</span><span class="p">)</span></code></pre></figure>
+
+<p><img src="/figs/2021-01-05-transit-cost-project/unnamed-chunk-3-1.png" alt="center" /></p>
+
+<p>In united States, NewYork has most transit projects.</p>
+
+<h3 id="top-8-countries-with-highest-cost-millions-in-usd-per-km-which-type-of">Top 8 Countries with highest cost (Millions in USD) per km? which type of</h3>
+<p>construction cost more?</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">transit_cost</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="o">!</span><span class="nf">is.na</span><span class="p">(</span><span class="n">cost_km_millions</span><span class="p">),</span><span class="w">
+         </span><span class="o">!</span><span class="nf">is.na</span><span class="p">(</span><span class="n">rr</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">country</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fct_lump</span><span class="p">(</span><span class="n">country</span><span class="p">,</span><span class="w"> </span><span class="m">8</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">add_count</span><span class="p">(</span><span class="n">country</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"count"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">country</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glue</span><span class="o">::</span><span class="n">glue</span><span class="p">(</span><span class="s2">"{country} ({count})"</span><span class="p">),</span><span class="w">
+         </span><span class="n">country</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fct_reorder</span><span class="p">(</span><span class="n">country</span><span class="p">,</span><span class="w"> </span><span class="n">cost_km_millions</span><span class="p">),</span><span class="w">
+         </span><span class="n">rr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ifelse</span><span class="p">(</span><span class="n">rr</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="s2">"Railway"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Not Railway"</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">country</span><span class="p">,</span><span class="w"> </span><span class="n">cost_km_millions</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_boxplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rr</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_jitter</span><span class="p">(</span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.05</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_hline</span><span class="p">(</span><span class="n">yintercept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="o">=</span><span class="s2">"#333333"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">scale_y_continuous</span><span class="p">(</span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scales</span><span class="o">::</span><span class="n">dollar</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">coord_flip</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">labs</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"cost per km"</span><span class="p">,</span><span class="w">
+       </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"top"</span><span class="p">,</span><span class="w">
+        </span><span class="n">legend.direction</span><span class="o">=</span><span class="s2">"horizontal"</span><span class="p">)</span></code></pre></figure>
+
+<p><img src="/figs/2021-01-05-transit-cost-project/unnamed-chunk-4-1.png" alt="center" /></p>
+
+<p>Its clear, Railway cost more than Not Railway category. The Not Railway category (mostly metros).</p>
+
+
+      <hr />
+      <footer role="contentinfo">
+        <div class="article-author-bottom">
+          
+
+
+	<img src="http://localhost:4000/images/abhishekbongale.jpg" class="bio-photo" alt="Abhishek Bongale bio photo">
+
+<h3>Abhishek Bongale</h3>
+<p>AI student at the Dublin City University. Interested in mathematics, software development, Vim, design.</p>
+<a href="mailto:abhibongale97@gmail.com" class="author-social" target="_blank"><i class="fa fa-envelope-square"></i> Email</a>
+<a href="http://twitter.com/abhibongale" class="author-social" target="_blank"><i class="fa fa-twitter-square"></i> Twitter</a>
+
+
+
+
+
+<a href="http://github.com/abhibongale" class="author-social" target="_blank"><i class="fa fa-github"></i> Github</a>
+<a href="http://stackoverflow.com/users/8269522" class="author-social" target="_blank"><i class="fa fa-stack-overflow"></i> Stack Overflow</a>
+
+
+
+
+
+
+<h4>Subscribe</h4>
+
+<form method='post' action='http://blogtrottr.com'>
+    <input type='text' name='btr_email' placeholder = 'Your email'/><br />
+    <input type='hidden' name='btr_url' value='http://dataexplained.in/feed.xml' />
+    <input type='hidden' name='schedule_type' value='0' />
+    <input type='submit' class="styled-button-4" value='Subscribe to this blog' />
+</form>
+
+<style type="text/css"> 
+.styled-button-4 {
+	-webkit-box-shadow:rgba(0,0,0,0.98) 0 1px 0 0;
+	-moz-box-shadow:rgba(0,0,0,0.98) 0 1px 0 0;
+	box-shadow:rgba(0,0,0,0.98) 0 1px 0 0;
+	background-color:#EEE;
+	border-radius:0;
+	-webkit-border-radius:0;
+	-moz-border-radius:0;
+	border:1px solid #999;
+	color:#666;
+	font-family:'Lucida Grande',Tahoma,Verdana,Arial,Sans-serif;
+	font-size:11px;
+	font-weight:700;
+	padding:2px 6px;
+	height:28px
+}
+</style>
+
+
+<h4>Recommended Blogs</h4>
+<ul>
+    <li><a href="http://www.r-bloggers.com/">R Bloggers</a></li>
+    <li><a href="http://blog.rstudio.org/">RStudio Blog</a></li>
+    <li><a href="http://r4stats.com/">R4Stats</a></li>
+    <li><a href="http://simplystatistics.org/">Simply Statistics</a></li>
+</ul>
+
+        </div>
+        <p class="byline"><strong>Which Construction cost more per km Railways or Metros?</strong> was published on <time datetime="2021-01-10T00:00:00+05:30">January 10, 2021</time>.</p>
+      </footer>
+    </div><!-- /.article-wrap -->
+  
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+  
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrap">
+  <div class="related-articles">
+  <h4>You might also enjoy <small class="pull-right">(<a href="http://localhost:4000/posts/">View all posts</a>)</small></h4>
+    <ul>
+    
+      <li><a href="http://localhost:4000/r/netflix-shows/" title="Netflix Shows">Netflix Shows</a></li>
+    
+      <li><a href="http://localhost:4000/r/un-votes/" title="UN Votes">UN Votes</a></li>
+    
+      <li><a href="http://localhost:4000/r/video-games-and-sliced/" title="Video Games and Sliced">Video Games and Sliced</a></li>
+    
+    </ul>
+    <hr />
+  </div><!-- /.related-articles -->
+  <footer>
+    
+
+<span>&copy; 2021 Abhishek Bongale. Powered by <a href="http://jekyllrb.com">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/">Minimal Mistakes</a> theme.</span>
+
+  </footer>
+</div><!-- /.footer-wrap -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="http://localhost:4000/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="http://localhost:4000/assets/js/scripts.min.js"></script>
+
+
+  
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'dataexplained'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+	        
+
+</body>
+</html>

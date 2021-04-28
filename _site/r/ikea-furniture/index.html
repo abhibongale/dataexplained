@@ -1,0 +1,513 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>IKEA Furniture prices- A tidy analysis &#8211; Data Explained</title>
+<meta name="description" content="The weird economics of ikea
+">
+<meta name="keywords" content="r, statistics">
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="IKEA Furniture prices- A tidy analysis">
+<meta name="twitter:description" content="The weird economics of ikea
+">
+<meta name="twitter:site" content="@abhibongale">
+<meta name="twitter:creator" content="@abhibongale">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://localhost:4000/images/default-thumb.png">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IKEA Furniture prices- A tidy analysis">
+<meta property="og:description" content="The weird economics of ikea
+">
+<meta property="og:url" content="http://localhost:4000/r/ikea-furniture/">
+<meta property="og:site_name" content="Data Explained">
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/r/ikea-furniture/">
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Data Explained Feed">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+	<script src="http://localhost:4000/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="http://localhost:4000/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="http://localhost:4000/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<!-- MathJax -->
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<link href='//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700%7CPT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://localhost:4000/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144-precomposed.png">
+
+<!-- Google Analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-57723549-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+</head>
+
+<body class="post">
+
+<!--[if lt IE 9]><div class="browser-upgrade alert alert-info">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]-->
+
+<div class="navigation-wrapper">
+	<div class="site-name">
+		<a href="http://localhost:4000">Data Explained</a>
+	</div><!-- /.site-name -->
+	<div class="top-navigation">
+		<nav role="navigation" id="site-nav" class="nav">
+		    <ul>
+		        
+					    
+					    <li><a href="http://localhost:4000/about/" >About Me</a></li>
+					  
+					    
+					    <li><a href="http://localhost:4000/posts/" >Posts</a></li>
+					  
+		    </ul>
+		</nav>
+	</div><!-- /.top-navigation -->
+</div><!-- /.navigation-wrapper -->
+
+
+
+<div id="main" role="main">
+  <div class="article-author-side">
+    
+
+
+	<img src="http://localhost:4000/images/abhishekbongale.jpg" class="bio-photo" alt="Abhishek Bongale bio photo">
+
+<h3>Abhishek Bongale</h3>
+<p>AI student at the Dublin City University. Interested in mathematics, software development, Vim, design.</p>
+<a href="mailto:abhibongale97@gmail.com" class="author-social" target="_blank"><i class="fa fa-envelope-square"></i> Email</a>
+<a href="http://twitter.com/abhibongale" class="author-social" target="_blank"><i class="fa fa-twitter-square"></i> Twitter</a>
+
+
+
+
+
+<a href="http://github.com/abhibongale" class="author-social" target="_blank"><i class="fa fa-github"></i> Github</a>
+<a href="http://stackoverflow.com/users/8269522" class="author-social" target="_blank"><i class="fa fa-stack-overflow"></i> Stack Overflow</a>
+
+
+
+
+
+
+<h4>Subscribe</h4>
+
+<form method='post' action='http://blogtrottr.com'>
+    <input type='text' name='btr_email' placeholder = 'Your email'/><br />
+    <input type='hidden' name='btr_url' value='http://dataexplained.in/feed.xml' />
+    <input type='hidden' name='schedule_type' value='0' />
+    <input type='submit' class="styled-button-4" value='Subscribe to this blog' />
+</form>
+
+<style type="text/css"> 
+.styled-button-4 {
+	-webkit-box-shadow:rgba(0,0,0,0.98) 0 1px 0 0;
+	-moz-box-shadow:rgba(0,0,0,0.98) 0 1px 0 0;
+	box-shadow:rgba(0,0,0,0.98) 0 1px 0 0;
+	background-color:#EEE;
+	border-radius:0;
+	-webkit-border-radius:0;
+	-moz-border-radius:0;
+	border:1px solid #999;
+	color:#666;
+	font-family:'Lucida Grande',Tahoma,Verdana,Arial,Sans-serif;
+	font-size:11px;
+	font-weight:700;
+	padding:2px 6px;
+	height:28px
+}
+</style>
+
+
+<h4>Recommended Blogs</h4>
+<ul>
+    <li><a href="http://www.r-bloggers.com/">R Bloggers</a></li>
+    <li><a href="http://blog.rstudio.org/">RStudio Blog</a></li>
+    <li><a href="http://r4stats.com/">R4Stats</a></li>
+    <li><a href="http://simplystatistics.org/">Simply Statistics</a></li>
+</ul>
+
+  </div>
+  <article class="post">
+    <div class="headline-wrap">
+      
+        <h1><a href="http://localhost:4000/r/ikea-furniture/" rel="bookmark" title="IKEA Furniture prices- A tidy analysis">IKEA Furniture prices- A tidy analysis</a></h1>
+      
+    </div><!--/ .headline-wrap -->
+    <div class="article-wrap">
+      <p><a href="https://fivethirtyeight.com/features/the-weird-economics-of-ikea/">The weird economics of ikea</a></p>
+
+<p>The Article explained how unique IKEA is and they are the only company in furniture (proving wrong to the analyst 15 years ago who predict they will have lots of competitors around the world).</p>
+
+<p>Let’s look at what makes IKEA so unique how they sale there furniture.</p>
+
+<h2 id="explore-data">Explore data</h2>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">ikea</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">readr</span><span class="o">::</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-11-03/ikea.csv'</span><span class="p">)</span></code></pre></figure>
+
+<ul>
+  <li>Data contains <code class="highlighter-rouge">X1</code> variable which define row numbers.</li>
+  <li><code class="highlighter-rouge">short_description</code> is messy.</li>
+</ul>
+
+<p>We’ve done data preprocessing.</p>
+
+<h4 id="clean-data">Clean data</h4>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">ikea_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ikea</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="o">-</span><span class="n">X1</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">short_description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">str_squish</span><span class="p">(</span><span class="n">short_description</span><span class="p">))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">ikea_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ikea</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">separate</span><span class="p">(</span><span class="n">short_description</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"main_description"</span><span class="p">,</span><span class="w"> </span><span class="s2">"rest"</span><span class="p">),</span><span class="w">
+           </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w"> 
+           </span><span class="n">extra</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"merge"</span><span class="p">,</span><span class="w">
+           </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"right"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">extract</span><span class="p">(</span><span class="n">rest</span><span class="p">,</span><span class="w"> </span><span class="s2">"numbers"</span><span class="p">,</span><span class="w"> </span><span class="s2">"([\\d\\-xX]+) cm"</span><span class="p">,</span><span class="w"> </span><span class="n">remove</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+
+</span><span class="n">ikea_df</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">count</span><span class="p">(</span><span class="n">category</span><span class="p">,</span><span class="w"> </span><span class="n">main_description</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## # A tibble: 1,012 x 3
+##    category      main_description                      n
+##    &lt;chr&gt;         &lt;chr&gt;                             &lt;int&gt;
+##  1 Bar furniture Bar stool                             7
+##  2 Bar furniture Bar stool with backrest              17
+##  3 Bar furniture Bar stool with backrest frame         1
+##  4 Bar furniture Bar table                             8
+##  5 Bar furniture Bar table and 2 bar stools            6
+##  6 Bar furniture Bar table and 4 bar stools            4
+##  7 Bar furniture Cover for bar stool with backrest     1
+##  8 Bar furniture Stool                                 1
+##  9 Bar furniture Table                                 1
+## 10 Bar furniture Wall-mounted drop-leaf table          1
+## # … with 1,002 more rows</code></pre></figure>
+
+<h3 id="does-price-associate-with-furniture-size">Does <code class="highlighter-rouge">price</code> associate with furniture size?</h3>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">ikea_df</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span><span class="w"> </span><span class="n">price</span><span class="p">,</span><span class="w"> </span><span class="n">depth</span><span class="o">:</span><span class="n">width</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">pivot_longer</span><span class="p">(</span><span class="n">depth</span><span class="o">:</span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">names_to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"dim"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">price</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dim</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.4</span><span class="p">,</span><span class="w"> </span><span class="n">show.legend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">scale_y_log10</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">facet_wrap</span><span class="p">(</span><span class="o">~</span><span class="n">dim</span><span class="p">,</span><span class="w"> </span><span class="n">scales</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"free_x"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">labs</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">)</span></code></pre></figure>
+
+<p><img src="/figs/2020-11-03-ikea-furniture/unnamed-chunk-4-1.png" alt="center" /></p>
+
+<p>there is a relation between width and price. While we don’t see any or there is a vague relation between <code class="highlighter-rouge">depth</code> and <code class="highlighter-rouge">height</code>.</p>
+
+<p>Lets look at the volume vs price for each category.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">ikea_df</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">add_count</span><span class="p">(</span><span class="n">category</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"category_total"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">volume</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">depth</span><span class="o">*</span><span class="n">height</span><span class="o">*</span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">rm.na</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w">
+         </span><span class="n">category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glue</span><span class="o">::</span><span class="n">glue</span><span class="p">(</span><span class="s2">"{category} ({category_total})"</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">volume</span><span class="p">,</span><span class="w"> </span><span class="n">price</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.4</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">scale_y_log10</span><span class="p">(</span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scales</span><span class="o">::</span><span class="n">dollar_format</span><span class="p">())</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">expand_limits</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_smooth</span><span class="p">(</span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"lm"</span><span class="p">)</span></code></pre></figure>
+
+<p><img src="/figs/2020-11-03-ikea-furniture/unnamed-chunk-5-1.png" alt="center" /></p>
+
+<h3 id="what-are-the-common-item-people-prefer-in-terms-of-spacesize">What are the common item people prefer in terms of space/size?</h3>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">ikea_df</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">add_count</span><span class="p">(</span><span class="n">category</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"category_total"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glue</span><span class="o">::</span><span class="n">glue</span><span class="p">(</span><span class="s2">"{category}({category_total})"</span><span class="p">),</span><span class="w">
+         </span><span class="n">category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fct_reorder</span><span class="p">(</span><span class="n">category</span><span class="p">,</span><span class="w"> </span><span class="n">price</span><span class="p">),</span><span class="w">
+         </span><span class="n">volume</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">depth</span><span class="o">*</span><span class="n">height</span><span class="o">*</span><span class="n">width</span><span class="p">)</span><span class="o">/</span><span class="m">10</span><span class="o">^</span><span class="m">6</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">volume</span><span class="p">,</span><span class="w"> </span><span class="n">category</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">category</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_density_ridges</span><span class="p">(</span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.5</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"none"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_vline</span><span class="p">(</span><span class="n">xintercept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"red"</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">labs</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"volume in cubic meter"</span><span class="p">,</span><span class="w">
+       </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"furniture category"</span><span class="p">,</span><span class="w">
+       </span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"How much volune does each item have?"</span><span class="p">,</span><span class="w">
+       </span><span class="n">subtitle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"vertical red line represent 1 cubic meter"</span><span class="p">)</span></code></pre></figure>
+
+<p><img src="/figs/2020-11-03-ikea-furniture/unnamed-chunk-6-1.png" alt="center" /></p>
+
+<p>People choose different lots of different wardrobes, Sofas and armchairs in terms of size. Room dividers category has only 13 data so we have to ignore that column.</p>
+
+<h3 id="how-category-effects-price">How <code class="highlighter-rouge">category</code> effects <code class="highlighter-rouge">price</code>?</h3>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">ikea_df</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span><span class="w"> </span><span class="n">price</span><span class="p">,</span><span class="w"> </span><span class="n">category</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">add_count</span><span class="p">(</span><span class="n">category</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"category_total"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glue</span><span class="o">::</span><span class="n">glue</span><span class="p">(</span><span class="s2">"{category} ({category_total})"</span><span class="p">),</span><span class="w">
+         </span><span class="n">category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fct_reorder</span><span class="p">(</span><span class="n">category</span><span class="p">,</span><span class="w"> </span><span class="n">price</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">category</span><span class="p">,</span><span class="w"> </span><span class="n">price</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_boxplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">category</span><span class="p">),</span><span class="w"> </span><span class="n">show.legend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">scale_y_log10</span><span class="p">(</span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scales</span><span class="o">::</span><span class="n">dollar_format</span><span class="p">())</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">coord_flip</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">labs</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Prices according to the famous category"</span><span class="p">,</span><span class="w">
+       </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+       </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Price"</span><span class="p">)</span></code></pre></figure>
+
+<p><img src="/figs/2020-11-03-ikea-furniture/unnamed-chunk-7-1.png" alt="center" /></p>
+
+<h2 id="linear-model">Linear Model</h2>
+
+<p>So lets predict prices w.r.t to furniture volumes</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">ikea_df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ikea_df</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">mutate</span><span class="p">(</span><span class="n">volume</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">depth</span><span class="o">*</span><span class="n">height</span><span class="o">*</span><span class="n">width</span><span class="p">)</span><span class="o">/</span><span class="m">10</span><span class="o">^</span><span class="m">6</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">ikea_lm</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ikea_df</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">volume</span><span class="p">,</span><span class="w"> </span><span class="n">price</span><span class="p">,</span><span class="w"> </span><span class="n">category</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">lm</span><span class="p">(</span><span class="n">log2</span><span class="p">(</span><span class="n">price</span><span class="p">)</span><span class="o">~</span><span class="n">log2</span><span class="p">(</span><span class="n">volume</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">category</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="n">.</span><span class="p">)</span><span class="w">
+
+</span><span class="n">ikea_lm</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ikea_df</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">volume</span><span class="p">,</span><span class="w"> </span><span class="n">price</span><span class="p">,</span><span class="w"> </span><span class="n">category</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fct_relevel</span><span class="p">(</span><span class="n">category</span><span class="p">,</span><span class="w"> </span><span class="s2">"Tables &amp; desks"</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">lm</span><span class="p">(</span><span class="n">log2</span><span class="p">(</span><span class="n">price</span><span class="p">)</span><span class="o">~</span><span class="n">log2</span><span class="p">(</span><span class="n">volume</span><span class="p">)</span><span class="o">+</span><span class="n">category</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="n">.</span><span class="p">)</span><span class="w">
+
+</span><span class="n">ikea_lm</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">summary</span><span class="p">()</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## 
+## Call:
+## lm(formula = log2(price) ~ log2(volume) + category, data = .)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -5.1816 -0.4674  0.0475  0.5529  4.5521 
+## 
+## Coefficients:
+##                                              Estimate Std. Error
+## (Intercept)                                  10.11429    0.09296
+## log2(volume)                                  0.68998    0.01248
+## categoryBar furniture                        -0.33446    0.20181
+## categoryBeds                                  1.10249    0.13572
+## categoryBookcases &amp; shelving units           -0.47412    0.10004
+## categoryCabinets &amp; cupboards                  0.38920    0.10880
+## categoryCafé furniture                       -0.07261    0.26206
+## categoryChairs                               -0.33770    0.10701
+## categoryChests of drawers &amp; drawer units      0.24544    0.11945
+## categoryChildren's furniture                 -0.59554    0.13364
+## categoryNursery furniture                    -0.42568    0.14315
+## categoryOutdoor furniture                    -0.33535    0.13333
+## categoryRoom dividers                        -0.47913    0.37513
+## categorySideboards, buffets &amp; console tables  0.45786    0.21844
+## categorySofas &amp; armchairs                     0.66090    0.11211
+## categoryTrolleys                              0.03402    0.30961
+## categoryTV &amp; media furniture                  0.02292    0.12799
+## categoryWardrobes                             0.09444    0.11543
+##                                              t value Pr(&gt;|t|)    
+## (Intercept)                                  108.799  &lt; 2e-16 ***
+## log2(volume)                                  55.293  &lt; 2e-16 ***
+## categoryBar furniture                         -1.657 0.097626 .  
+## categoryBeds                                   8.123 8.13e-16 ***
+## categoryBookcases &amp; shelving units            -4.739 2.31e-06 ***
+## categoryCabinets &amp; cupboards                   3.577 0.000356 ***
+## categoryCafé furniture                        -0.277 0.781763    
+## categoryChairs                                -3.156 0.001626 ** 
+## categoryChests of drawers &amp; drawer units       2.055 0.040039 *  
+## categoryChildren's furniture                  -4.456 8.83e-06 ***
+## categoryNursery furniture                     -2.974 0.002980 ** 
+## categoryOutdoor furniture                     -2.515 0.011978 *  
+## categoryRoom dividers                         -1.277 0.201685    
+## categorySideboards, buffets &amp; console tables   2.096 0.036215 *  
+## categorySofas &amp; armchairs                      5.895 4.43e-09 ***
+## categoryTrolleys                               0.110 0.912525    
+## categoryTV &amp; media furniture                   0.179 0.857865    
+## categoryWardrobes                              0.818 0.413353    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.8903 on 1881 degrees of freedom
+##   (1795 observations deleted due to missingness)
+## Multiple R-squared:  0.7491,	Adjusted R-squared:  0.7468 
+## F-statistic: 330.3 on 17 and 1881 DF,  p-value: &lt; 2.2e-16</code></pre></figure>
+
+<p>So we start with $10.191^2$ and for 1 $m^3$ volume increase price will increase $2^0.754$</p>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>Goal of this analysis is to find the relation between price and other variables. Which category people buy most depending on size.</p>
+
+<p>Here We can clearly see that for <code class="highlighter-rouge">wadrobe</code> and some other categories people go for bigger volumes. But TV  &amp; media furniture people still prefer smaller size.</p>
+
+<p>Prediction isn’t because lots of items missing dimensions and lots of them have incorrect prediction. We might have to do webscraping from ikea furniture’s Saudi Arabia website using the links(some links items are not avaliable) provided. Prediction here is bias towards bigger items like tables and wardrobes.</p>
+
+      <hr />
+      <footer role="contentinfo">
+        <div class="article-author-bottom">
+          
+
+
+	<img src="http://localhost:4000/images/abhishekbongale.jpg" class="bio-photo" alt="Abhishek Bongale bio photo">
+
+<h3>Abhishek Bongale</h3>
+<p>AI student at the Dublin City University. Interested in mathematics, software development, Vim, design.</p>
+<a href="mailto:abhibongale97@gmail.com" class="author-social" target="_blank"><i class="fa fa-envelope-square"></i> Email</a>
+<a href="http://twitter.com/abhibongale" class="author-social" target="_blank"><i class="fa fa-twitter-square"></i> Twitter</a>
+
+
+
+
+
+<a href="http://github.com/abhibongale" class="author-social" target="_blank"><i class="fa fa-github"></i> Github</a>
+<a href="http://stackoverflow.com/users/8269522" class="author-social" target="_blank"><i class="fa fa-stack-overflow"></i> Stack Overflow</a>
+
+
+
+
+
+
+<h4>Subscribe</h4>
+
+<form method='post' action='http://blogtrottr.com'>
+    <input type='text' name='btr_email' placeholder = 'Your email'/><br />
+    <input type='hidden' name='btr_url' value='http://dataexplained.in/feed.xml' />
+    <input type='hidden' name='schedule_type' value='0' />
+    <input type='submit' class="styled-button-4" value='Subscribe to this blog' />
+</form>
+
+<style type="text/css"> 
+.styled-button-4 {
+	-webkit-box-shadow:rgba(0,0,0,0.98) 0 1px 0 0;
+	-moz-box-shadow:rgba(0,0,0,0.98) 0 1px 0 0;
+	box-shadow:rgba(0,0,0,0.98) 0 1px 0 0;
+	background-color:#EEE;
+	border-radius:0;
+	-webkit-border-radius:0;
+	-moz-border-radius:0;
+	border:1px solid #999;
+	color:#666;
+	font-family:'Lucida Grande',Tahoma,Verdana,Arial,Sans-serif;
+	font-size:11px;
+	font-weight:700;
+	padding:2px 6px;
+	height:28px
+}
+</style>
+
+
+<h4>Recommended Blogs</h4>
+<ul>
+    <li><a href="http://www.r-bloggers.com/">R Bloggers</a></li>
+    <li><a href="http://blog.rstudio.org/">RStudio Blog</a></li>
+    <li><a href="http://r4stats.com/">R4Stats</a></li>
+    <li><a href="http://simplystatistics.org/">Simply Statistics</a></li>
+</ul>
+
+        </div>
+        <p class="byline"><strong>IKEA Furniture prices- A tidy analysis</strong> was published on <time datetime="2020-12-09T00:00:00+05:30">December 09, 2020</time>.</p>
+      </footer>
+    </div><!-- /.article-wrap -->
+  
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+  
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrap">
+  <div class="related-articles">
+  <h4>You might also enjoy <small class="pull-right">(<a href="http://localhost:4000/posts/">View all posts</a>)</small></h4>
+    <ul>
+    
+      <li><a href="http://localhost:4000/r/netflix-shows/" title="Netflix Shows">Netflix Shows</a></li>
+    
+      <li><a href="http://localhost:4000/r/un-votes/" title="UN Votes">UN Votes</a></li>
+    
+      <li><a href="http://localhost:4000/r/video-games-and-sliced/" title="Video Games and Sliced">Video Games and Sliced</a></li>
+    
+    </ul>
+    <hr />
+  </div><!-- /.related-articles -->
+  <footer>
+    
+
+<span>&copy; 2021 Abhishek Bongale. Powered by <a href="http://jekyllrb.com">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/">Minimal Mistakes</a> theme.</span>
+
+  </footer>
+</div><!-- /.footer-wrap -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="http://localhost:4000/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="http://localhost:4000/assets/js/scripts.min.js"></script>
+
+
+  
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'dataexplained'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+	        
+
+</body>
+</html>

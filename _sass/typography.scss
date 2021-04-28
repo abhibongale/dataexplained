@@ -4,22 +4,22 @@ h1, h2, h3, h4, h5, h6 {
 	font-family: $heading-font;
 }
 h1 {
-	@include font-size(32);
+	@include font-size(34);
 }
 h2 {
-	@include font-size(28);
+	@include font-size(30);
 }
 h3 {
-	@include font-size(24);
+	@include font-size(26);
 }
 h4 {
-	@include font-size(18);
+	@include font-size(20);
 }
 h5 {
-	@include font-size(16);
+	@include font-size(18);
 }
 h6 {
-	@include font-size(14);
+	@include font-size(16);
 }
 
 // Links
@@ -129,7 +129,7 @@ tt, code, kbd, samp, pre {
 p,
 li { 
 	code {
-		@include font-rem(12);
+		@include font-rem(14);
 		line-height: 1.5;
 		white-space: nowrap;
 		margin: 0 2px;
@@ -140,7 +140,7 @@ li {
 	}
 }
 pre {
-	@include font-rem(12);
+	@include font-rem(16);
 	line-height: 1.5;
 	overflow-x: auto;
 }

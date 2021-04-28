@@ -1,0 +1,816 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Plastic Pollution &#8211; Data Explained</title>
+<meta name="description" content="Introduction
+">
+<meta name="keywords" content="r, tidytuesday, tidyverse">
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="Plastic Pollution">
+<meta name="twitter:description" content="Introduction
+">
+<meta name="twitter:site" content="@abhibongale">
+<meta name="twitter:creator" content="@abhibongale">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://localhost:4000/images/default-thumb.png">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Plastic Pollution">
+<meta property="og:description" content="Introduction
+">
+<meta property="og:url" content="http://localhost:4000/r/plastic-pollution/">
+<meta property="og:site_name" content="Data Explained">
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/r/plastic-pollution/">
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Data Explained Feed">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+	<script src="http://localhost:4000/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="http://localhost:4000/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="http://localhost:4000/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<!-- MathJax -->
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<link href='//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700%7CPT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="http://localhost:4000/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="http://localhost:4000/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://localhost:4000/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://localhost:4000/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://localhost:4000/images/apple-touch-icon-144x144-precomposed.png">
+
+<!-- Google Analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-57723549-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+</head>
+
+<body class="post">
+
+<!--[if lt IE 9]><div class="browser-upgrade alert alert-info">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]-->
+
+<div class="navigation-wrapper">
+	<div class="site-name">
+		<a href="http://localhost:4000">Data Explained</a>
+	</div><!-- /.site-name -->
+	<div class="top-navigation">
+		<nav role="navigation" id="site-nav" class="nav">
+		    <ul>
+		        
+					    
+					    <li><a href="http://localhost:4000/about/" >About Me</a></li>
+					  
+					    
+					    <li><a href="http://localhost:4000/posts/" >Posts</a></li>
+					  
+		    </ul>
+		</nav>
+	</div><!-- /.top-navigation -->
+</div><!-- /.navigation-wrapper -->
+
+
+
+<div id="main" role="main">
+  <div class="article-author-side">
+    
+
+
+	<img src="http://localhost:4000/images/abhishekbongale.jpg" class="bio-photo" alt="Abhishek Bongale bio photo">
+
+<h3>Abhishek Bongale</h3>
+<p>AI student at the Dublin City University. Interested in mathematics, software development, Vim, design.</p>
+<a href="mailto:abhibongale97@gmail.com" class="author-social" target="_blank"><i class="fa fa-envelope-square"></i> Email</a>
+<a href="http://twitter.com/abhibongale" class="author-social" target="_blank"><i class="fa fa-twitter-square"></i> Twitter</a>
+
+
+
+
+
+<a href="http://github.com/abhibongale" class="author-social" target="_blank"><i class="fa fa-github"></i> Github</a>
+<a href="http://stackoverflow.com/users/8269522" class="author-social" target="_blank"><i class="fa fa-stack-overflow"></i> Stack Overflow</a>
+
+
+
+
+
+
+<h4>Subscribe</h4>
+
+<form method='post' action='http://blogtrottr.com'>
+    <input type='text' name='btr_email' placeholder = 'Your email'/><br />
+    <input type='hidden' name='btr_url' value='http://dataexplained.in/feed.xml' />
+    <input type='hidden' name='schedule_type' value='0' />
+    <input type='submit' class="styled-button-4" value='Subscribe to this blog' />
+</form>
+
+<style type="text/css"> 
+.styled-button-4 {
+	-webkit-box-shadow:rgba(0,0,0,0.98) 0 1px 0 0;
+	-moz-box-shadow:rgba(0,0,0,0.98) 0 1px 0 0;
+	box-shadow:rgba(0,0,0,0.98) 0 1px 0 0;
+	background-color:#EEE;
+	border-radius:0;
+	-webkit-border-radius:0;
+	-moz-border-radius:0;
+	border:1px solid #999;
+	color:#666;
+	font-family:'Lucida Grande',Tahoma,Verdana,Arial,Sans-serif;
+	font-size:11px;
+	font-weight:700;
+	padding:2px 6px;
+	height:28px
+}
+</style>
+
+
+<h4>Recommended Blogs</h4>
+<ul>
+    <li><a href="http://www.r-bloggers.com/">R Bloggers</a></li>
+    <li><a href="http://blog.rstudio.org/">RStudio Blog</a></li>
+    <li><a href="http://r4stats.com/">R4Stats</a></li>
+    <li><a href="http://simplystatistics.org/">Simply Statistics</a></li>
+</ul>
+
+  </div>
+  <article class="post">
+    <div class="headline-wrap">
+      
+        <h1><a href="http://localhost:4000/r/plastic-pollution/" rel="bookmark" title="Plastic Pollution">Plastic Pollution</a></h1>
+      
+    </div><!--/ .headline-wrap -->
+    <div class="article-wrap">
+      <h2 id="introduction">Introduction</h2>
+
+<p><img src="https://images.pexels.com/photos/2827735/pexels-photo-2827735.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=650&amp;w=940" alt="Image" /></p>
+
+<p><a href="https://www.pexels.com/photo/piles-of-garbage-by-the-shore-2827735/">Photo by Lucien Wanda from Pexels</a>
+<br /></p>
+
+<p>This blog is about <strong>Plastic Pollution</strong>  We will look into the countries, types of plastic and companies that are heavily involved in the contribution of plastic pollution. The data comes from <a href="https://www.breakfreefromplastic.org/">Break Free from Plastic</a> courtesy of <a href="https://sarahasauve.wordpress.com/">Sarah Sauve</a>.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">library</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span><span class="w"> </span><span class="c1"># metadata of packages</span><span class="w">
+</span><span class="n">theme_set</span><span class="p">(</span><span class="n">theme_light</span><span class="p">())</span></code></pre></figure>
+
+<h2 id="read-the-data">Read the data</h2>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">plastics</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-01-26/plastics.csv'</span><span class="p">)</span></code></pre></figure>
+
+<h2 id="explore-the-data">Explore the data</h2>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">skimr</span><span class="o">::</span><span class="n">skim</span><span class="p">(</span><span class="n">plastics</span><span class="p">)</span></code></pre></figure>
+
+<p>Table: Data summary</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left"> </th>
+      <th style="text-align: left"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Name</td>
+      <td style="text-align: left">plastics</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Number of rows</td>
+      <td style="text-align: left">13380</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Number of columns</td>
+      <td style="text-align: left">14</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>__</strong><strong>__</strong><strong>__</strong>_____</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Column type frequency:</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">character</td>
+      <td style="text-align: left">2</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">numeric</td>
+      <td style="text-align: left">12</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>__</strong><strong>__</strong><strong>__</strong><strong>__</strong></td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Group variables</td>
+      <td style="text-align: left">None</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Variable type: character</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">skim_variable</th>
+      <th style="text-align: right">n_missing</th>
+      <th style="text-align: right">complete_rate</th>
+      <th style="text-align: right">min</th>
+      <th style="text-align: right">max</th>
+      <th style="text-align: right">empty</th>
+      <th style="text-align: right">n_unique</th>
+      <th style="text-align: right">whitespace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">country</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">4</td>
+      <td style="text-align: right">50</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">69</td>
+      <td style="text-align: right">0</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">parent_company</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">84</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">10823</td>
+      <td style="text-align: right">0</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Variable type: numeric</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">skim_variable</th>
+      <th style="text-align: right">n_missing</th>
+      <th style="text-align: right">complete_rate</th>
+      <th style="text-align: right">mean</th>
+      <th style="text-align: right">sd</th>
+      <th style="text-align: right">p0</th>
+      <th style="text-align: right">p25</th>
+      <th style="text-align: right">p50</th>
+      <th style="text-align: right">p75</th>
+      <th style="text-align: right">p100</th>
+      <th style="text-align: left">hist</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">year</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.00</td>
+      <td style="text-align: right">2019.31</td>
+      <td style="text-align: right">0.46</td>
+      <td style="text-align: right">2019</td>
+      <td style="text-align: right">2019</td>
+      <td style="text-align: right">2019</td>
+      <td style="text-align: right">2020</td>
+      <td style="text-align: right">2020</td>
+      <td style="text-align: left">▇▁▁▁▃</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">empty</td>
+      <td style="text-align: right">3243</td>
+      <td style="text-align: right">0.76</td>
+      <td style="text-align: right">0.41</td>
+      <td style="text-align: right">22.59</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">2208</td>
+      <td style="text-align: left">▇▁▁▁▁</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">hdpe</td>
+      <td style="text-align: right">1646</td>
+      <td style="text-align: right">0.88</td>
+      <td style="text-align: right">3.05</td>
+      <td style="text-align: right">66.12</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">3728</td>
+      <td style="text-align: left">▇▁▁▁▁</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ldpe</td>
+      <td style="text-align: right">2077</td>
+      <td style="text-align: right">0.84</td>
+      <td style="text-align: right">10.32</td>
+      <td style="text-align: right">194.64</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">11700</td>
+      <td style="text-align: left">▇▁▁▁▁</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">o</td>
+      <td style="text-align: right">267</td>
+      <td style="text-align: right">0.98</td>
+      <td style="text-align: right">49.61</td>
+      <td style="text-align: right">1601.99</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">2</td>
+      <td style="text-align: right">120646</td>
+      <td style="text-align: left">▇▁▁▁▁</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">pet</td>
+      <td style="text-align: right">214</td>
+      <td style="text-align: right">0.98</td>
+      <td style="text-align: right">20.94</td>
+      <td style="text-align: right">428.16</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">36226</td>
+      <td style="text-align: left">▇▁▁▁▁</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">pp</td>
+      <td style="text-align: right">1496</td>
+      <td style="text-align: right">0.89</td>
+      <td style="text-align: right">8.22</td>
+      <td style="text-align: right">141.81</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">6046</td>
+      <td style="text-align: left">▇▁▁▁▁</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ps</td>
+      <td style="text-align: right">1972</td>
+      <td style="text-align: right">0.85</td>
+      <td style="text-align: right">1.86</td>
+      <td style="text-align: right">39.74</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">2101</td>
+      <td style="text-align: left">▇▁▁▁▁</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">pvc</td>
+      <td style="text-align: right">4328</td>
+      <td style="text-align: right">0.68</td>
+      <td style="text-align: right">0.35</td>
+      <td style="text-align: right">7.89</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">622</td>
+      <td style="text-align: left">▇▁▁▁▁</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">grand_total</td>
+      <td style="text-align: right">14</td>
+      <td style="text-align: right">1.00</td>
+      <td style="text-align: right">90.15</td>
+      <td style="text-align: right">1873.68</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">6</td>
+      <td style="text-align: right">120646</td>
+      <td style="text-align: left">▇▁▁▁▁</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">num_events</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.00</td>
+      <td style="text-align: right">33.37</td>
+      <td style="text-align: right">44.71</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">4</td>
+      <td style="text-align: right">15</td>
+      <td style="text-align: right">42</td>
+      <td style="text-align: right">145</td>
+      <td style="text-align: left">▇▃▁▁▂</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">volunteers</td>
+      <td style="text-align: right">107</td>
+      <td style="text-align: right">0.99</td>
+      <td style="text-align: right">1117.65</td>
+      <td style="text-align: right">1812.40</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">114</td>
+      <td style="text-align: right">400</td>
+      <td style="text-align: right">1416</td>
+      <td style="text-align: right">31318</td>
+      <td style="text-align: left">▇▁▁▁▁</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Every Country has <code class="highlighter-rouge">Grand Total</code> in <code class="highlighter-rouge">parent_company</code> is the summation of the total plastic produces in that particular country.</p>
+
+<h2 id="highest-plastic-pollutant-countries">Highest plastic pollutant countries</h2>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1">#Prepare data</span><span class="w">
+</span><span class="n">plastics</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">country</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s2">"EMPTY"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">parent_company</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"Grand Total"</span><span class="p">,</span><span class="w"> </span><span class="n">year</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"2019"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">country</span><span class="p">,</span><span class="w"> </span><span class="n">grand_total</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">group_by</span><span class="p">(</span><span class="n">country</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">summarise</span><span class="p">(</span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">grand_total</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">country</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fct_reorder</span><span class="p">(</span><span class="n">country</span><span class="p">,</span><span class="w"> </span><span class="n">total</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">total</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">3000</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="c1">#Make plot</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">country</span><span class="p">,</span><span class="w"> </span><span class="n">total</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_bar</span><span class="p">(</span><span class="n">stat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"identity"</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#FAAB18"</span><span class="p">)</span><span class="w">  </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_hline</span><span class="p">(</span><span class="n">yintercept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="o">=</span><span class="s2">"#333333"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">labs</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+       </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"total"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">coord_flip</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">labs</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+       </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+       </span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Top Plastic Pollutant Countries"</span><span class="p">,</span><span class="w">
+       </span><span class="n">subtitle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Total of different types of plastics"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="w"> </span><span class="n">plot.title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Helvetica"</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w">
+                                   </span><span class="n">face</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"bold"</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#222222"</span><span class="p">),</span><span class="w"> 
+        </span><span class="n">plot.subtitle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Helvetica"</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">18</span><span class="p">,</span><span class="w"> 
+                                     </span><span class="n">margin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">margin</span><span class="p">(</span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">)),</span><span class="w">
+        </span><span class="n">axis.text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Helvetica"</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> 
+                                 </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#222222"</span><span class="p">))</span><span class="w"> </span></code></pre></figure>
+
+<p><img src="/figs/2021-01-26-plastic-pollution/unnamed-chunk-4-1.png" alt="center" /></p>
+
+<p>We have filtered countries which have <code class="highlighter-rouge">grand_total</code> more than $3000$.
+(<strong>Note: Lot of missing data</strong>, But it gives a overview).</p>
+
+<p>Countries which are miles ahead in plastic pollution according to data.</p>
+<ul>
+  <li>Taiwan</li>
+  <li>Nigeria</li>
+  <li>Philippines</li>
+</ul>
+
+<p>Nearly 513 million tons of plastics wind up in the oceans every year out of which 80% is from just 20 countries in the World. While China, India and America are in the list of contributors to this havoc, other countries like Indonesia, Philippines, Vietnam, Sri Lanka, Thailand, Egypt, Malaysia, Nigeria, Bangladesh and South Africa contribute their own share in a considerable manner.</p>
+
+<p><a href="https://www.worldatlas.com/articles/countries-putting-the-most-plastic-waste-into-the-oceans.html">worldatlas-article</a></p>
+
+<h2 id="type-of-plastic-produce">Type of plastic produce?</h2>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1">#Prepare data</span><span class="w">
+</span><span class="n">plastics</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">pivot_longer</span><span class="p">(</span><span class="n">hdpe</span><span class="o">:</span><span class="n">pvc</span><span class="p">,</span><span class="w"> </span><span class="n">names_to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"plastic_type"</span><span class="p">,</span><span class="w"> </span><span class="n">values_to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"count"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">country</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fct_reorder</span><span class="p">(</span><span class="n">country</span><span class="p">,</span><span class="w"> </span><span class="n">grand_total</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="o">!</span><span class="nf">is.na</span><span class="p">(</span><span class="n">count</span><span class="p">),</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="c1"># Make Plot</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">plastic_type</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_col</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#990000"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_hline</span><span class="p">(</span><span class="n">yintercept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#333333"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">scale_y_continuous</span><span class="p">(</span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scales</span><span class="o">::</span><span class="n">comma</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">labs</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+       </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+       </span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Types of plastic"</span><span class="p">,</span><span class="w">
+       </span><span class="n">subtitle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Most Plastic Type Manufactured"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">axis.text.x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">angle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">15</span><span class="p">),</span><span class="w"> 
+        </span><span class="n">plot.title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Helvetica"</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="n">face</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"bold"</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#222222"</span><span class="p">),</span><span class="w"> 
+        </span><span class="n">plot.subtitle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Helvetica"</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">16</span><span class="p">,</span><span class="w"> 
+                                     </span><span class="n">margin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">margin</span><span class="p">(</span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">)),</span><span class="w">
+        </span><span class="n">axis.text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Helvetica"</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> 
+                                 </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#222222"</span><span class="p">))</span><span class="w"> </span></code></pre></figure>
+
+<p><img src="/figs/2021-01-26-plastic-pollution/unnamed-chunk-5-1.png" alt="center" /></p>
+
+<p>Most other (o) type is the most manufactured plastic.</p>
+
+<p>Look up the Details about the plastic types and products in which they used:</p>
+
+<h3 id="7-types-of--plastic-harmful">7 types of  plastic (harmful)</h3>
+
+<p>There are many different types of plastic out there, and they can be simply classified into 7 main categories –</p>
+
+<h4 id="1-polyethylene-terephthalate-pet">1. Polyethylene terephthalate (pet)</h4>
+
+<p>Commonly known as PET, this type of plastic can be most commonly seen as being sold as water bottles and soda bottles. Even ketchup usually comes in a bottle made out of PET. While according to studies it is said to be a food-grade plastic since it has no BPA. But on the flip side when this plastic is exposed to heat, it becomes highly toxic.</p>
+
+<h4 id="2-high-density-polyethylene-hdpe">2. High-density polyethylene (hdpe)</h4>
+
+<p>Commonly known as HDPE, the most common applications of this plastic are milk and juice bottles. This is basically a hard plastic that is strong and durable and is often used to store hygiene products. This plastic is also often termed as a safe plastic but is known to leach very harmful chemicals. Too much exposure to these chemicals leads to harmful effects on kids and juveniles.</p>
+
+<h4 id="3-polyvinyl-chloride-pvc">3. Polyvinyl chloride (pvc)</h4>
+
+<p>This plastic is also known as PVC and it is a very rigid yet flexible material. This makes it ideal for hardware purposes like plumbing pipes and so on. Other purposes of PVC include plastic containers, shrink wrap, toys for children, and wrappers for medicines. PVC contains DEHP, which can result in male traits becoming feminine. It basically disrupts natural human hormones to a fault.</p>
+
+<h4 id="4-low-density-polyethylene-ldpe">4. Low-density polyethylene (ldpe)</h4>
+
+<p>This is a much thinner plastic that is mostly used for trash bags and bread packers. They are also used as a lining for beverage cups. Even though it has no BPA, it does have harmful estrogenic chemicals.</p>
+
+<h4 id="5-polypropylene-pp">5. Polypropylene (pp)</h4>
+
+<p>Most commonly used for making takeaway food containers. Polypropylene, or PP, is harmful too, but not as harmful as the other plastics we have mentioned in this article. But with that being said, it does cause quite a few health issues as well.</p>
+
+<h4 id="6-polystyrene-ps">6. Polystyrene (ps)</h4>
+
+<p>Often referred to as Styrofoam, is the common material for making single-use disposable utensils</p>
+
+<p>like plates and cups. It leaches styrene which is a well-known carcinogen. Styrene is especially harmful when exposed to heat.</p>
+
+<h4 id="7-other-plastics-o">7. Other plastics (o)</h4>
+
+<p>Plastics that don’t fall in any of the above categories go into the last one. These plastics mostly leach BPA or BPS and are very harmful. They cause many different diseases and disorders like mood dysfunctions, sexual disorders, reproductive disorders, and are also known to be endocrine disrupters.</p>
+
+<p>(<strong>article link</strong>: <a href="https://www.plasticcollectors.com/blog/types-of-plastic-harmful-to-health/">harmful plastic types</a>)</p>
+
+<h4 id="highest-producers">Highest producer’s?</h4>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1">#Prepare data</span><span class="w">
+</span><span class="n">plastics</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="o">!</span><span class="nf">is.na</span><span class="p">(</span><span class="n">grand_total</span><span class="p">),</span><span class="w"> </span><span class="n">parent_company</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s2">"Grand Total"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="o">-</span><span class="nf">c</span><span class="p">(</span><span class="n">country</span><span class="p">,</span><span class="w"> </span><span class="n">empty</span><span class="p">,</span><span class="w"> </span><span class="n">num_events</span><span class="p">,</span><span class="w"> </span><span class="n">volunteers</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">pivot_longer</span><span class="p">(</span><span class="n">hdpe</span><span class="o">:</span><span class="n">pvc</span><span class="p">,</span><span class="w"> </span><span class="n">names_to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"plastic_type"</span><span class="p">,</span><span class="w"> </span><span class="n">values_to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"count"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">group_by</span><span class="p">(</span><span class="n">parent_company</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">summarise</span><span class="p">(</span><span class="n">grand_sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">grand_total</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">arrange</span><span class="p">(</span><span class="n">desc</span><span class="p">(</span><span class="n">grand_sum</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">parent_company</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ifelse</span><span class="p">(</span><span class="n">parent_company</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"The Coca-Cola Company"</span><span class="p">,</span><span class="w">
+                                 </span><span class="s2">"Coca-Cola"</span><span class="p">,</span><span class="w"> </span><span class="n">parent_company</span><span class="p">),</span><span class="w">
+         </span><span class="n">parent_company</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ifelse</span><span class="p">(</span><span class="n">parent_company</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"Universal Robina Corporation"</span><span class="p">,</span><span class="w"> </span><span class="s2">"UNL Robina Corp."</span><span class="p">,</span><span class="w"> </span><span class="n">parent_company</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">parent_company</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fct_reorder</span><span class="p">(</span><span class="n">parent_company</span><span class="p">,</span><span class="w"> </span><span class="n">grand_sum</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">head</span><span class="p">(</span><span class="m">10</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="c1">#Make Plot</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">parent_company</span><span class="p">,</span><span class="w"> </span><span class="n">grand_sum</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_col</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#1380A1"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_hline</span><span class="p">(</span><span class="n">yintercept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="o">=</span><span class="s2">"#333333"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">scale_y_continuous</span><span class="p">(</span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scales</span><span class="o">::</span><span class="n">comma</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">labs</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+       </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+       </span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Top Plastic Pollutant Company"</span><span class="p">,</span><span class="w">
+       </span><span class="n">subtitle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Total of different types of product manufacture"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">axis.text.x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">angle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">15</span><span class="p">),</span><span class="w"> 
+        </span><span class="n">plot.title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Helvetica"</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="n">face</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"bold"</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#222222"</span><span class="p">),</span><span class="w"> 
+        </span><span class="n">plot.subtitle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Helvetica"</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">18</span><span class="p">,</span><span class="w"> 
+                                     </span><span class="n">margin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">margin</span><span class="p">(</span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">)),</span><span class="w">
+        </span><span class="n">axis.text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Helvetica"</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> 
+                                 </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#222222"</span><span class="p">))</span><span class="w"> </span></code></pre></figure>
+
+<p><img src="/figs/2021-01-26-plastic-pollution/unnamed-chunk-6-1.png" alt="center" /></p>
+
+<p>Lots of plastics are unbranded, a considerable amount of Company names are missing ($NULL$, $null$). If we remove the unbranded, null, NULL we will get Top plastic producers.</p>
+
+<h2 id="top-10-highest-plastic-producing-companies">Top 10 highest plastic producing companies</h2>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1">#Prepare data</span><span class="w">
+</span><span class="n">top_company</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">plastics</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="o">!</span><span class="nf">is.na</span><span class="p">(</span><span class="n">grand_total</span><span class="p">),</span><span class="w"> </span><span class="n">parent_company</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s2">"Grand Total"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="o">-</span><span class="nf">c</span><span class="p">(</span><span class="n">country</span><span class="p">,</span><span class="w"> </span><span class="n">empty</span><span class="p">,</span><span class="w"> </span><span class="n">num_events</span><span class="p">,</span><span class="w"> </span><span class="n">volunteers</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">pivot_longer</span><span class="p">(</span><span class="n">hdpe</span><span class="o">:</span><span class="n">pvc</span><span class="p">,</span><span class="w"> </span><span class="n">names_to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"plastic_type"</span><span class="p">,</span><span class="w"> </span><span class="n">values_to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"count"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">group_by</span><span class="p">(</span><span class="n">parent_company</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">summarise</span><span class="p">(</span><span class="n">grand_sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">grand_total</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">arrange</span><span class="p">(</span><span class="n">desc</span><span class="p">(</span><span class="n">grand_sum</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">parent_company</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s2">"null"</span><span class="p">,</span><span class="w"> </span><span class="n">parent_company</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s2">"NULL"</span><span class="p">,</span><span class="w"> </span><span class="n">parent_company</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s2">"Unbranded"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">head</span><span class="p">(</span><span class="m">10</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">parent_company</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ifelse</span><span class="p">(</span><span class="n">parent_company</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"The Coca-Cola Company"</span><span class="p">,</span><span class="w">
+                                 </span><span class="s2">"Coca-Cola"</span><span class="p">,</span><span class="w"> </span><span class="n">parent_company</span><span class="p">),</span><span class="w">
+         </span><span class="n">parent_company</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ifelse</span><span class="p">(</span><span class="n">parent_company</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"Universal Robina Corporation"</span><span class="p">,</span><span class="w"> </span><span class="s2">"UNL Robina Corp."</span><span class="p">,</span><span class="w"> </span><span class="n">parent_company</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">parent_company</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fct_reorder</span><span class="p">(</span><span class="n">parent_company</span><span class="p">,</span><span class="w"> </span><span class="n">grand_sum</span><span class="p">))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## Error in check_factor(.f): object 'parent_company' not found</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1">#Make plot</span><span class="w">
+</span><span class="n">top_company</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">parent_company</span><span class="p">,</span><span class="w"> </span><span class="n">grand_sum</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_col</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#1380A1"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_hline</span><span class="p">(</span><span class="n">yintercept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="o">=</span><span class="s2">"#333333"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_text</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10000</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">grand_sum</span><span class="p">),</span><span class="w"> </span><span class="n">vjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"white"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">labs</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+       </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+       </span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Top Plastic Pollutant Company"</span><span class="p">,</span><span class="w">
+       </span><span class="n">subtitle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Total of different types of product manufacture"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">axis.text.x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">angle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">15</span><span class="p">),</span><span class="w"> 
+        </span><span class="n">plot.title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Helvetica"</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="n">face</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"bold"</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#222222"</span><span class="p">),</span><span class="w"> 
+        </span><span class="n">plot.subtitle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Helvetica"</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">18</span><span class="p">,</span><span class="w"> 
+                                     </span><span class="n">margin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">margin</span><span class="p">(</span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">9</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">)),</span><span class="w">
+        </span><span class="n">axis.text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">family</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Helvetica"</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> 
+                                 </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#222222"</span><span class="p">))</span><span class="w"> </span></code></pre></figure>
+
+<p><img src="/figs/2021-01-26-plastic-pollution/unnamed-chunk-7-1.png" alt="center" /></p>
+
+<p>Coca-Cola was the largest plastic polluter. (<strong>Note: Lot of missing data</strong>, But it gives a overview).<br /></p>
+
+<p><a href="https://www.forbes.com/sites/trevornace/2019/10/29/coca-cola-named-the-worlds-most-polluting-brand-in-plastic-waste-audit/?sh=678cc92c74e0">Forbes Article</a></p>
+
+<h2 id="conclusion">Conclusion</h2>
+<ul>
+  <li>Plastic Pollution is has become mainstream environmental problem Countries, companies should do more to tackle this problem.</li>
+  <li>Awareness should be spread about plastic pollution and its harm.</li>
+</ul>
+
+<h3 id="to-tackle-this-problem-we-should">To tackle this problem, We should</h3>
+
+<p>The increasingly apparent single-use plastic problem highlights the need to tackle the issue, in part, with three strategies:</p>
+
+<ul>
+  <li>
+    <p>Smart consumer choices - Educating the consumer on the need and practice of recycling single-use plastics.</p>
+  </li>
+  <li>
+    <p>Easy and efficient recycling - Developing an infrastructure where recycling is easy for the consumer and efficient enough to be economically viable.</p>
+  </li>
+  <li>
+    <p>Breakaway from plastics - Encouraging companies to develop alternative materials to use beyond plastics and changing the mindset around their products to not rely solely on plastic single-use containers.</p>
+  </li>
+</ul>
+
+<p>There is no perfect solution and as long as plastic is an effective and inexpensive source material, political and environmental pressure is the primary mechanism by which they will be encouraged to change.</p>
+
+<p><a href="https://www.forbes.com/sites/trevornace/2019/10/29/coca-cola-named-the-worlds-most-polluting-brand-in-plastic-waste-audit/?sh=678cc92c74e0">Article</a></p>
+
+      <hr />
+      <footer role="contentinfo">
+        <div class="article-author-bottom">
+          
+
+
+	<img src="http://localhost:4000/images/abhishekbongale.jpg" class="bio-photo" alt="Abhishek Bongale bio photo">
+
+<h3>Abhishek Bongale</h3>
+<p>AI student at the Dublin City University. Interested in mathematics, software development, Vim, design.</p>
+<a href="mailto:abhibongale97@gmail.com" class="author-social" target="_blank"><i class="fa fa-envelope-square"></i> Email</a>
+<a href="http://twitter.com/abhibongale" class="author-social" target="_blank"><i class="fa fa-twitter-square"></i> Twitter</a>
+
+
+
+
+
+<a href="http://github.com/abhibongale" class="author-social" target="_blank"><i class="fa fa-github"></i> Github</a>
+<a href="http://stackoverflow.com/users/8269522" class="author-social" target="_blank"><i class="fa fa-stack-overflow"></i> Stack Overflow</a>
+
+
+
+
+
+
+<h4>Subscribe</h4>
+
+<form method='post' action='http://blogtrottr.com'>
+    <input type='text' name='btr_email' placeholder = 'Your email'/><br />
+    <input type='hidden' name='btr_url' value='http://dataexplained.in/feed.xml' />
+    <input type='hidden' name='schedule_type' value='0' />
+    <input type='submit' class="styled-button-4" value='Subscribe to this blog' />
+</form>
+
+<style type="text/css"> 
+.styled-button-4 {
+	-webkit-box-shadow:rgba(0,0,0,0.98) 0 1px 0 0;
+	-moz-box-shadow:rgba(0,0,0,0.98) 0 1px 0 0;
+	box-shadow:rgba(0,0,0,0.98) 0 1px 0 0;
+	background-color:#EEE;
+	border-radius:0;
+	-webkit-border-radius:0;
+	-moz-border-radius:0;
+	border:1px solid #999;
+	color:#666;
+	font-family:'Lucida Grande',Tahoma,Verdana,Arial,Sans-serif;
+	font-size:11px;
+	font-weight:700;
+	padding:2px 6px;
+	height:28px
+}
+</style>
+
+
+<h4>Recommended Blogs</h4>
+<ul>
+    <li><a href="http://www.r-bloggers.com/">R Bloggers</a></li>
+    <li><a href="http://blog.rstudio.org/">RStudio Blog</a></li>
+    <li><a href="http://r4stats.com/">R4Stats</a></li>
+    <li><a href="http://simplystatistics.org/">Simply Statistics</a></li>
+</ul>
+
+        </div>
+        <p class="byline"><strong>Plastic Pollution</strong> was published on <time datetime="2021-01-28T00:00:00+05:30">January 28, 2021</time>.</p>
+      </footer>
+    </div><!-- /.article-wrap -->
+  
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+  
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrap">
+  <div class="related-articles">
+  <h4>You might also enjoy <small class="pull-right">(<a href="http://localhost:4000/posts/">View all posts</a>)</small></h4>
+    <ul>
+    
+      <li><a href="http://localhost:4000/r/netflix-shows/" title="Netflix Shows">Netflix Shows</a></li>
+    
+      <li><a href="http://localhost:4000/r/un-votes/" title="UN Votes">UN Votes</a></li>
+    
+      <li><a href="http://localhost:4000/r/video-games-and-sliced/" title="Video Games and Sliced">Video Games and Sliced</a></li>
+    
+    </ul>
+    <hr />
+  </div><!-- /.related-articles -->
+  <footer>
+    
+
+<span>&copy; 2021 Abhishek Bongale. Powered by <a href="http://jekyllrb.com">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/">Minimal Mistakes</a> theme.</span>
+
+  </footer>
+</div><!-- /.footer-wrap -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="http://localhost:4000/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="http://localhost:4000/assets/js/scripts.min.js"></script>
+
+
+  
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'dataexplained'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+	        
+
+</body>
+</html>
