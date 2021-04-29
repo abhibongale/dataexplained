@@ -1,0 +1,179 @@
+---
+layout: post
+title: "CEO Departures"
+description: ""
+output: html_document
+date: "`r Sys.Date()`"
+category: r
+tags: [r, tidytuesday, tidyverse]
+comments: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r echo=FALSE}
+library(tidyverse)
+```
+
+
+```{r}
+departures <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-04-27/departures.csv')
+```
+
+We will predict the departure of ceo's due to health issues or not in this article. 
+
+We will analyise data before making pipeline for prediction.
+
+# Analysis dataset
+
+`ceo_dismissal` variable will be our y (to predict value). We will look whether it contains any NA or any nonsense values.
+
+
+Total non_health_dismissal and health related dismissal are ?
+```{r}
+
+departures <- departures %>%
+  group_by(coname) %>%
+  mutate(total_dismiss = n(), 
+         ratio_dismissal = ceo_dismissal/total_dismiss) %>%
+  ungroup()
+
+departures %>%
+  filter(!is.na(ceo_dismissal)) %>%
+  select(coname, ceo_dismissal, ratio_dismissal) %>%
+  group_by(coname) %>%
+  summarise(non_health_dismiss = sum(ratio_dismissal*100)) %>%
+  group_by(non_health_dismiss) %>%
+  count() %>%
+  arrange(desc(non_health_dismiss)) %>%
+  ggplot() +
+  geom_bar(aes("", n, fill = non_health_dismiss), stat="identity") +
+  coord_polar(theta = "y", start = 0)
+```
+
+```{r}
+departures %>%
+  count(ceo_dismissal) %>%
+  summarise(total = sum(n), ratio = n/total*100)
+```
+
+
+```{r}
+departures %>%
+  filter(!is.na(ceo_dismissal)) %>%
+  select(coname, ceo_dismissal, ratio_dismissal) %>%
+  group_by(coname) %>%
+  summarise(non_health_dismiss = sum(ratio_dismissal*100)) %>%
+  group_by(non_health_dismiss) %>%
+  count() %>%
+  arrange(desc(non_health_dismiss)) %>%
+  ggplot(aes(non_health_dismiss, n)) +
+  geom_area()
+```
+
+since, y(ceo_dismissal) variable which predicts 0 (health related) or 1 (non-health related) dismiss is positive skewed. 
+
+```{r}
+library(tidytext)
+library(wordcloud)
+
+
+
+departures %>%
+  select(notes, ratio_dismissal) %>%
+  unnest_tokens(word, notes) %>%
+  anti_join(stop_words, by = "word") %>%
+  count(word) %>%
+  arrange(desc(n)) %>%
+  filter(n > 100) %>%
+  with(wordcloud(word, n, max.words = 200))
+```
+
+
+```{r}
+library(textdata)
+
+notes_sentiment <- departures %>%
+  select(notes, departure_code, exec_fullname) %>%
+  unnest_tokens(word, notes) %>%
+  anti_join(stop_words, by = "word") %>%
+  inner_join(get_sentiments("afinn")) %>%
+  group_by(departure_code, exec_fullname)%>%
+  summarise(senti_value = sum(value))
+  
+notes_sentiment %>%
+  group_by(departure_code) %>%
+  summarise(sentiment_code = sum(senti_value)) %>%
+  filter(!is.na(departure_code)) %>%
+  ggplot(aes(departure_code, sentiment_code)) +
+  geom_col()
+```
+
+
+
+```{r}
+library(smotefamily)
+
+smote_departures <- departures %>%
+  inner_join(notes_sentiment, by = c("exec_fullname","departure_code")) %>%
+  select(fyear, departure_code, ceo_dismissal, tenure_no_ceodb, max_tenure_ceodb, total_dismiss, ratio_dismissal, senti_value) %>%
+  filter(!is.na(ceo_dismissal))
+
+
+
+new_departure <- SMOTE(smote_departures, smote_departures$ceo_dismissal, K = 10)
+```
+
+
+```{r}
+new_departure$data %>%
+  count(ceo_dismissal)
+```
+
+```{r}
+new_departure$syn_data %>%
+  count(ceo_dismissal)
+```
+
+```{r}
+new_dataset <- new_departure$data 
+
+```
+
+
+```{r}
+library(lubridate)
+
+new_dataset <- new_dataset %>%
+  mutate(fyear = as.Date(as.character(fyear), format = "%Y"), 
+         fyear = year(fyear), ceo_dismissal = factor(ceo_dismissal))
+
+new_dataset %>%
+  filter(fyear < 2019) %>%
+  count(fyear, ceo_dismissal) %>%
+  ggplot(aes(fyear, n)) +
+  geom_line(aes(color = ceo_dismissal)) +
+  geom_point() +
+  geom_smooth()
+```
+
+```{r}
+departures %>%
+  filter(fyear < 2019) %>%
+  mutate(ceo_dismissal = factor(ceo_dismissal)) %>%
+  filter(!is.na(ceo_dismissal)) %>%
+  count(fyear, ceo_dismissal) %>%
+  ggplot(aes(fyear, n)) +
+  geom_line(aes(color = ceo_dismissal)) +
+  geom_point() +
+  geom_smooth()
+```
+
+
+
+
+```{r}
+glm.fit = glm(ceo_dismissal ~ departure_code+senti_value, data = new_dataset, family = binomial)
+summary(glm.fit)
+```
+
