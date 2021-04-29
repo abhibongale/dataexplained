@@ -51,6 +51,8 @@ Plug 'valloric/youcompleteme'
 Plug 'scrooloose/nerdtree'
 " A Vim plugin which shows a git diff in the sign column
 Plug 'airblade/vim-gitgutter'
+" UltiSnips is the ultimate solution for snippets in Vim
+Plug 'SirVer/ultisnips'
 call plug#end()
 
 " vim-markdown settings
