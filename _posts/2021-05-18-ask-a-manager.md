@@ -24,12 +24,6 @@ Annual salary Forecasts like these are useful because they help us understand th
 
 
 
-{% highlight r %}
-survey_raw <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-05-18/survey.csv')
-{% endhighlight %}
-
-
-
 {% highlight text %}
 ## 
 ## ── Column specification ──────────────────────────────────────────────────────────────
@@ -57,38 +51,7 @@ survey_raw <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytu
 
 
 
-{% highlight r %}
-survey  <- survey_raw %>%
-  filter(gender == "Woman", annual_salary >= 5000, annual_salary <= 2e6, currency == "USD",
-         !is.na(how_old_are_you)) %>%
-  mutate(age_category = fct_reorder(how_old_are_you, parse_number(how_old_are_you)),
-         age_category = fct_relevel(age_category,"under 18"),
-         overall_experience = fct_reorder(str_replace(overall_years_of_professional_experience, 
-                                                     " - ", "-"),
-                                        parse_number(overall_years_of_professional_experience)),
-         field_experience = fct_reorder(str_replace(years_of_experience_in_field, " - ", "-"),
-                                        parse_number(years_of_experience_in_field)),
-         education = factor(highest_level_of_education_completed)
-         ) %>%
-  select(-c(how_old_are_you, 
-            years_of_experience_in_field, 
-            overall_years_of_professional_experience,
-            timestamp, job_title, additional_context_on_income, 
-            additional_context_on_job_title, currency, other_monetary_comp, currency_other,
-            country, race, gender, highest_level_of_education_completed))
-{% endhighlight %}
 
-
-
-
-{% highlight r %}
-# effects of industry on annual salary
-survey %>%
-  filter(!is.na(industry)) %>%
-  mutate(industry = fct_lump(industry, 8)) %>%
-  lm(annual_salary ~ industry, data = .) %>%
-  summary()
-{% endhighlight %}
 
 
 
@@ -122,17 +85,6 @@ survey %>%
 
 
 
-{% highlight r %}
-survey %>%
-  filter(annual_salary > 5000, annual_salary <= 2e6) %>%
-  ggplot(aes(log10(annual_salary))) +
-  geom_histogram(aes(fill = overall_experience)) +
-  scale_x_continuous(label = scales::dollar_format())  +
-  facet_wrap(~field_experience)
-{% endhighlight %}
-
-
-
 {% highlight text %}
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 {% endhighlight %}
@@ -157,31 +109,11 @@ survey %>%
 ![center](/figs/2021-05-18-ask-a-manager/unnamed-chunk-6-1.png)
 
 
-{% highlight r %}
-survey %>%
-  mutate(state = fct_lump(state, 10)) %>%
-  ggplot(aes(state)) +
-  geom_histogram(stat = "count")
-{% endhighlight %}
-
-
-
 {% highlight text %}
 ## Warning: Ignoring unknown parameters: binwidth, bins, pad
 {% endhighlight %}
 
 ![center](/figs/2021-05-18-ask-a-manager/unnamed-chunk-7-1.png)
-
-
-
-{% highlight r %}
-survey %>%
-  filter(!is.na(industry)) %>%
-  mutate(industry = fct_lump(industry, 8),
-         state = fct_lump(state, 8)) %>%
-  glm(annual_salary ~ industry + field_experience + overall_experience + age_category + state + education, data = .) %>%
-  summary()
-{% endhighlight %}
 
 
 
@@ -254,66 +186,15 @@ survey %>%
 
 
 
-{% highlight r %}
-set.seed(2021)
-survey_split <- initial_split(survey)
-survey_train <- training(survey_split)
-survey_test <- testing(survey_split)
-{% endhighlight %}
 
  
 
-{% highlight r %}
-survey_recipe <- survey %>%
-  recipe(annual_salary ~ .) %>%
-  #step_log(annual_salary, base = 10) %>%
-  step_unknown(all_nominal()) %>%
-  step_other(all_nominal()) %>%
-  step_center(all_numeric()) %>%
-  step_novel(all_nominal()) %>%
-  step_dummy(all_nominal()) %>%
-  prep()
-
-
-survey_train_prep <- bake(survey_recipe, survey_train)
-survey_test_prep <- bake(survey_recipe, survey_test)
-{% endhighlight %}
 
 
 
-{% highlight r %}
-lin_reg <- linear_reg(penalty = 0.1) %>%
-  set_engine("lm") %>%
-    set_mode("regression") 
-
-rf_model <- 
-  # specify that the model is a random forest
-  rand_forest() %>%
-  # select the engine/package that underlies the model
-  set_engine("ranger") %>%
-  # choose either the continuous regression or binary classification mode
-  set_mode("regression")
-{% endhighlight %}
 
 
 
-{% highlight r %}
-lin_workflow <- # new workflow object
- workflow() %>% # use workflow function
- add_recipe(survey_recipe) %>%   # use the new recipe
- add_model(lin_reg)   # add your model spec
-
-rf_workflow <- workflow() %>%
-  add_recipe(survey_recipe) %>%
-  add_model(rf_model)
-{% endhighlight %}
-
-
-
-{% highlight r %}
-lin_fit <- lin_workflow %>%
-  last_fit(survey_split)
-{% endhighlight %}
 
 
 
@@ -325,13 +206,6 @@ lin_fit <- lin_workflow %>%
 
 {% highlight text %}
 ## ! train/test split: preprocessor 1/1, model 1/1 (predictions): There are new levels in a factor: NA
-{% endhighlight %}
-
-
-
-{% highlight r %}
-rf_fit <- rf_workflow %>%
-  last_fit(survey_split)
 {% endhighlight %}
 
 
@@ -354,27 +228,6 @@ rf_fit <- rf_workflow %>%
 
 
 
-{% highlight r %}
-lin_prediction <- lin_fit %>%
-  collect_predictions()
-
-lin_performance <- lin_fit %>%
-  collect_metrics(summarize = TRUE)
-
-
-rf_prediction <- rf_fit %>%
-  collect_predictions()
-
-rf_performance <- rf_fit %>%
-  collect_metrics(summarize = TRUE)
-{% endhighlight %}
-
-
-{% highlight r %}
-lin_fit %>%
-  collect_metrics()
-{% endhighlight %}
-
 
 
 {% highlight text %}
@@ -383,32 +236,6 @@ lin_fit %>%
 ##   <chr>   <chr>            <dbl> <fct>               
 ## 1 rmse    standard   65015.      Preprocessor1_Model1
 ## 2 rsq     standard       0.00589 Preprocessor1_Model1
-{% endhighlight %}
-
-
-
-{% highlight r %}
-rf.model <- rand_forest() %>%
-  set_engine(engine = "ranger") %>%
-  set_mode(mode = "regression") %>%
-  fit(annual_salary ~ ., data  = survey_train_prep)
-
-rf_predict <- rf.model %>%
-  predict(survey_test_prep) %>%
-  bind_cols(survey_test_prep)
-{% endhighlight %}
-
-
-{% highlight r %}
-rf_predict %>%
-ggplot(mapping = aes(x = .pred, y = annual_salary)) +
-  geom_point(color = '#006EA1', alpha = 0.25) +
-  geom_abline(intercept = 0, slope = 1, color = 'orange') +
-  labs(title = 'Linear Regression Results -Annual Salary Test Set',
-       x = 'Predicted Annual Salary',
-       y = 'Actual Annual Salary') +
-  scale_x_continuous(labels = scales::dollar_format()) +
-  scale_y_continuous(labels = scales::dollar_format())
 {% endhighlight %}
 
 ![center](/figs/2021-05-18-ask-a-manager/unnamed-chunk-16-1.png)
