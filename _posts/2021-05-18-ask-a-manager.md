@@ -24,30 +24,6 @@ Annual salary Forecasts like these are useful because they help us understand th
 
 
 
-{% highlight text %}
-## 
-## ── Column specification ──────────────────────────────────────────────────────────────
-## cols(
-##   timestamp = col_character(),
-##   how_old_are_you = col_character(),
-##   industry = col_character(),
-##   job_title = col_character(),
-##   additional_context_on_job_title = col_character(),
-##   annual_salary = col_double(),
-##   other_monetary_comp = col_character(),
-##   currency = col_character(),
-##   currency_other = col_character(),
-##   additional_context_on_income = col_character(),
-##   country = col_character(),
-##   state = col_character(),
-##   city = col_character(),
-##   overall_years_of_professional_experience = col_character(),
-##   years_of_experience_in_field = col_character(),
-##   highest_level_of_education_completed = col_character(),
-##   gender = col_character(),
-##   race = col_character()
-## )
-{% endhighlight %}
 
 
 
@@ -92,30 +68,6 @@ Annual salary Forecasts like these are useful because they help us understand th
 
 
 
-
-
-
-{% highlight text %}
-## ! train/test split: preprocessor 1/1: There are new levels in a factor: NA
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## ! train/test split: preprocessor 1/1, model 1/1 (predictions): There are new levels in a factor: NA
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## ! train/test split: preprocessor 1/1: There are new levels in a factor: NA
-{% endhighlight %}
-
-
-
-{% highlight text %}
-## x train/test split: preprocessor 1/1, model 1/1: Error: Missing data in columns: education_PhD.
-{% endhighlight %}
 
 
 

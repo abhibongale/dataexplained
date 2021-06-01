@@ -26,12 +26,12 @@ library(tidymodels)
 ```
 
 
-```{r echo=FALSE, results='hide'}
+```{r echo=FALSE, results='hide', message=FALSE}
 survey_raw <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-05-18/survey.csv')
 ```
 
 
-```{r echo=FALSE, results='hide'}
+```{r echo=FALSE, results='hide', message=FALSE}
 survey  <- survey_raw %>%
   filter(gender == "Woman", annual_salary >= 5000, annual_salary <= 2e6, currency == "USD",
          !is.na(how_old_are_you)) %>%
@@ -54,7 +54,7 @@ survey  <- survey_raw %>%
 
 
 
-```{r echo=FALSE, results='hide'}
+```{r echo=FALSE, results='hide', message=FALSE}
 # effects of industry on annual salary
 survey %>%
   filter(!is.na(industry)) %>%
@@ -81,7 +81,7 @@ survey %>%
   labs(x = "Annual Salary in log scale", y = "Frequency")
 ```
 
-```{r echo=FALSE, results='hide'}
+```{r echo=FALSE}
 survey %>%
   mutate(state = fct_lump(state, 10)) %>%
   ggplot(aes(state)) +
@@ -89,7 +89,7 @@ survey %>%
 ```
 
 
-```{r echo=FALSE, results='hide'}
+```{r echo=FALSE, results='hide', message=FALSE}
 survey %>%
   filter(!is.na(industry)) %>%
   mutate(industry = fct_lump(industry, 8),
@@ -99,7 +99,7 @@ survey %>%
 ```
 
 
-```{r echo=FALSE, results='hide'}
+```{r echo=FALSE, results='hide', message=FALSE}
 set.seed(2021)
 survey_split <- initial_split(survey)
 survey_train <- training(survey_split)
@@ -107,7 +107,7 @@ survey_test <- testing(survey_split)
 ```
 
  
-```{r echo=FALSE, results='hide'}
+```{r echo=FALSE, results='hide', message=FALSE}
 survey_recipe <- survey %>%
   recipe(annual_salary ~ .) %>%
   #step_log(annual_salary, base = 10) %>%
@@ -124,7 +124,7 @@ survey_test_prep <- bake(survey_recipe, survey_test)
 ```
 
 
-```{r echo=FALSE, results='hide'}
+```{r echo=FALSE, results='hide', message=FALSE}
 lin_reg <- linear_reg(penalty = 0.1) %>%
   set_engine("lm") %>%
     set_mode("regression") 
@@ -139,7 +139,7 @@ rf_model <-
 ```
 
 
-```{r echo=FALSE, results='hide'}
+```{r echo=FALSE, results='hide', message=FALSE}
 lin_workflow <- # new workflow object
  workflow() %>% # use workflow function
  add_recipe(survey_recipe) %>%   # use the new recipe
@@ -151,7 +151,7 @@ rf_workflow <- workflow() %>%
 ```
 
 
-```{r echo=FALSE, results='hide'}
+```{r echo=FALSE, results='hide', message=FALSE}
 lin_fit <- lin_workflow %>%
   last_fit(survey_split)
 
@@ -160,7 +160,7 @@ rf_fit <- rf_workflow %>%
 ```
 
 
-```{r echo=FALSE, results='hide'}
+```{r echo=FALSE, results='hide', message=FALSE}
 lin_prediction <- lin_fit %>%
   collect_predictions()
 
@@ -175,7 +175,7 @@ rf_performance <- rf_fit %>%
   collect_metrics(summarize = TRUE)
 ```
 
-```{r echo=FALSE, results='hide'}
+```{r echo=FALSE, results='hide', message=FALSE}
 lin_fit %>%
   collect_metrics()
 
@@ -190,7 +190,7 @@ rf_predict <- rf.model %>%
   
 ```
 
-```{r echo=FALSE, results='hide'}
+```{r echo=FALSE}
 rf_predict %>%
 ggplot(mapping = aes(x = .pred, y = annual_salary)) +
   geom_point(color = '#006EA1', alpha = 0.25) +
