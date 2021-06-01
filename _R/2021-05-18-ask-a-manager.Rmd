@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Survivor TV Show data"
-description: "data sets detailing events across all 40 seasons of the US Survivor, including castaway information, vote history, immunity and reward challenge winners and jury votes."
+title: "Ask a Manager"
+description: ""
 output: html_document
 date: "`r Sys.Date()`"
 category: r
@@ -13,6 +13,11 @@ editor_options:
 
 ![ask-a-manager](https://www.askamanager.org/wp-content/uploads/2019/09/cropped-aam-resize-1-550px_width.png)
 
+*Tidy-Tuesday challenge about the salary survey a few weeks ago.*
+
+Lots of womens living in United States responsed to the salary survey. So we will look into how the state, age, job type, education, experience overall and in the field effects the annual salary. 
+
+Annual salary Forecasts like these are useful because they help us understand the most likely range for certain kind of talent.
 
 
 ```{r echo=FALSE}
@@ -21,14 +26,15 @@ library(tidymodels)
 ```
 
 
-```{r}
+```{r recho=FALSE}
 survey_raw <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-05-18/survey.csv')
 ```
 
 
-```{r}
+```{r recho=FALSE}
 survey  <- survey_raw %>%
-  filter(gender == "Woman", annual_salary >= 5000, annual_salary <= 2e6, currency == "USD") %>%
+  filter(gender == "Woman", annual_salary >= 5000, annual_salary <= 2e6, currency == "USD",
+         !is.na(how_old_are_you)) %>%
   mutate(age_category = fct_reorder(how_old_are_you, parse_number(how_old_are_you)),
          age_category = fct_relevel(age_category,"under 18"),
          overall_experience = fct_reorder(str_replace(overall_years_of_professional_experience, 
@@ -47,7 +53,9 @@ survey  <- survey_raw %>%
 ```
 
 
-```{r}  
+
+```{r recho=FALSE}  
+# effects of industry on annual salary
 survey %>%
   filter(!is.na(industry)) %>%
   mutate(industry = fct_lump(industry, 8)) %>%
@@ -55,10 +63,11 @@ survey %>%
   summary()
 ```
 
-```{r}
+
+```{r recho=FALSE}
 survey %>%
   filter(annual_salary > 5000, annual_salary <= 2e6) %>%
-  ggplot(aes(log2(annual_salary))) +
+  ggplot(aes(log10(annual_salary))) +
   geom_histogram(aes(fill = overall_experience)) +
   scale_x_continuous(label = scales::dollar_format())  +
   facet_wrap(~field_experience)
@@ -66,28 +75,46 @@ survey %>%
 
 ```{r}
 survey %>%
+  ggplot(aes(log(annual_salary))) +
+  geom_histogram(fill = "#1380A1") +
+  scale_x_log10(label = scales::dollar_format()) +
+  labs(x = "Annual Salary in log scale", y = "Frequency")
+```
+
+```{r}
+survey %>%
+  mutate(state = fct_lump(state, 10)) %>%
+  ggplot(aes(state)) +
+  geom_histogram(stat = "count")
+```
+
+
+```{r recho=FALSE}
+survey %>%
   filter(!is.na(industry)) %>%
   mutate(industry = fct_lump(industry, 8),
          state = fct_lump(state, 8)) %>%
-  glm(annual_salary ~ industry + field_experience + overall_experience + age_category + state, 
-     data = .) %>%
+  glm(annual_salary ~ industry + field_experience + overall_experience + age_category + state + education, data = .) %>%
   summary()
 ```
 
 
-```{r}
+```{r recho=FALSE}
+set.seed(2021)
 survey_split <- initial_split(survey)
 survey_train <- training(survey_split)
 survey_test <- testing(survey_split)
 ```
 
-
-```{r}
+ 
+```{r recho=FALSE}
 survey_recipe <- survey %>%
   recipe(annual_salary ~ .) %>%
-  step_log(annual_salary) %>%
+  #step_log(annual_salary, base = 10) %>%
   step_unknown(all_nominal()) %>%
   step_other(all_nominal()) %>%
+  step_center(all_numeric()) %>%
+  step_novel(all_nominal()) %>%
   step_dummy(all_nominal()) %>%
   prep()
 
@@ -97,39 +124,84 @@ survey_test_prep <- bake(survey_recipe, survey_test)
 ```
 
 
-```{r}
-lin_reg <- linear_reg(penalty = 0.1, mode = "regression") %>%
-  set_engine("lm") 
+```{r recho=FALSE}
+lin_reg <- linear_reg(penalty = 0.1) %>%
+  set_engine("lm") %>%
+    set_mode("regression") 
 
-
-
+rf_model <- 
+  # specify that the model is a random forest
+  rand_forest() %>%
+  # select the engine/package that underlies the model
+  set_engine("ranger") %>%
+  # choose either the continuous regression or binary classification mode
+  set_mode("regression")
 ```
 
 
-```{r}
+```{r recho=FALSE}
 lin_workflow <- # new workflow object
  workflow() %>% # use workflow function
  add_recipe(survey_recipe) %>%   # use the new recipe
  add_model(lin_reg)   # add your model spec
+
+rf_workflow <- workflow() %>%
+  add_recipe(survey_recipe) %>%
+  add_model(rf_model)
 ```
 
-```{r}
 
-
+```{r recho=FALSE}
 lin_fit <- lin_workflow %>%
+  last_fit(survey_split)
+
+rf_fit <- rf_workflow %>%
   last_fit(survey_split)
 ```
 
-```{r}
+
+```{r recho=FALSE}
 lin_prediction <- lin_fit %>%
   collect_predictions()
 
 lin_performance <- lin_fit %>%
   collect_metrics(summarize = TRUE)
+
+
+rf_prediction <- rf_fit %>%
+  collect_predictions()
+
+rf_performance <- rf_fit %>%
+  collect_metrics(summarize = TRUE)
 ```
 
-```{r}
+```{r recho=FALSE}
 lin_fit %>%
   collect_metrics()
+
+rf.model <- rand_forest() %>%
+  set_engine(engine = "ranger") %>%
+  set_mode(mode = "regression") %>%
+  fit(annual_salary ~ ., data  = survey_train_prep)
+
+rf_predict <- rf.model %>%
+  predict(survey_test_prep) %>%
+  bind_cols(survey_test_prep)
+  
 ```
+
+```{r recho=FALSE}
+rf_predict %>%
+ggplot(mapping = aes(x = .pred, y = annual_salary)) +
+  geom_point(color = '#006EA1', alpha = 0.25) +
+  geom_abline(intercept = 0, slope = 1, color = 'orange') +
+  labs(title = 'Linear Regression Results -Annual Salary Test Set',
+       x = 'Predicted Annual Salary',
+       y = 'Actual Annual Salary') +
+  scale_x_continuous(labels = scales::dollar_format()) +
+  scale_y_continuous(labels = scales::dollar_format())
+
+```
+
+
 
