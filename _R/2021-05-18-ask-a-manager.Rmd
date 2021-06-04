@@ -15,7 +15,9 @@ editor_options:
 
 *Tidy-Tuesday challenge about the salary survey a few weeks ago.*
 
+
 Lots of womens living in United States responsed to the salary survey. So we will look into how the state, age, job type, education, experience overall and in the field effects the annual salary. 
+
 
 Annual salary Forecasts like these are useful because they help us understand the most likely range for certain kind of talent.
 
@@ -86,7 +88,7 @@ survey %>%
 
 
 #### Median Salary w.r.t Industry
-```{r echo=FALSE, fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+```{r echo=FALSE, message=FALSE, fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
 survey %>%
   filter(!is.na(industry)) %>%
   select(industry, annual_salary) %>%
@@ -103,7 +105,7 @@ survey %>%
 ```
 
 #### Annual Salary in log scale
-```{r echo=FALSE, fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+```{r echo=FALSE, message=FALSE, fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
 survey %>%
   ggplot(aes(log(annual_salary))) +
   geom_histogram(fill = "#1380A1") +
@@ -114,7 +116,7 @@ survey %>%
 
 
 #### Median Salary w.r.t State
-```{r echo=FALSE, fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+```{r echo=FALSE, message=FALSE, fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
 survey %>%
   filter(!is.na(state)) %>%
   select(state, annual_salary) %>%
@@ -132,7 +134,7 @@ survey %>%
 
 
 #### Median Salary w.r.t Age wise 
-```{r}
+```{r echo=FALSE, message=FALSE, fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
 survey %>%
   select(age_category, annual_salary) %>%
   group_by(age_category) %>%
@@ -249,7 +251,7 @@ rf_predict <- rf.model %>%
 ```
 
 #### Actual annual Salary vs Predicted annual Salary 
-```{r echo=FALSE, fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
+```{r echo=FALSE, message=FALSE, fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
 rf_predict %>%
 ggplot(mapping = aes(x = .pred, y = annual_salary)) +
   geom_point(color = '#006EA1', alpha = 0.25) +
