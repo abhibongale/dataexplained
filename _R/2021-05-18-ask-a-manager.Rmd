@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Ask a Manager"
-description: ""
+description: "Lots of womens living in United States responsed to the salary survey. So we will look into how the state, age, job type, education, experience overall and in the field effects the annual salary. Annual salary Forecasts like these are useful because they help us understand the most likely range for certain kind of talent."
 output: html_document
 date: "`r Sys.Date()`"
 category: r
@@ -22,7 +22,7 @@ Lots of womens living in United States responsed to the salary survey. So we wil
 Annual salary Forecasts like these are useful because they help us understand the most likely range for certain kind of talent.
 
 
-```{r echo=FALSE, results='hide'}
+```{r echo=FALSE, results='hide', message=FALSE}
 library(tidyverse)
 library(tidymodels)
 ```
@@ -87,7 +87,7 @@ survey %>%
 ```
 
 
-#### Median Salary w.r.t Industry
+#### Median Annual Salary w.r.t Industry
 ```{r echo=FALSE, message=FALSE, fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
 survey %>%
   filter(!is.na(industry)) %>%
@@ -115,7 +115,7 @@ survey %>%
 ```
 
 
-#### Median Salary w.r.t State
+#### Median Annual Salary w.r.t State
 ```{r echo=FALSE, message=FALSE, fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
 survey %>%
   filter(!is.na(state)) %>%
@@ -133,7 +133,7 @@ survey %>%
 ```
 
 
-#### Median Salary w.r.t Age wise 
+#### Median Annual Salary w.r.t Age wise 
 ```{r echo=FALSE, message=FALSE, fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
 survey %>%
   select(age_category, annual_salary) %>%

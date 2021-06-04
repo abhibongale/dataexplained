@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Ask a Manager"
-description: ""
+description: "Lots of womens living in United States responsed to the salary survey. So we will look into how the state, age, job type, education, experience overall and in the field effects the annual salary. Annual salary Forecasts like these are useful because they help us understand the most likely range for certain kind of talent."
 output: html_document
 date: "2021-06-04"
 category: r
@@ -38,18 +38,18 @@ Annual salary Forecasts like these are useful because they help us understand th
 
 
 
-#### Median Salary w.r.t Industry
+#### Median Annual Salary w.r.t Industry
 ![center](/figs/2021-05-18-ask-a-manager/unnamed-chunk-6-1.png)
 
 #### Annual Salary in log scale
 ![center](/figs/2021-05-18-ask-a-manager/unnamed-chunk-7-1.png)
 
 
-#### Median Salary w.r.t State
+#### Median Annual Salary w.r.t State
 ![center](/figs/2021-05-18-ask-a-manager/unnamed-chunk-8-1.png)
 
 
-#### Median Salary w.r.t Age wise 
+#### Median Annual Salary w.r.t Age wise 
 ![center](/figs/2021-05-18-ask-a-manager/unnamed-chunk-9-1.png)
 
 
