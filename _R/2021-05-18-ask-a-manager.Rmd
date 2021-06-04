@@ -32,6 +32,27 @@ survey_raw <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytu
 
 
 ```{r echo=FALSE, results='hide', message=FALSE}
+bbplot <- function () {
+     font <- "Helvetica"
+     ggplot2::theme(plot.title = ggplot2::element_text(family = font,          size = 22, face = "bold", color = "#222222"), plot.subtitle = ggplot2::element_text(family = font, 
+         size = 16, margin = ggplot2::margin(9, 0, 9, 0)), plot.caption = ggplot2::element_blank(), 
+         legend.position = "top", legend.text.align = 0, legend.background = ggplot2::element_blank(), 
+         legend.title = ggplot2::element_blank(), legend.key = ggplot2::element_blank(), 
+         legend.text = ggplot2::element_text(family = font, size = 12, 
+             color = "#222222"), axis.title = ggplot2::element_blank(), 
+         axis.text = ggplot2::element_text(family = font, size = 12, 
+             color = "#222222"), axis.text.x = ggplot2::element_text(margin = ggplot2::margin(5, 
+             b = 10)), axis.ticks = ggplot2::element_blank(), 
+         axis.line = ggplot2::element_blank(), panel.grid.minor = ggplot2::element_blank(), 
+         panel.grid.major.y = ggplot2::element_line(color = "#cbcbcb"), 
+         panel.grid.major.x = ggplot2::element_blank(), panel.background = ggplot2::element_blank(), 
+         strip.background = ggplot2::element_rect(fill = "white"), 
+         strip.text = ggplot2::element_text(size = 16, hjust = 0))
+ }
+```
+
+
+```{r echo=FALSE, results='hide', message=FALSE}
 survey  <- survey_raw %>%
   filter(gender == "Woman", annual_salary >= 5000, annual_salary <= 2e6, currency == "USD",
          !is.na(how_old_are_you)) %>%
@@ -64,28 +85,46 @@ survey %>%
 ```
 
 
-```{r echo=FALSE}
+#### Median Salary w.r.t Industry
+```{r echo=FALSE, fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
 survey %>%
-  filter(annual_salary > 5000, annual_salary <= 2e6) %>%
-  ggplot(aes(log10(annual_salary))) +
-  geom_histogram(aes(fill = overall_experience)) +
-  scale_x_continuous(label = scales::dollar_format())  +
-  facet_wrap(~field_experience)
+  filter(!is.na(industry)) %>%
+  select(industry, annual_salary) %>%
+  mutate(industry = fct_lump(industry, 12)) %>%
+  group_by(industry) %>%
+  summarise(salary_median = median(annual_salary)) %>%
+  mutate(industry = fct_reorder(industry, salary_median)) %>%
+  ggplot(aes(salary_median, industry)) +
+  geom_col(fill="#1380A1") +
+  scale_x_continuous(labels = scales::dollar_format()) +
+  bbplot()
+  
 ```
 
-```{r echo=FALSE}
+#### Annual Salary in log scale
+```{r echo=FALSE, fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
 survey %>%
   ggplot(aes(log(annual_salary))) +
   geom_histogram(fill = "#1380A1") +
   scale_x_log10(label = scales::dollar_format()) +
-  labs(x = "Annual Salary in log scale", y = "Frequency")
+  labs(x = "Annual Salary in log scale", y = "Frequency") +
+  bbplot()
 ```
 
-```{r echo=FALSE}
+
+#### Median Salary w.r.t State
+```{r echo=FALSE, fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
 survey %>%
-  mutate(state = fct_lump(state, 10)) %>%
-  ggplot(aes(state)) +
-  geom_histogram(stat = "count")
+  filter(!is.na(state)) %>%
+  select(state, annual_salary) %>%
+  mutate(state = fct_lump(state, 12)) %>%
+  group_by(state) %>%
+  summarise(salary_median = median(annual_salary)) %>%
+  mutate(state = fct_reorder(state, salary_median)) %>%
+  ggplot(aes(salary_median, state)) +
+  geom_col(fill = "#1380A1") +
+  scale_x_continuous(labels = scales::dollar_format()) +
+  bbplot()
 ```
 
 
@@ -190,17 +229,20 @@ rf_predict <- rf.model %>%
   
 ```
 
-```{r echo=FALSE}
+#### Actual annual Salary vs Predicted annual Salary 
+```{r echo=FALSE, fig.width=6.72, fig.height=4.8, dpi=200, fig.fullwidth=TRUE}
 rf_predict %>%
 ggplot(mapping = aes(x = .pred, y = annual_salary)) +
   geom_point(color = '#006EA1', alpha = 0.25) +
-  geom_abline(intercept = 0, slope = 1, color = 'orange') +
-  labs(title = 'Linear Regression Results -Annual Salary Test Set',
+  geom_abline(intercept = 0, slope = 2, color = "#FAAB18", size = 1) +
+  geom_vline(xintercept = 0, size = 1, colour="#333333") +
+  geom_hline(yintercept = 0, size = 1, colour="#333333") +
+  labs(title = 'Linear Regression',
        x = 'Predicted Annual Salary',
        y = 'Actual Annual Salary') +
   scale_x_continuous(labels = scales::dollar_format()) +
-  scale_y_continuous(labels = scales::dollar_format())
-
+  scale_y_continuous(labels = scales::dollar_format()) +
+  bbplot()
 ```
 
 
