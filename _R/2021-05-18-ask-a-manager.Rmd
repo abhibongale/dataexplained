@@ -97,8 +97,9 @@ survey %>%
   ggplot(aes(salary_median, industry)) +
   geom_col(fill="#1380A1") +
   scale_x_continuous(labels = scales::dollar_format()) +
+  geom_text(aes(label =paste0("$",salary_median)), check_overlap = TRUE, x = 10, 
+            hjust = 0, vjust = 0.5, colour = "white",family="Helvetica", size = 6) +
   bbplot()
-  
 ```
 
 #### Annual Salary in log scale
@@ -124,6 +125,24 @@ survey %>%
   ggplot(aes(salary_median, state)) +
   geom_col(fill = "#1380A1") +
   scale_x_continuous(labels = scales::dollar_format()) +
+  geom_text(aes(label =paste0("$",salary_median)), check_overlap = TRUE, x = 10, 
+            hjust = 0, vjust = 0.5, colour = "white",family="Helvetica", size = 6) +
+  bbplot()
+```
+
+
+#### Median Salary w.r.t Age wise 
+```{r}
+survey %>%
+  select(age_category, annual_salary) %>%
+  group_by(age_category) %>%
+  summarise(salary_median = median(annual_salary)) %>%
+  #mutate(age_category = fct_reorder(age_category, salary_median)) %>%
+  ggplot(aes(salary_median, age_category)) +
+  geom_col(fill = "#1380A1") +
+  scale_x_continuous(labels = scales::dollar_format()) +
+  geom_text(aes(label =paste0("$",salary_median)), check_overlap = TRUE, x = 10, 
+            hjust = 0, vjust = 0.5, colour = "white",family="Helvetica", size = 6) +
   bbplot()
 ```
 
